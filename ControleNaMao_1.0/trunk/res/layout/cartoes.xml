@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LayoutCartao"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fundo"
+    tools:listitem="@android:layout/simple_list_item_1" >
+
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbarStyle="insideOverlay" >
+
+        <ListView
+            android:id="@+id/listaCartoes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:scrollbarStyle="outsideOverlay"
+            android:scrollbars="vertical|none" >
+        </ListView>
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center" >
+
+        <Button
+            android:id="@+id/btAddCartao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btAddCartao" />
+
+    </TableRow>
+
+</TableLayout>

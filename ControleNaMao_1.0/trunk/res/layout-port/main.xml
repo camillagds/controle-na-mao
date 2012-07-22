@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/fundo"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText,Overdraw" >
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/logotipo"
+        android:src="@drawable/logo" />
+
+    <TableLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:collapseColumns="*"
+        android:shrinkColumns="*"
+        android:stretchColumns="*" >
+
+        <TableRow
+            android:id="@+id/menu1"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center" >
+
+            <ImageView
+                android:id="@+id/itemCartao"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:contentDescription="Todo1"
+                android:src="@drawable/cartoes_ico" />
+
+            <ImageView
+                android:id="@+id/itemLancamentos"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:contentDescription="TODO2"
+                android:src="@drawable/lancamentos_ico" />
+
+            <ImageView
+                android:id="@+id/itemCategoria"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:contentDescription="TODO3"
+                android:src="@drawable/categoria_ico" />
+        </TableRow>
+
+
+
+        <TableRow
+            android:id="@+id/menu2"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+
+            <ImageView
+                android:id="@+id/itemConsultas"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:contentDescription="TODO45"
+                android:src="@drawable/consultas_ico" />
+
+            <ImageView
+                android:id="@+id/itemGraficos"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:contentDescription="TODO5"
+                android:src="@drawable/graficos_ico" />
+
+            <ImageView
+                android:id="@+id/itemExcel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:contentDescription="TODO6"
+                android:src="@drawable/excel_ico" />
+        </TableRow>
+
+       
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/direitos"
+            android:textColor="#000000" />
+    </TableLayout>
+
+</LinearLayout>

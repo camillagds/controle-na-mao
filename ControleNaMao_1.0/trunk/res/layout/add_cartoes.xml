@@ -1,0 +1,106 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LayoutCartao"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fundo"
+    android:orientation="vertical"
+    tools:context=".TelaAddCartoes" >
+
+    <TextView
+        android:id="@+id/titTelaCartao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="17dp"
+        android:text="Novo Cartão"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#005566"
+        android:textSize="12pt"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/titDescricaoCartao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="17dp"
+        android:layout_marginTop="20dp"
+        android:text="Descrição"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/txtDescricaoCartao"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="17dp"
+        android:ems="10" />
+
+    <TextView
+        android:id="@+id/titBandeiraCartao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="17dp"
+        android:text="Bandeira"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Spinner
+        android:id="@+id/dbBandeiraCartao"
+        android:layout_width="218dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="17dp" />
+
+    <TextView
+        android:id="@+id/titNumeroCartao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="17dp"
+        android:text="Número"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/txtNumeroCartao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="17dp"
+        android:ems="10"
+        android:inputType="number" />
+
+    <TextView
+        android:id="@+id/titDtFaturaCartao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="17dp"
+        android:text="Fechamento da Fatura"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <DatePicker
+        android:id="@+id/dtFaturaCartao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="17dp" />
+
+    <TableRow
+        android:id="@+id/Botoes"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        android:gravity="center" >
+
+        <Button
+            android:id="@+id/btConfirmar"
+            style="?android:attr/buttonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Confirmar" />
+
+        <Button
+            android:id="@+id/btCancelar"
+            style="?android:attr/buttonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:text="Cancelar" />
+
+    </TableRow>
+
+</LinearLayout>
