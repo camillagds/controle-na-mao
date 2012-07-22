@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ControleNaMao</string>
+    <string name="direitos">Desenvolvido por @LobinhaXD</string>
+    <string name="logotipo">Logotipo</string>
+    <string name="btAddCartao">Adicionar Novo Cartão</string>
+    <string name="btAddCategoria">Adicionar Nova Categoria</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_tela_add_cartoes">Adicionar Novo Cartão</string>
+
+</resources>
