@@ -11,7 +11,7 @@
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Light.NoTitleBar" >
         <activity
-            android:name=".ControleNaMaoActivity"
+            android:name=".visualizacao.ControleNaMaoActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
             <intent-filter>
@@ -21,23 +21,34 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".TelaListaCartoes"
-            android:label="Cartões"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:name=".visualizacao.TelaListaCartoes"
+            android:label="Cartões" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="controle.mao.ControleNaMaoActivity" />
         </activity>
-        <activity android:name=".TelaAddCartoes" android:label="Adicionar Novo Cartão">
-            <meta-data android:name="android.support.PARENT_ACTIVITY" android:value="controle.mao.ControleNaMaoActivity" />
-        </activity><activity
-            android:name=".TelaListaCategorias"
+        <activity
+            android:name=".visualizacao.TelaAddCartoes"
+            android:label="Adicionar Novo Cartão" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="controle.mao.ControleNaMaoActivity" />
+        </activity>
+        <activity
+            android:name=".visualizacao.TelaListaCategorias"
             android:label="Cartegorias" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="controle.mao.ControleNaMaoActivity" />
         </activity>
-        
+        <activity
+            android:name=".visualizacao.TelaAddCategoria"
+            android:label="Adicionar Nova Categoria" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="controle.mao.ControleNaMaoActivity" />
+        </activity>
+        <activity android:label="Incluir Despesa" android:name=".visualizacao.TelaAddDespesas"></activity>
     </application>
 
 </manifest>

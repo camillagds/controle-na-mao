@@ -1,6 +1,10 @@
-package controle.mao;
+package controle.mao.visualizacao;
 
 import java.util.Calendar;
+
+import controle.mao.R;
+import controle.mao.R.id;
+import controle.mao.R.layout;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -22,8 +26,8 @@ public class TelaAddCartoes extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_cartoes);
         setCurrentDateOnView();
-        Button btConfirmar = (Button) findViewById(R.id.btConfirmar);
-        Button btCancelar = (Button) findViewById(R.id.btCancelar);
+        Button btConfirmar = (Button) findViewById(R.id.btConfirmarCartao);
+        Button btCancelar = (Button) findViewById(R.id.btCancelarCartao);
         
         //Bt Confirmar
         btConfirmar.setOnClickListener(new ImageView.OnClickListener(){
