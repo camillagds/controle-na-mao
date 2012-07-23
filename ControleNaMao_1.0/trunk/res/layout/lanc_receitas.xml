@@ -1,79 +1,78 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/LayoutCartao"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fundo"
     android:orientation="vertical"
     tools:context=".TelaAddCartoes" >
-
+
     <TextView
-        android:id="@+id/titTelaCartao"
+        android:id="@+id/titTelaReceitas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="17dp"
-        android:text="Novo Cartão"
+        android:text="Receitas"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#005566"
         android:textSize="12pt"
         android:textStyle="bold" />
-
+
     <TextView
-        android:id="@+id/titDescricaoCartao"
+        android:id="@+id/titDescricaoReceitas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="17dp"
         android:layout_marginTop="20dp"
         android:text="Descrição"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
+
     <EditText
-        android:id="@+id/txtDescricaoCartao"
+        android:id="@+id/txtDescricaoReceitas"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="17dp"
         android:ems="10" />
 
     <TextView
-        android:id="@+id/titBandeiraCartao"
+        android:id="@+id/titCategoriaReceitas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="17dp"
-        android:text="Bandeira"
+        android:text="Categoria"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
+
     <Spinner
-        android:id="@+id/dbBandeiraCartao"
+        android:id="@+id/dbCategoriaReceitas"
         android:layout_width="218dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="17dp" />
-
+
     <TextView
-        android:id="@+id/titNumeroCartao"
+        android:id="@+id/titValorReceitas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="17dp"
-        android:text="Número"
+        android:text="Valor (R$)"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
+
     <EditText
-        android:id="@+id/txtNumeroCartao"
-        android:layout_width="wrap_content"
+        android:id="@+id/txtValorReceitas"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="17dp"
         android:ems="10"
-        android:inputType="number" />
-
+        android:layout_marginLeft="17dp"
+        android:inputType="numberDecimal" />
+
     <TextView
-        android:id="@+id/titDtFaturaCartao"
+        android:id="@+id/titDtCreditoReceitas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="17dp"
-        android:text="Fechamento da Fatura"
+        android:text="Data do Crédito"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <DatePicker
-        android:id="@+id/dtFaturaCartao"
+        android:id="@+id/dtCreditoReceitas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="17dp" />
@@ -84,16 +83,16 @@
         android:layout_marginTop="20dp"
         android:layout_weight="1"
         android:gravity="center" >
-
+
         <Button
-            android:id="@+id/btConfirmarCartao"
+            android:id="@+id/btConfirmarReceitas"
             style="?android:attr/buttonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Confirmar" />
-
+
         <Button
-            android:id="@+id/btCancelarCartao"
+            android:id="@+id/btCancelarReceitas"
             style="?android:attr/buttonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -1,5 +1,8 @@
-package controle.mao;
+package controle.mao.visualizacao;
 
+import controle.mao.R;
+import controle.mao.R.id;
+import controle.mao.R.layout;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;

@@ -1,5 +1,8 @@
-package controle.mao;
+package controle.mao.visualizacao;
 
+import controle.mao.R;
+import controle.mao.R.id;
+import controle.mao.R.layout;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +17,7 @@ public class ControleNaMaoActivity extends Activity {
         setContentView(R.layout.main);
         ImageView btCartao = (ImageView) findViewById(R.id.itemCartao);
         ImageView btCategoria = (ImageView) findViewById(R.id.itemCategoria);
+        ImageView btLancamentos = (ImageView) findViewById(R.id.itemLancamentos);
         
         //Tela Lista Cartões
         btCartao.setOnClickListener(new ImageView.OnClickListener(){
@@ -30,6 +34,17 @@ public class ControleNaMaoActivity extends Activity {
         	public void onClick(View v){
         		Intent trocatela = new
         		Intent(ControleNaMaoActivity.this,TelaListaCategorias.class);
+        		ControleNaMaoActivity.this.startActivity(trocatela);
+        		ControleNaMaoActivity.this.finish();
+        	}
+        });
+        
+        //Tela Lista Lançamentos
+        //TODO: implementar pop-up
+        btLancamentos.setOnClickListener(new ImageView.OnClickListener(){
+        	public void onClick(View v){
+        		Intent trocatela = new
+        		Intent(ControleNaMaoActivity.this,TelaAddDespesas.class);
         		ControleNaMaoActivity.this.startActivity(trocatela);
         		ControleNaMaoActivity.this.finish();
         	}
