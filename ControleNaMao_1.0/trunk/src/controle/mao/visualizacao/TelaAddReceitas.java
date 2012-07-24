@@ -3,8 +3,6 @@ package controle.mao.visualizacao;
 import java.util.Calendar;
 
 import controle.mao.R;
-import controle.mao.R.id;
-import controle.mao.R.layout;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -14,9 +12,9 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 
-public class TelaAddDespesas extends Activity {
+public class TelaAddReceitas extends Activity {
 
-	private DatePicker dtCreditoDespesas;
+	private DatePicker dtCreditoReceitas;
 	private int year;
 	private int month;
 	private int day;
@@ -24,18 +22,18 @@ public class TelaAddDespesas extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.lanc_despesas);
+        setContentView(R.layout.lanc_receitas);
         setCurrentDateOnView();
         Button btConfirmar = (Button) findViewById(R.id.btConfirmarDespesas);
-        Button btCancelar = (Button) findViewById(R.id.btCancelarDespesas);
+        Button btCancelar = (Button) findViewById(R.id.btCancelarReceitas);
         
         //Bt Confirmar
         btConfirmar.setOnClickListener(new ImageView.OnClickListener(){
         	public void onClick(View v){
         		Intent trocatela = new
-        		Intent(TelaAddDespesas.this,ControleNaMaoActivity.class);
-        		TelaAddDespesas.this.startActivity(trocatela);
-        		TelaAddDespesas.this.finish();
+        		Intent(TelaAddReceitas.this,ControleNaMaoActivity.class);
+        		TelaAddReceitas.this.startActivity(trocatela);
+        		TelaAddReceitas.this.finish();
         	}
         });
         
@@ -43,9 +41,9 @@ public class TelaAddDespesas extends Activity {
         btCancelar.setOnClickListener(new ImageView.OnClickListener(){
         	public void onClick(View v){
         		Intent trocatela = new
-        		Intent(TelaAddDespesas.this,ControleNaMaoActivity.class);
-        		TelaAddDespesas.this.startActivity(trocatela);
-        		TelaAddDespesas.this.finish();
+        		Intent(TelaAddReceitas.this,ControleNaMaoActivity.class);
+        		TelaAddReceitas.this.startActivity(trocatela);
+        		TelaAddReceitas.this.finish();
         	}
         });
         
@@ -53,7 +51,7 @@ public class TelaAddDespesas extends Activity {
 
     public void setCurrentDateOnView() {
     	 
-    	dtCreditoDespesas = (DatePicker) findViewById(R.id.dtCreditoReceitas);
+    	dtCreditoReceitas = (DatePicker) findViewById(R.id.dtCreditoReceitas);
  
 		final Calendar c = Calendar.getInstance();
 		year = c.get(Calendar.YEAR);
@@ -62,7 +60,7 @@ public class TelaAddDespesas extends Activity {
  
 		
 		// set current date into datepicker
-		dtCreditoDespesas.init(year, month, day, null);
+		dtCreditoReceitas.init(year, month, day, null);
 	}
     
 
