@@ -3,8 +3,7 @@ package controle.mao.visualizacao;
 import java.util.Calendar;
 
 import controle.mao.R;
-import controle.mao.R.id;
-import controle.mao.R.layout;
+
 
 import android.os.Bundle;
 import android.app.Activity;

@@ -49,6 +49,7 @@
                 android:value="controle.mao.ControleNaMaoActivity" />
         </activity>
         <activity android:label="Incluir Despesa" android:name=".visualizacao.TelaAddDespesas"></activity>
+        <activity android:label="Incluir Receitas" android:name=".visualizacao.TelaAddReceitas"></activity>
     </application>
 
 </manifest>
