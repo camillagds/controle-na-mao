@@ -1,0 +1,111 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LayoutCartao"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/fundo"
+    android:orientation="vertical"
+    tools:context=".TelaAddCartoes"
+    tools:ignore="HardcodedText" >
+    <TextView
+        android:id="@+id/titTelaEE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="17dp"
+        android:text="Exportar para Excel"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#005566"
+        android:textSize="9pt"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/titCategoriaEE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="17dp"
+        android:layout_marginTop="20dp"
+        android:text="Categoria"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <Spinner
+        android:id="@+id/dbCategoriaEE"
+        android:layout_width="282dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="17dp" />
+    <TextView
+        android:id="@+id/TitPeriodoEE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="17dp"
+        android:text="Período"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginLeft="17dp" >
+            <Button
+                android:id="@+id/btDataDataInicialEE"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginLeft="17dp"
+                android:text="Data Inicial" />
+            <Button
+                android:id="@+id/btDataFinalEE"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Data Final" />
+        </TableRow>
+
+    <TextView
+        android:id="@+id/titFormadePagEE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="17dp"
+        android:text="Forma de Pagamento"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <Spinner
+        android:id="@+id/dbItem1EE"
+        android:layout_width="279dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="17dp" />
+    <TextView
+        android:id="@+id/titExportaparaEE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="17dp"
+        android:text="Exportar para:"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <RadioButton
+        android:id="@+id/rbEnviarporEmailEE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="17dp"
+        android:text="Enviar por Email" />
+    <RadioButton
+        android:id="@+id/rbSalvarCartaoMemoriaEE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="17dp"
+        android:text="Salvar no Cartão de Memória" />
+        <TableRow
+            android:id="@+id/tableRow5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="17dp"
+            android:layout_marginTop="20dp" >
+            <Button
+                android:id="@+id/btConfirmarEE"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="Confirmar" />
+            <Button
+                android:id="@+id/btCancelarEE"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:text="Cancelar" />
+        </TableRow>
+</LinearLayout>

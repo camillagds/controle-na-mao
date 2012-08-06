@@ -17,73 +17,75 @@
     <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:layout_marginLeft="17dp"
         android:scrollbarAlwaysDrawVerticalTrack="true"
         android:scrollbarStyle="insideOverlay"
         android:scrollbars="vertical" >
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_height="fill_parent"
             android:orientation="vertical" >
             <TextView
-                android:id="@+id/titDescricaoReceitas"
+                android:id="@+id/titDescricaoDespesas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Descrição"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
             <EditText
-                android:id="@+id/txtDescricaoReceitas"
+                android:id="@+id/txtDescricaoDespesas"
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
-                android:ems="10" />
+                android:ems="10" 
+                android:inputType="text"
+                android:imeOptions="actionDone"
+                 />
             <TextView
-                android:id="@+id/titCategoriaReceitas"
+                android:id="@+id/titCategoriaDespesas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Categoria"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
             <Spinner
-                android:id="@+id/dbCategoriaReceitas"
+                android:id="@+id/dbCategoriaDespesas"
                 android:layout_width="218dp"
                 android:layout_height="wrap_content" />
             <TextView
-                android:id="@+id/titValorReceitas"
+                android:id="@+id/titValorDespesas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Valor (R$)"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
             <EditText
-                android:id="@+id/txtValorReceitas"
-                android:layout_width="match_parent"
+                android:id="@+id/txtValorDespesas"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="numberDecimal" />
             <TextView
-                android:id="@+id/titDtCreditoReceitas"
+                android:id="@+id/titDtDebitoDespesas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Data do Crédito"
+                android:text="Data do Débito"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
             <DatePicker
-                android:id="@+id/dtCreditoReceitas"
+                android:id="@+id/dtDebitoDespesas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TableLayout
                 android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="10dp"
                 android:collapseColumns="*"
                 android:shrinkColumns="*"
                 android:stretchColumns="*" >
                 <TableRow
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center" >
+                    android:gravity="top" >
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical" >
                         <TextView
                             android:id="@+id/titModPagtoDespesas"
@@ -91,19 +93,27 @@
                             android:layout_height="wrap_content"
                             android:text="Modalidade"
                             android:textAppearance="?android:attr/textAppearanceMedium" />
+                        <RadioGroup android:id="@+id/rgFormaPagtoDespesas" 
+                            android:layout_height="wrap_content" 
+                            android:layout_width="wrap_content" 
+                            android:orientation="vertical">
                         <RadioButton
                             android:id="@+id/rdAVistaDespesas"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:onClick="onClickFormaPagamento"
                             android:text="A Vista" />
                         <RadioButton
                             android:id="@+id/rdParcelasDespesas"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:onClick="onClickFormaPagamento"
                             android:text="Parcelado" />
+                        </RadioGroup>
                     </LinearLayout>
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical" >
                         <TextView
@@ -134,7 +144,8 @@
                 </TableRow>
                 <TableRow
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content" 
+                    android:id="@+id/rowParcelamentos">
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -152,27 +163,26 @@
                             android:inputType="number" />
                     </LinearLayout>
                     <LinearLayout
-                        android:layout_width="fill_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical" >
                         <TextView
                             android:id="@+id/titPeriodoDespesas"
-                            android:layout_width="fill_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Periodicidade"
                             android:textAppearance="?android:attr/textAppearanceMedium" />
                         <Spinner
                             android:id="@+id/dbPeriodoDespesas"
-                            android:layout_width="fill_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
                 </TableRow>
                 <TableRow
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:layout_weight="1"
-                    android:gravity="center" >
+                    android:gravity="top" >
                     <Button
                         android:id="@+id/btConfirmarDespesas"
                         style="?android:attr/buttonStyle"

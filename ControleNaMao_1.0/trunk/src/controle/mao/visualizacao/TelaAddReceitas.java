@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.Spinner;
 
 public class TelaAddReceitas extends Activity {
 
@@ -24,8 +26,17 @@ public class TelaAddReceitas extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lanc_receitas);
         setCurrentDateOnView();
-        Button btConfirmar = (Button) findViewById(R.id.btConfirmarDespesas);
+        
+        //Elementos
+        Button btConfirmar = (Button) findViewById(R.id.btConfirmarReceitas);
         Button btCancelar = (Button) findViewById(R.id.btCancelarReceitas);
+       
+        //Lista - Categorias
+        Spinner dbCategoriaReceitas = (Spinner) findViewById(R.id.dbCategoriaReceitas);
+        ArrayAdapter<CharSequence> listaCategorias = ArrayAdapter.createFromResource(this,
+        R.array.categorias, android.R.layout.simple_spinner_item);
+        listaCategorias.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dbCategoriaReceitas.setAdapter(listaCategorias);
         
         //Bt Confirmar
         btConfirmar.setOnClickListener(new ImageView.OnClickListener(){
@@ -45,7 +56,8 @@ public class TelaAddReceitas extends Activity {
         		TelaAddReceitas.this.startActivity(trocatela);
         		TelaAddReceitas.this.finish();
         	}
-        });
+        });   
+        
         
     }
 
@@ -62,8 +74,4 @@ public class TelaAddReceitas extends Activity {
 		// set current date into datepicker
 		dtCreditoReceitas.init(year, month, day, null);
 	}
-    
-
-
-    
 }
