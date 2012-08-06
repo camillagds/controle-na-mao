@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import controle.mao.R;
 import android.os.Bundle;
 import android.app.Activity;
-import android.app.ListActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
@@ -14,7 +13,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import controle.mao.negocio.categorias.CategoriaAdapterListView;
@@ -38,7 +36,7 @@ public class TelaListaCategorias extends Activity implements OnItemClickListener
         //Tela Lista Categorias
 
         //Pega a referencia do ListView
-        listaCategoriaView = (ListView) findViewById(R.id.listItemCategoria);
+        listaCategoriaView = (ListView) findViewById(R.id.listaCategoria);
         //Define o Listener quando alguem clicar no item.
         listaCategoriaView.setOnItemClickListener(this);
 
@@ -58,11 +56,13 @@ public class TelaListaCategorias extends Activity implements OnItemClickListener
     private void createListView() {
         //Criamos nossa lista que preenchera o ListView
         itemListView = new ArrayList<CategoriaItemListView>();
-        ArrayAdapter<String> listaCategoria = new ArrayAdapter<String>(this, R.id.listaCategoria);
+//        ArrayAdapter<String> listaCategoriaXML = new ArrayAdapter<String>(this, R.array.categorias);
+        String[] listaString = getResources().getStringArray(R.array.categorias);
         
-        for(int i = 0;i < listaCategoria.getCount();i++){
-        
-        	itemListView.add(new CategoriaItemListView(listaCategoria.getItem(i)));
+        for(int i = 0;i < listaString.length;i++){
+//        String x = listaCategoriaXML.getItem(i);
+//        String[] x = getResources().getStringArray(R.array.categorias);
+        itemListView.add(new CategoriaItemListView(listaString[i]));
         }
 
 
