@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="categorias">
+        <item>Alimentação</item>
+        <item>Lazer</item>
+        <item>Roupas</item>
+        <item>Livros</item>
+        <item>Eletronicos</item>
+    </string-array>
+    <string-array name="forma_pagamento">
+        <item>Dinheiro</item>
+        <item>Cheque</item>
+        <item>Cartão</item>
+    </string-array>
+        <string-array name="periodicidade">
+        <item>Semanal</item>
+        <item>Mensal</item>
+        <item>Quinzenal</item>
+    </string-array>
+    
+</resources>

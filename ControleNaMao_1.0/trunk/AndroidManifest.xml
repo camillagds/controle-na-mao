@@ -16,7 +16,6 @@
             android:theme="@android:style/Theme.Light.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -25,31 +24,41 @@
             android:label="Cartões" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="controle.mao.ControleNaMaoActivity" />
+                android:value="controle.mao.visualizacao.ControleNaMaoActivity" />
         </activity>
         <activity
             android:name=".visualizacao.TelaAddCartoes"
             android:label="Adicionar Novo Cartão" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="controle.mao.ControleNaMaoActivity" />
+                android:value="controle.mao.visualizacao.ControleNaMaoActivity" />
         </activity>
         <activity
             android:name=".visualizacao.TelaListaCategorias"
-            android:label="Cartegorias" >
+            android:label="Categorias" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="controle.mao.ControleNaMaoActivity" />
+                android:value="controle.mao.visualizacao.ControleNaMaoActivity" />
         </activity>
         <activity
             android:name=".visualizacao.TelaAddCategoria"
             android:label="Adicionar Nova Categoria" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="controle.mao.ControleNaMaoActivity" />
+                android:value="controle.mao.visualizacao.ControleNaMaoActivity" />
         </activity>
-        <activity android:label="Incluir Despesa" android:name=".visualizacao.TelaAddDespesas"></activity>
-        <activity android:label="Incluir Receitas" android:name=".visualizacao.TelaAddReceitas"></activity>
+        <activity 
+            android:label="Incluir Despesa" 
+            android:name=".visualizacao.TelaAddDespesas" 
+            android:configChanges="keyboardHidden">
+            
+        </activity>
+        <activity 
+            android:label="Incluir Receitas" 
+            android:name=".visualizacao.TelaAddReceitas" 
+            android:configChanges="keyboardHidden">
+            
+        </activity>
     </application>
 
 </manifest>
