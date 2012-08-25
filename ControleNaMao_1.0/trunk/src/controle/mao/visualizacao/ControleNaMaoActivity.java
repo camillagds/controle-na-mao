@@ -20,6 +20,7 @@ public class ControleNaMaoActivity extends Activity {
         ImageView btCategoria = (ImageView) findViewById(R.id.itemCategoria);
         ImageView btLancamentos = (ImageView) findViewById(R.id.itemLancamentos);
         registerForContextMenu(btLancamentos); 
+        ImageView btExportarPlanilha = (ImageView) findViewById(R.id.itemExcel);
         
         //Tela Lista Cartões
         btCartao.setOnClickListener(new ImageView.OnClickListener(){
@@ -50,9 +51,19 @@ public class ControleNaMaoActivity extends Activity {
         		ControleNaMaoActivity.this.finish();
         	}
         });
+        
+        //Tela Exportar Planilha
+        btExportarPlanilha.setOnClickListener(new ImageView.OnClickListener(){
+        	public void onClick(View v){
+        		Intent trocatela = new
+        		Intent(ControleNaMaoActivity.this,TelaExportarPlanilha.class);
+        		ControleNaMaoActivity.this.startActivity(trocatela);
+        		ControleNaMaoActivity.this.finish();
+        	}
+        });
     }
+    
     //Tela Lista Lançamentos
-    //TODO: implementar pop-up
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,ContextMenuInfo menuInfo) {
 	super.onCreateContextMenu(menu, v, menuInfo);
@@ -63,22 +74,22 @@ public class ControleNaMaoActivity extends Activity {
 
     @Override
 	public boolean onContextItemSelected(MenuItem item) {
-       	if(item.getTitle()=="Despesas"){function1(item.getItemId());}
-    	else if(item.getTitle()=="Receitas"){function2(item.getItemId());}
+       	if(item.getTitle()=="Despesas"){abrirDespesas(item.getItemId());}
+    	else if(item.getTitle()=="Receitas"){abrirReceitas(item.getItemId());}
     	else {return false;}
 	return true;
 	}
 
-    public void function1(int id){
+    public void abrirDespesas(int id){
     		Intent trocatela = new
     		Intent(ControleNaMaoActivity.this,TelaAddDespesas.class);
     		ControleNaMaoActivity.this.startActivity(trocatela);
     		ControleNaMaoActivity.this.finish();
     }
-    public void function2(int id){
+    public void abrirReceitas(int id){
 		Intent trocatela = new
 		Intent(ControleNaMaoActivity.this,TelaAddReceitas.class);
 		ControleNaMaoActivity.this.startActivity(trocatela);
 		ControleNaMaoActivity.this.finish();    }
-
+    
 }

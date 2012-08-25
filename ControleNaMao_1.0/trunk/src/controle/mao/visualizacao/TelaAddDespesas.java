@@ -84,13 +84,13 @@ public class TelaAddDespesas extends Activity {
 				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		dbCategoriaDespesas.setAdapter(listaCategorias);
 
-		// Lista - Categorias
+		// Lista - Periodicidade
 		ArrayAdapter<CharSequence> listaPeriodicidade = ArrayAdapter
 				.createFromResource(this, R.array.periodicidade,
 						android.R.layout.simple_spinner_item);
 		listaPeriodicidade
 				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		dbPeriodoDespesas.setAdapter(listaCategorias);
+		dbPeriodoDespesas.setAdapter(listaPeriodicidade);
 
 		// Bt Confirmar
 		btConfirmar.setOnClickListener(new ImageView.OnClickListener() {

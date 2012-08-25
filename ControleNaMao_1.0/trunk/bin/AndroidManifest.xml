@@ -51,13 +51,26 @@
             android:label="Incluir Despesa" 
             android:name=".visualizacao.TelaAddDespesas" 
             android:configChanges="keyboardHidden">
-            
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="controle.mao.visualizacao.ControleNaMaoActivity" />         
         </activity>
         <activity 
             android:label="Incluir Receitas" 
             android:name=".visualizacao.TelaAddReceitas" 
             android:configChanges="keyboardHidden">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="controle.mao.visualizacao.ControleNaMaoActivity" />
             
+        </activity>
+        <activity 
+            android:name=".visualizacao.TelaExportarPlanilha" 
+            android:label="Exportar Planilha"
+            android:configChanges="keyboardHidden">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="controle.mao.visualizacao.ControleNaMaoActivity" />
         </activity>
     </application>
 
