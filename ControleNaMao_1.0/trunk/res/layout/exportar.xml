@@ -8,7 +8,7 @@
     tools:context=".TelaAddCartoes"
     tools:ignore="HardcodedText" >
     <TextView
-        android:id="@+id/titTelaEE"
+        android:id="@+id/titTelaExportar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="17dp"
@@ -18,7 +18,7 @@
         android:textSize="9pt"
         android:textStyle="bold" />
     <TextView
-        android:id="@+id/titCategoriaEE"
+        android:id="@+id/titCategoriaExportar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="17dp"
@@ -26,12 +26,12 @@
         android:text="Categoria"
         android:textAppearance="?android:attr/textAppearanceLarge" />
     <Spinner
-        android:id="@+id/dbCategoriaEE"
+        android:id="@+id/dbCategoriaExportar"
         android:layout_width="282dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="17dp" />
     <TextView
-        android:id="@+id/TitPeriodoEE"
+        android:id="@+id/TitPeriodoExportar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="17dp"
@@ -44,52 +44,51 @@
             android:layout_gravity="left"
             android:layout_marginLeft="17dp" >
             <Button
-                android:id="@+id/btDataDataInicialEE"
+                android:id="@+id/btDataInicialExportar"
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_marginLeft="17dp"
                 android:text="Data Inicial" />
             <Button
-                android:id="@+id/btDataFinalEE"
+                android:id="@+id/btDataFinalExportar"
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:layout_marginBottom="5dp"
                 android:text="Data Final" />
         </TableRow>
 
     <TextView
-        android:id="@+id/titFormadePagEE"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="17dp"
-        android:text="Forma de Pagamento"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-    <Spinner
-        android:id="@+id/dbItem1EE"
-        android:layout_width="279dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="17dp" />
-    <TextView
-        android:id="@+id/titExportaparaEE"
+        android:id="@+id/titExportaparaExportar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="17dp"
         android:text="Exportar para:"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-    <RadioButton
-        android:id="@+id/rbEnviarporEmailEE"
+    
+    <RadioGroup
+        android:id="@+id/rgExportarLocalExportar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="17dp"
-        android:text="Enviar por Email" />
-    <RadioButton
-        android:id="@+id/rbSalvarCartaoMemoriaEE"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="17dp"
-        android:text="Salvar no Cartão de Memória" />
+        android:orientation="vertical" >
+
+        <RadioButton
+            android:id="@+id/rdEnviarporEmailExportar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="17dp"
+            android:text="Enviar por Email" />
+
+        <RadioButton
+            android:id="@+id/rdSalvarCartaoMemoriaExportar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="17dp"
+            android:text="Salvar no Cartão de Memória" />
+    </RadioGroup>
+
         <TableRow
             android:id="@+id/tableRow5"
             android:layout_width="match_parent"
@@ -97,13 +96,13 @@
             android:layout_marginLeft="17dp"
             android:layout_marginTop="20dp" >
             <Button
-                android:id="@+id/btConfirmarEE"
+                android:id="@+id/btConfirmarExportar"
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:text="Confirmar" />
             <Button
-                android:id="@+id/btCancelarEE"
+                android:id="@+id/btCancelarExportar"
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:text="Cancelar" />
