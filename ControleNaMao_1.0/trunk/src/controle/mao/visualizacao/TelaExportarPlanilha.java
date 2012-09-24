@@ -1,16 +1,9 @@
 package controle.mao.visualizacao;
 
-import java.util.Calendar;
-
 import controle.mao.R;
-import controle.mao.R.id;
-import controle.mao.R.layout;
-import controle.mao.negocio.util.CampoData;
 import controle.mao.negocio.util.DialogoData;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,28 +17,16 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.TableRow;
-import android.app.Activity;
-import android.app.DatePickerDialog;
-import android.app.DatePickerDialog.OnDateSetListener;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 
 public class TelaExportarPlanilha extends FragmentActivity {
 
-	private DatePicker dtDataInicialExportar;
-	private DatePicker dtDataFinalExportar;
-	private int yearI;
-	private int monthI;
-	private int dayI;
-	private int yearF;
-	private int monthF;
-	private int dayF;
-
 	// Elementos
 	private Button btDataInicialExportar;
 	private Button btDataFinalExportar;
+	private DatePicker dtDataInicialExportar;
+	private DatePicker dtDataFinalExportar;
 	private Spinner dbCategoriaExportar;
 	private RadioGroup rgExportarLocal;
 	private RadioButton rdEnviarporEmailExportar;
@@ -69,11 +50,6 @@ public class TelaExportarPlanilha extends FragmentActivity {
 		btDataInicialExportar = (Button) findViewById(R.id.btDataInicialExportar);
 		btDataFinalExportar = (Button) findViewById(R.id.btDataFinalExportar);
 		dbCategoriaExportar = (Spinner) findViewById(R.id.dbCategoriaExportar);
-
-//		dtDataInicialExportar = new DatePicker(getApplicationContext());
-//		dtDataFinalExportar = new DatePicker(getApplicationContext());
-//		dtDataInicialExportar = new CampoData(getBaseContext());
-//		dtDataFinalExportar = new CampoData(getBaseContext());
 		btConfirmarExportar = (Button) findViewById(R.id.btConfirmarExportar);
 		btCancelarExportar = (Button) findViewById(R.id.btCancelarExportar);
 		

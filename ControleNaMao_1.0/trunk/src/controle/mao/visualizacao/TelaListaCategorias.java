@@ -1,85 +1,113 @@
 package controle.mao.visualizacao;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import controle.mao.R;
 import android.os.Bundle;
-import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Intent;
-import android.graphics.Color;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
-import controle.mao.negocio.categorias.CategoriaAdapterListView;
-import controle.mao.negocio.categorias.CategoriaItemListView;
+import controle.mao.dados.CategoriaDAO;
+import controle.mao.dados.CategoriaDAO.Categorias;
+import controle.mao.dados.CategoriasUtil;
+import controle.mao.negocio.CategoriaAdapterListViewBD;
 
 
-public class TelaListaCategorias extends Activity implements OnItemClickListener{
-
-	private ListView listaCategoriaView;
-    private CategoriaAdapterListView adapterListView;
-    private ArrayList<CategoriaItemListView> itemListView;
-	private Button btAddCategoria;
+public class TelaListaCategorias extends ListActivity{
+	
+	public static CategoriasUtil bdScript;
+	protected static final int INSERIR_EDITAR = 1;
+	protected static final int BUSCAR = 2;
+	
+	private List<CategoriaDAO> categorias;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.categoria);
-        
-        btAddCategoria = (Button) findViewById(R.id.btAddCategoria);
-        
-        //Tela Lista Categorias
-
-        //Pega a referencia do ListView
-        listaCategoriaView = (ListView) findViewById(R.id.listaCategoria);
-        //Define o Listener quando alguem clicar no item.
-        listaCategoriaView.setOnItemClickListener(this);
-
-        createListView();
-        
-        //Botão Adicionar Categoria
-        btAddCategoria.setOnClickListener(new ImageView.OnClickListener(){
-        	public void onClick(View v){
-        		Intent trocatela = new
-        		Intent(TelaListaCategorias.this,TelaAddCategoria.class);
-        		TelaListaCategorias.this.startActivity(trocatela);
-        		TelaListaCategorias.this.finish();
-        	}
-        });
+        getListView().setBackgroundResource(R.drawable.fundo);
+        bdScript = new CategoriasUtil(this);
+		atualizarLista();
     }
 
-    private void createListView() {
-        //Criamos nossa lista que preenchera o ListView
-        itemListView = new ArrayList<CategoriaItemListView>();
-//        ArrayAdapter<String> listaCategoriaXML = new ArrayAdapter<String>(this, R.array.categorias);
-        String[] listaString = getResources().getStringArray(R.array.categorias);
-        
-        for(int i = 0;i < listaString.length;i++){
-//        String x = listaCategoriaXML.getItem(i);
-//        String[] x = getResources().getStringArray(R.array.categorias);
-        itemListView.add(new CategoriaItemListView(listaString[i]));
-        }
+	protected void atualizarLista() {
+		// Pega a lista de categorias e exibe na tela
+		categorias = bdScript.listarCategorias();
+		Log.e("cnm", "Nenhum Registro?: " + categorias.isEmpty());
+		// Se não tiver dados, ele vai pra tela de adicionar categoria.
+		if (categorias.isEmpty()){
+			startActivityForResult(new Intent(this, TelaAddCategoria.class), INSERIR_EDITAR);
+//			setListAdapter(new CategoriaAdapterListViewBD(this, categorias));
+		} else{
+		// Adaptador de lista customizado para cada linha de uma categoria
+			setListAdapter(new CategoriaAdapterListViewBD(this, categorias));
+		}
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		menu.add(0, INSERIR_EDITAR, 0, "Inserir Novo").setIcon(R.drawable.novo);
+		menu.add(0, BUSCAR, 0, "Buscar").setIcon(R.drawable.pesquisar);
+		return true;
+	}
 
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		// Clicou no menu
+		switch (item.getItemId()) {
+		case INSERIR_EDITAR:
+			// Abre a tela com o formulário para adicionar
+			startActivityForResult(new Intent(this, TelaAddCategoria.class), INSERIR_EDITAR);
+			break;
+		case BUSCAR:
+			//TODO Implementar Busca
+			// Abre a tela para buscar o carro pelo nome
+			//startActivity(new Intent(this, BuscarCarro.class));
+			break;
+		}
+		return true;
+	}
 
-        //Cria o adapter
-        adapterListView = new CategoriaAdapterListView(this, itemListView);
+	@Override
+	protected void onListItemClick(ListView l, View v, int posicao, long id) {
+		super.onListItemClick(l, v, posicao, id);
+		editarCategoria(posicao);
+	}
 
-        //Define o Adapter
-        listaCategoriaView.setAdapter(adapterListView);
-        //Cor quando a lista é selecionada para ralagem.
-        listaCategoriaView.setCacheColorHint(Color.TRANSPARENT);
-    }
+	// Recupera o id do carro, e abre a tela de edição
+	protected void editarCategoria(int posicao) {
+		// Usuário clicou em algum carro da lista
+		// Recupera a categoria selecionada
+		CategoriaDAO categoria = categorias.get(posicao);
+		// Cria a intent para abrir a tela de editar
+		Intent it = new Intent(this, TelaAddCategoria.class);
+		// Passa o id do carro como parâmetro
+		it.putExtra(Categorias._ID, categoria.id);
+		// Abre a tela de edição
+		startActivityForResult(it, INSERIR_EDITAR);
+	}
 
-    public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-        //Pega o item que foi selecionado.
-        CategoriaItemListView item = adapterListView.getItem(arg2);
-        //Demostração
-        Toast.makeText(this, "Você Clicou em: " + item.getTexto(), Toast.LENGTH_LONG).show();
-    }
+	@Override
+	protected void onActivityResult(int codigo, int codigoRetorno, Intent it) {
+		super.onActivityResult(codigo, codigoRetorno, it);
+
+		// Quando a activity TelaAddCategoria retornar, seja se foi para adicionar vamos atualizar a lista
+		if (codigoRetorno == RESULT_OK) {
+			// atualiza a lista na tela
+			atualizarLista();
+		}
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+
+		// Fecha o banco
+		bdScript.fechar();
+	}
 
 }

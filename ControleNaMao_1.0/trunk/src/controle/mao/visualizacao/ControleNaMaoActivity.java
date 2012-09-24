@@ -1,6 +1,7 @@
 package controle.mao.visualizacao;
 
 import controle.mao.R;
+import controle.mao.dados.BancoDadosScript;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,9 +13,11 @@ import android.widget.ImageView;
 
 public class ControleNaMaoActivity extends Activity {
     /** Called when the activity is first created. */
+	public static BancoDadosScript bdScript;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        bdScript = new BancoDadosScript(this);
         setContentView(R.layout.main);
         ImageView btCartao = (ImageView) findViewById(R.id.itemCartao);
         ImageView btCategoria = (ImageView) findViewById(R.id.itemCategoria);
