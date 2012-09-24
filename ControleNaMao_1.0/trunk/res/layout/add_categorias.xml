@@ -1,12 +1,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/LayoutCartegoria"
+    android:id="@+id/LayoutCategoria"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fundo"
     android:orientation="vertical"
     tools:context=".TelaAddCartoes" >
-
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,7 +16,7 @@
         android:textColor="#005566"
         android:textSize="12pt"
         android:textStyle="bold" />
-
+
     <TextView
         android:id="@+id/titNomeCategoria"
         android:layout_width="wrap_content"
@@ -25,36 +25,43 @@
         android:layout_marginTop="20dp"
         android:text="Nome"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
+
     <EditText
         android:id="@+id/txtNomeCategoria"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="17dp"
         android:ems="10" />
-
+
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
         android:layout_weight="1"
         android:gravity="center|top" >
-
-        <Button
-            android:id="@+id/btConfirmarCategoria"
-            style="?android:attr/buttonStyle"
+
+        <ImageButton
+            android:id="@+id/btCancelarCategoria"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Confirmar" />
-
-        <Button
-            android:id="@+id/btCancelarCategoria"
-            style="?android:attr/buttonStyle"
+            android:src="@drawable/cancelar"
+            android:text="Cancelar" />
+
+        <ImageButton
+            android:id="@+id/btSalvarCategoria"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:text="Cancelar" />
+            android:src="@drawable/salvar"
+            android:text=" Salvar " />
 
+        <ImageButton
+            android:id="@+id/btExcluirCategoria"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:src="@drawable/excluir"
+            android:text=" Excluir " />
     </TableRow>
 
 </LinearLayout>

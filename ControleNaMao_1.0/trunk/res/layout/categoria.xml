@@ -5,25 +5,24 @@
     android:layout_height="fill_parent"
     android:background="@drawable/fundo"
     >
-   <TableRow
+
+   <TableRow
        android:layout_width="fill_parent"
-       android:layout_height="match_parent"
+       android:layout_height="fill_parent"
        android:layout_weight="1"
        android:scrollbarStyle="insideOverlay" >
+
         <ListView
             android:id="@+id/listaCategoria"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:divider="#ECECEC"
-			android:dividerHeight="1sp"
-		/>
-
-
+            android:dividerHeight="1sp" />
 
     </TableRow>
-
+
     <TableRow
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center" >
 
