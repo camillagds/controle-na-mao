@@ -1,5 +1,6 @@
 package controle.mao.negocio.util;
 
+import java.sql.Date;
 import java.util.Calendar;
 
 import controle.mao.R;
@@ -37,5 +38,14 @@ public class CampoData extends DatePicker{
 
 		// set current date into datepicker
 		campoData.init(year, month, day, null);
+	}
+	
+	public Calendar getData(long data){
+		
+		Calendar calendar = Calendar.getInstance();    
+		calendar.setTimeInMillis(data);
+
+	     calendar.getTime();
+	     return calendar;
 	}
 }

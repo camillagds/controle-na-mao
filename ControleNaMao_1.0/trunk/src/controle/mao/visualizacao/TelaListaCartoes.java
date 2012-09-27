@@ -4,8 +4,8 @@ import java.util.List;
 
 import controle.mao.R;
 import controle.mao.dados.CartaoDAO;
+import controle.mao.dados.CartaoDAO.Cartoes;
 import controle.mao.dados.CartoesUtil;
-import controle.mao.dados.CategoriaDAO.Categorias;
 import controle.mao.negocio.CartaoAdapterListViewBD;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,7 +27,7 @@ public class TelaListaCartoes extends ListActivity {
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        setContentView(R.layout.cartoes);
+//        setContentView(R.layout.cartoes);
         getListView().setBackgroundResource(R.drawable.fundo);
         bdScript = new CartoesUtil(this);
 		atualizarLista();
@@ -40,7 +40,7 @@ protected void atualizarLista() {
 	Log.e("cnm", "Nenhum Registro?: " + cartoes.isEmpty());
 	// Se não tiver dados, ele vai pra tela de adicionar categoria.
 	if (cartoes.isEmpty()){
-		startActivityForResult(new Intent(this, TelaAddCategoria.class), INSERIR_EDITAR);
+		startActivityForResult(new Intent(this, TelaAddCartoes.class), INSERIR_EDITAR);
 	} else{
 	// Adaptador de lista customizado para cada linha de uma categoria
 		setListAdapter(new CartaoAdapterListViewBD(this, cartoes));
@@ -75,18 +75,18 @@ public boolean onMenuItemSelected(int featureId, MenuItem item) {
 @Override
 protected void onListItemClick(ListView l, View v, int posicao, long id) {
 	super.onListItemClick(l, v, posicao, id);
-	editarCategoria(posicao);
+	editarCartao(posicao);
 }
 
 // Recupera o id do carro, e abre a tela de edição
-protected void editarCategoria(int posicao) {
+protected void editarCartao(int posicao) {
 	// Usuário clicou em algum carro da lista
 	// Recupera a categoria selecionada
-	CartaoDAO categoria = cartoes.get(posicao);
+	CartaoDAO cartao = cartoes.get(posicao);
 	// Cria a intent para abrir a tela de editar
-	Intent it = new Intent(this, TelaAddCategoria.class);
+	Intent it = new Intent(this, TelaAddCartoes.class);
 	// Passa o id do carro como parâmetro
-	it.putExtra(Categorias._ID, categoria.id);
+	it.putExtra(Cartoes._ID, cartao.id);
 	// Abre a tela de edição
 	startActivityForResult(it, INSERIR_EDITAR);
 }
