@@ -69,7 +69,6 @@ public class CartoesUtil {
 		ContentValues values = new ContentValues();
 		values.put(Cartoes.NOME, cartao.nome_cartao);
 		values.put(Cartoes.BANDEIRA, cartao.bandeira_Cartao);
-		values.put(Cartoes.VENCIMENTO, cartao.vencimento_cartao);
 		values.put(Cartoes.FECHAMENTO, cartao.fechaFatura_cartao);
 		long id = inserir(values);
 		return id;
@@ -86,7 +85,6 @@ public class CartoesUtil {
 		ContentValues values = new ContentValues();
 		values.put(Cartoes.NOME, cartao.nome_cartao);
 		values.put(Cartoes.BANDEIRA, cartao.bandeira_Cartao);
-		values.put(Cartoes.VENCIMENTO, cartao.vencimento_cartao);
 		values.put(Cartoes.FECHAMENTO, cartao.fechaFatura_cartao);
 
 		String _id = String.valueOf(cartao.id);
@@ -142,8 +140,7 @@ public class CartoesUtil {
 			cartao.id = c.getLong(0);
 			cartao.nome_cartao = c.getString(1);
 			cartao.bandeira_Cartao = c.getString(2);
-			cartao.vencimento_cartao = c.getString(3);
-			cartao.fechaFatura_cartao = c.getInt(4);
+			cartao.fechaFatura_cartao = c.getInt(3);
 			
 			
 			return cartao;
@@ -179,7 +176,6 @@ public class CartoesUtil {
 			int idxId = c.getColumnIndex(Cartoes._ID);
 			int idxNome = c.getColumnIndex(Cartoes.NOME);
 			int idxBandeira = c.getColumnIndex(Cartoes.BANDEIRA);
-			int idxVencimento = c.getColumnIndex(Cartoes.VENCIMENTO);
 			int idxFechamento = c.getColumnIndex(Cartoes.FECHAMENTO);
 
 			// Loop até o final
@@ -191,7 +187,6 @@ public class CartoesUtil {
 				cartao.id = c.getLong(idxId);
 				cartao.nome_cartao = c.getString(idxNome);
 				cartao.bandeira_Cartao = c.getString(idxBandeira);
-				cartao.vencimento_cartao = c.getString(idxVencimento);
 				cartao.fechaFatura_cartao = c.getInt(idxFechamento);
 
 			} while (c.moveToNext());
@@ -217,8 +212,7 @@ public class CartoesUtil {
 				cartao.id = c.getLong(0);
 				cartao.nome_cartao = c.getString(1);
 				cartao.bandeira_Cartao = c.getString(2);
-				cartao.vencimento_cartao = c.getString(3);
-				cartao.fechaFatura_cartao = c.getInt(4);
+				cartao.fechaFatura_cartao = c.getInt(3);
 			}
 		} catch (SQLException e) {
 			Log.e(CATEGORIA, "Erro ao buscar o cartao pelo nome: " + e.toString());

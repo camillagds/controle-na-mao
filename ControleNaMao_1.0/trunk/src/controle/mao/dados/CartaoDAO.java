@@ -12,7 +12,7 @@ import android.provider.BaseColumns;
  */
 public class CartaoDAO {
 
-	public static String[] colunas = new String[] { Cartoes._ID, Cartoes.NOME, Cartoes.BANDEIRA, Cartoes.VENCIMENTO, Cartoes.FECHAMENTO};
+	public static String[] colunas = new String[] { Cartoes._ID, Cartoes.NOME, Cartoes.BANDEIRA, Cartoes.FECHAMENTO};
 
 	/**
 	 * Pacote do Content Provider. Precisa ser único.
@@ -22,26 +22,23 @@ public class CartaoDAO {
 	public long id;
 	public String nome_cartao;
 	public String bandeira_Cartao;
-	public String vencimento_cartao;
 	public int fechaFatura_cartao;
 
 	public CartaoDAO() {
 	}
 
-	public CartaoDAO(String nome, String bandeira, String vencimento, int fechamento) {
+	public CartaoDAO(String nome, String bandeira, long vencimento, int fechamento) {
 		super();
 		this.nome_cartao = nome;
 		this.bandeira_Cartao = bandeira;
-		this.vencimento_cartao = vencimento;
 		this.fechaFatura_cartao = fechamento;
 	}
 
-	public CartaoDAO(long id, String nome, String bandeira, String vencimento, int fechamento) {
+	public CartaoDAO(long id, String nome, String bandeira, int fechamento) {
 		super();
 		this.id = id;
 		this.nome_cartao = nome;
 		this.bandeira_Cartao = bandeira;
-		this.vencimento_cartao = vencimento;
 		this.fechaFatura_cartao = fechamento;
 	}
 
@@ -72,7 +69,6 @@ public class CartaoDAO {
 		
 		public static final String NOME = "nome_cartao";
 		public static final String BANDEIRA = "bandeira_Cartao";
-		public static final String VENCIMENTO = "vencimento_cartao";
 		public static final String FECHAMENTO = "fechaFatura_cartao";
 
 	
@@ -87,6 +83,6 @@ public class CartaoDAO {
 
 	@Override
 	public String toString() {
-		return "Nome: " + nome_cartao +"Bandeira: " + bandeira_Cartao +"Vencimento: " + vencimento_cartao +"Fechamento Fatura: " + fechaFatura_cartao;
+		return "Nome: " + nome_cartao +"Bandeira: " + bandeira_Cartao + "Fechamento Fatura: " + fechaFatura_cartao;
 	}
 }

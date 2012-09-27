@@ -32,7 +32,7 @@ public class BancoDadosScript{
 
 	// Cria a tabela com o "_id" sequencial
 	private static final String[] SCRIPT_DATABASE_CREATE = new String[] {
-			"CREATE TABLE tb_cartoes ( _id INTEGER PRIMARY KEY AUTOINCREMENT, nome_cartao TEXT NOT NULL, bandeira_Cartao TEXT NOT NULL, vencimento_cartao DATE, fechaFatura_cartao INTEGER(2) NOT NULL);",
+			"CREATE TABLE tb_cartoes ( _id INTEGER PRIMARY KEY AUTOINCREMENT, nome_cartao TEXT NOT NULL, bandeira_Cartao TEXT NOT NULL, fechaFatura_cartao INTEGER NOT NULL);",
 			"CREATE TABLE tb_categorias ( _id INTEGER PRIMARY KEY AUTOINCREMENT, nome_categoria TEXT NOT NULL);",
 			"CREATE TABLE tb_contaPagar ( _id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, categoria_contaPagar INT NOT NULL, modalidade_contaPagar TEXT NOT NULL, formaPgto_contaPagar TEXT NOT NULL, numParcela_contaPagar INT, id_cartao INTEGER);",
 			"CREATE TABLE tb_contas ( _id INTEGER PRIMARY KEY AUTOINCREMENT, tipo_conta TEXT NOT NULL, descr_conta TEXT NOT NULL, dtVenc_conta DATE NOT NULL, dtPgto_conta DATE, valorPgto_conta MONEY NOT NULL, id_contaPagar INT, pago_conta BOOLEAN);",

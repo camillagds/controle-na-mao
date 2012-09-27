@@ -6,7 +6,7 @@
     android:background="@drawable/fundo"
     android:orientation="vertical"
     tools:context=".TelaAddCartoes" >
-
+
     <TextView
         android:id="@+id/titTelaCartao"
         android:layout_width="wrap_content"
@@ -17,7 +17,7 @@
         android:textColor="#005566"
         android:textSize="12pt"
         android:textStyle="bold" />
-
+
     <TextView
         android:id="@+id/titDescricaoCartao"
         android:layout_width="wrap_content"
@@ -26,7 +26,7 @@
         android:layout_marginTop="20dp"
         android:text="Descrição"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
+
     <EditText
         android:id="@+id/txtDescricaoCartao"
         android:layout_width="280dp"
@@ -34,7 +34,7 @@
         android:layout_marginLeft="17dp"
         android:ems="10"
         android:inputType="text" />
-
+
     <TextView
         android:id="@+id/titBandeiraCartao"
         android:layout_width="wrap_content"
@@ -42,64 +42,59 @@
         android:layout_marginLeft="17dp"
         android:text="Bandeira"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
+
     <Spinner
         android:id="@+id/dbBandeiraCartao"
         android:layout_width="218dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="17dp" />
-
+
     <TextView
-        android:id="@+id/titNumeroCartao"
+        android:id="@+id/titFechamentoCartao"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="17dp"
-        android:text="Número"
+        android:text="Dia de Fechamento da Fatura"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
+
     <EditText
-        android:id="@+id/txtNumeroCartao"
-        android:layout_width="wrap_content"
+        android:id="@+id/txtFechamentoCartao"
+        android:layout_width="75dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="17dp"
         android:ems="10"
         android:inputType="number" />
-
-    <TextView
-        android:id="@+id/titDtFaturaCartao"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="17dp"
-        android:text="Fechamento da Fatura"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <DatePicker
-        android:id="@+id/dtFaturaCartao"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="17dp" />
-
+
+
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
         android:layout_weight="1"
         android:gravity="center" >
-
-        <Button
-            android:id="@+id/btConfirmarCartao"
-            style="?android:attr/buttonStyle"
+
+        <ImageButton
+            android:id="@+id/btCancelarCartao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Confirmar" />
-
-        <Button
-            android:id="@+id/btCancelarCartao"
-            style="?android:attr/buttonStyle"
+            android:src="@drawable/cancelar"
+            android:text="Cancelar" />
+
+        <ImageButton
+            android:id="@+id/btSalvarCartao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:text="Cancelar" />
+            android:src="@drawable/salvar"
+            android:text=" Salvar " />
+
+        <ImageButton
+            android:id="@+id/btExcluirCartao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:src="@drawable/excluir"
+            android:text=" Excluir " />
 
     </TableRow>
 
