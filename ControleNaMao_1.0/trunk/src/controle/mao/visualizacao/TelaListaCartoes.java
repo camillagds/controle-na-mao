@@ -3,10 +3,10 @@ package controle.mao.visualizacao;
 import java.util.List;
 
 import controle.mao.R;
+import controle.mao.controle.CartaoAdapterListViewBD;
 import controle.mao.dados.CartaoDAO;
 import controle.mao.dados.CartaoDAO.Cartoes;
 import controle.mao.dados.CartoesUtil;
-import controle.mao.negocio.CartaoAdapterListViewBD;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -51,7 +51,7 @@ protected void atualizarLista() {
 public boolean onCreateOptionsMenu(Menu menu) {
 	super.onCreateOptionsMenu(menu);
 	menu.add(0, INSERIR_EDITAR, 0, "Inserir Novo").setIcon(R.drawable.novo);
-	menu.add(0, BUSCAR, 0, "Buscar").setIcon(R.drawable.pesquisar);
+//	menu.add(0, BUSCAR, 0, "Buscar").setIcon(R.drawable.pesquisar);
 	return true;
 }
 

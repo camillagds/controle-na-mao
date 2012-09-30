@@ -124,8 +124,8 @@ public class TelaAddCategoria extends Activity {
 	}
 
 	// Salvar a categoria
-	protected void salvarCategoria(CategoriaDAO carro) {
-		TelaListaCategorias.bdScript.salvar(carro);
+	protected void salvarCategoria(CategoriaDAO categoria) {
+		TelaListaCategorias.bdScript.salvar(categoria);
 	}
 
 	// Excluir a categoria

@@ -13,20 +13,10 @@ import android.util.Log;
 import controle.mao.dados.CategoriaDAO.Categorias;
 
 /**
- * <pre>
- * Repositório para categorias que utiliza o SQLite internamente
+ * Tabela de Categoria
  * 
- * Para visualizar o banco pelo adb shell:
  * 
- * &gt;&gt; sqlite3 /data/data/br.livro.android.exemplos.banco/databases/BancoCarro
- * 
- * &gt;&gt; Mais info dos comandos em: http://www.sqlite.org/sqlite.html
- * 
- * &gt;&gt; .exit para sair
- * 
- * </pre>
- * 
- * @author rlecheta
+ * @author camilas
  * 
  */
 public class CategoriasUtil {
