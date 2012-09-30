@@ -16,6 +16,7 @@
             android:theme="@android:style/Theme.Light.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -47,27 +48,33 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="controle.mao.visualizacao.ControleNaMaoActivity" />
         </activity>
-        <activity 
-            android:label="Incluir Despesa" 
-            android:name=".visualizacao.TelaAddDespesas" 
-            android:configChanges="keyboardHidden">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="controle.mao.visualizacao.ControleNaMaoActivity" />         
-        </activity>
-        <activity 
-            android:label="Incluir Receitas" 
-            android:name=".visualizacao.TelaAddReceitas" 
-            android:configChanges="keyboardHidden">
+        <activity
+            android:name=".visualizacao.TelaAddDespesas"
+            android:configChanges="keyboardHidden"
+            android:label="Incluir Despesa" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="controle.mao.visualizacao.ControleNaMaoActivity" />
-            
         </activity>
-        <activity 
-            android:name=".visualizacao.TelaExportarPlanilha" 
-            android:label="Exportar Planilha"
-            android:configChanges="keyboardHidden">
+        <activity
+            android:name=".visualizacao.TelaAddReceitas"
+            android:configChanges="keyboardHidden"
+            android:label="Incluir Receitas" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="controle.mao.visualizacao.ControleNaMaoActivity" />
+        </activity>
+        <activity
+            android:name=".visualizacao.TelaExportarPlanilha"
+            android:configChanges="keyboardHidden"
+            android:label="Exportar Planilha" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="controle.mao.visualizacao.ControleNaMaoActivity" />
+        </activity>
+        <activity
+            android:name=".visualizacao.TelaConsultas"
+            android:label="@string/title_activity_tela_consultas" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="controle.mao.visualizacao.ControleNaMaoActivity" />

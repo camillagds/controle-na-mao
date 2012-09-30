@@ -6,12 +6,21 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/listItemCategoria"
+            android:id="@+id/listItemNomeCartao"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="6dip"
             android:textColor="#FF000000"
-            android:textSize="14pt"
+            android:textSize="12pt"
+             />
+        <TextView
+            android:id="@+id/listItemBandeiraCartao"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="6dip"
+            android:textColor="#FF000000"
+            android:textSize="9pt"
+            android:textStyle="italic"
              />
 
     </LinearLayout>

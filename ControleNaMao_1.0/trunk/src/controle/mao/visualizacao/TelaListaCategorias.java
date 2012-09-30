@@ -28,9 +28,9 @@ public class TelaListaCategorias extends ListActivity{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getListView().setBackgroundResource(R.drawable.fundo);
         bdScript = new CategoriasUtil(this);
 		atualizarLista();
+        getListView().setBackgroundResource(R.drawable.fundo);
     }
 
 	protected void atualizarLista() {

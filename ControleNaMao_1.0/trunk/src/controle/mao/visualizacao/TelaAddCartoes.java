@@ -142,19 +142,6 @@ public class TelaAddCartoes extends Activity {
 		}  
         
     }
-
-    public void setCurrentDateOnView() {
-//    	campoVencimento = (DatePicker) findViewById(R.id.dtVencimentoCartao);
- 
-		final Calendar c = Calendar.getInstance();
-		year = c.get(Calendar.YEAR);
-		month = c.get(Calendar.MONTH);
-		day = c.get(Calendar.DAY_OF_MONTH);
- 
-		
-		// set current date into datepicker
-//		campoVencimento.init(year, month, day, null);
-	}
     
     @Override
 	protected void onPause() {

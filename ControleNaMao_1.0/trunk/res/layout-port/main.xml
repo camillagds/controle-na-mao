@@ -69,13 +69,13 @@
                 android:src="@drawable/consultas_ico" />
 
             <ImageView
-                android:id="@+id/itemGraficos"
+                android:id="@+id/itemFaturas"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:clickable="true"
                 android:contentDescription="TODO5"
-                android:src="@drawable/graficos_ico" />
+                android:src="@drawable/fatura_ico" />
 
             <ImageView
                 android:id="@+id/itemExcel"
