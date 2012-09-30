@@ -23,18 +23,4 @@
         </ListView>
 
     </TableRow>
-
-    <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center" >
-
-        <Button
-            android:id="@+id/btAddCartao"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btAddCartao" />
-
-    </TableRow>
-
 </TableLayout>

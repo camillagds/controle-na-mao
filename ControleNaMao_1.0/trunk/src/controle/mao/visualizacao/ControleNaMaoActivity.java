@@ -24,6 +24,10 @@ public class ControleNaMaoActivity extends Activity {
         ImageView btLancamentos = (ImageView) findViewById(R.id.itemLancamentos);
         registerForContextMenu(btLancamentos); 
         ImageView btExportarPlanilha = (ImageView) findViewById(R.id.itemExcel);
+        ImageView btFatura = (ImageView) findViewById(R.id.itemFaturas);
+        ImageView btConsulta = (ImageView) findViewById(R.id.itemConsultas);
+
+
         
         //Tela Lista Cartões
         btCartao.setOnClickListener(new ImageView.OnClickListener(){

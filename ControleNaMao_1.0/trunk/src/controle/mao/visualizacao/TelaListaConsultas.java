@@ -3,47 +3,42 @@ package controle.mao.visualizacao;
 import java.util.List;
 
 import controle.mao.R;
-import controle.mao.dados.CartaoDAO;
-import controle.mao.dados.CartaoDAO.Cartoes;
-import controle.mao.dados.CartoesUtil;
-import controle.mao.negocio.CartaoAdapterListViewBD;
+import controle.mao.dados.ControleDAO;
+import controle.mao.dados.ControleUtil;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ListView;
-import android.app.ListActivity;
+import android.app.Activity;
 import android.content.Intent;
 
-public class TelaListaCartoes extends ListActivity {
+public class TelaListaConsultas extends Activity {
 	
-	public static CartoesUtil bdScript;
+	public static ControleUtil bdScript;
 	protected static final int INSERIR_EDITAR = 1;
 	protected static final int BUSCAR = 2;
 	
-	private List<CartaoDAO> cartoes;
+	private List<ControleDAO> controles;
 
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
 //        setContentView(R.layout.cartoes); 
-        bdScript = new CartoesUtil(this);
+        bdScript = new ControleUtil(this);
 		atualizarLista();
-		getListView().setBackgroundResource(R.drawable.fundo);
     }
 
 
 protected void atualizarLista() {
 	// Pega a lista de categorias e exibe na tela
-	cartoes = bdScript.listarCartao();
-	Log.e("cnm", "Nenhum Registro?: " + cartoes.isEmpty());
+	controles = bdScript.listarControle();
+	Log.e("cnm", "Nenhum Registro?: " + controles.isEmpty());
 	// Se não tiver dados, ele vai pra tela de adicionar categoria.
-	if (cartoes.isEmpty()){
-		startActivityForResult(new Intent(this, TelaAddCartoes.class), INSERIR_EDITAR);
+	if (controles.isEmpty()){
+		startActivityForResult(new Intent(this, ControleNaMaoActivity.class), INSERIR_EDITAR);
 	} else{
 	// Adaptador de lista customizado para cada linha de uma categoria
-		setListAdapter(new CartaoAdapterListViewBD(this, cartoes));
+//		setListAdapter(new ReceitaAdapterListViewBD(this, controles));
 	}
 }
 
@@ -61,6 +56,7 @@ public boolean onMenuItemSelected(int featureId, MenuItem item) {
 	switch (item.getItemId()) {
 	case INSERIR_EDITAR:
 		// Abre a tela com o formulário para adicionar
+		//TODO dar um jeito dele saber se é despesa ou receita e abrir a tela certa
 		startActivityForResult(new Intent(this, TelaAddCartoes.class), INSERIR_EDITAR);
 		break;
 	case BUSCAR:
@@ -70,25 +66,6 @@ public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		break;
 	}
 	return true;
-}
-
-@Override
-protected void onListItemClick(ListView l, View v, int posicao, long id) {
-	super.onListItemClick(l, v, posicao, id);
-	editarCartao(posicao);
-}
-
-// Recupera o id do carro, e abre a tela de edição
-protected void editarCartao(int posicao) {
-	// Usuário clicou em algum carro da lista
-	// Recupera a categoria selecionada
-	CartaoDAO cartao = cartoes.get(posicao);
-	// Cria a intent para abrir a tela de editar
-	Intent it = new Intent(this, TelaAddCartoes.class);
-	// Passa o id do carro como parâmetro
-	it.putExtra(Cartoes._ID, cartao.id);
-	// Abre a tela de edição
-	startActivityForResult(it, INSERIR_EDITAR);
 }
 
 @Override

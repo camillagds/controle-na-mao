@@ -1,203 +1,294 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/fundo"
+        
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbarStyle="insideOverlay"
+        android:scrollbars="vertical"
+         >
+<LinearLayout
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/fundo"
     android:orientation="vertical" >
+
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="17dp"
+    android:orientation="vertical" >
+
     <TextView
         android:id="@+id/titTelaDespesas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="17dp"
         android:text="Despesas"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#005566"
         android:textSize="12pt"
         android:textStyle="bold" />
-    <ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <TextView
+        android:id="@+id/titDescricaoDespesas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Descrição"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/txtDescricaoDespesas"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:imeOptions="actionDone"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/titCategoriaDespesas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Categoria"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Spinner
+        android:id="@+id/dbCategoriaDespesas"
+        android:layout_width="218dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/titValorDespesas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Valor (R$)"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/txtValorDespesas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="numberDecimal" />
+
+    <TextView
+        android:id="@+id/titDtDebitoDespesas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Data do Débito"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <DatePicker
+        android:id="@+id/dtDebitoDespesas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
+    <TableLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginLeft="17dp"
-        android:scrollbarAlwaysDrawVerticalTrack="true"
-        android:scrollbarStyle="insideOverlay"
-        android:scrollbars="vertical" >
-        <LinearLayout
+        android:layout_marginTop="10dp"
+        android:collapseColumns="*"
+        android:shrinkColumns="*"
+        android:stretchColumns="*" >
+
+        <TextView
+            android:id="@+id/titModPagtoDespesas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Modalidade"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <RadioGroup
+            android:id="@+id/rgFormaPagtoDespesas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/rdAVistaDespesas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:onClick="onClickFormaPagamento"
+                android:text="A Vista" />
+
+            <RadioButton
+                android:id="@+id/rdParcelasDespesas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:onClick="onClickFormaPagamento"
+                android:text="Parcelado" />
+        </RadioGroup>
+
+        <TableRow
+            android:id="@+id/rowParcelamentos"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical" >
-            <TextView
-                android:id="@+id/titDescricaoDespesas"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Descrição"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-            <EditText
-                android:id="@+id/txtDescricaoDespesas"
-                android:layout_width="280dp"
-                android:layout_height="wrap_content"
-                android:ems="10" 
-                android:inputType="text"
-                android:imeOptions="actionDone"
-                 />
-            <TextView
-                android:id="@+id/titCategoriaDespesas"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Categoria"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-            <Spinner
-                android:id="@+id/dbCategoriaDespesas"
-                android:layout_width="218dp"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/titValorDespesas"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Valor (R$)"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-            <EditText
-                android:id="@+id/txtValorDespesas"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="numberDecimal" />
-            <TextView
-                android:id="@+id/titDtDebitoDespesas"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Data do Débito"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-            <DatePicker
-                android:id="@+id/dtDebitoDespesas"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TableLayout
+            android:layout_height="wrap_content" >
+
+            <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_marginTop="10dp"
-                android:collapseColumns="*"
-                android:shrinkColumns="*"
-                android:stretchColumns="*" >
-                <TableRow
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/titParcelasDespesas"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="top" >
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical" >
-                        <TextView
-                            android:id="@+id/titModPagtoDespesas"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Modalidade"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
-                        <RadioGroup android:id="@+id/rgFormaPagtoDespesas" 
-                            android:layout_height="wrap_content" 
-                            android:layout_width="wrap_content" 
-                            android:orientation="vertical">
-                        <RadioButton
-                            android:id="@+id/rdAVistaDespesas"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:checked="true"
-                            android:onClick="onClickFormaPagamento"
-                            android:text="A Vista" />
-                        <RadioButton
-                            android:id="@+id/rdParcelasDespesas"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:onClick="onClickFormaPagamento"
-                            android:text="Parcelado" />
-                        </RadioGroup>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical" >
-                        <TextView
-                            android:id="@+id/titValorDespesas"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Valor (R$)"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
-                        <EditText
-                            android:id="@+id/txtValorDespesas"
-                            android:layout_width="117dp"
-                            android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:inputType="numberDecimal" >
-                           
-                        </EditText>
-                        <TextView
-                            android:id="@+id/titFormaPgtoDespesas"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Forma de Pagamento"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
-                        <Spinner
-                            android:id="@+id/dbFormaPgtoDespesas"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-                </TableRow>
-                <TableRow
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" 
-                    android:id="@+id/rowParcelamentos">
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical" >
-                        <TextView
-                            android:id="@+id/titParcelasDespesas"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Parcelas"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
-                        <EditText
-                            android:id="@+id/txtParcelasDespesas"
-                            android:layout_width="108dp"
-                            android:layout_height="wrap_content"
-                            android:inputType="number" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical" >
-                        <TextView
-                            android:id="@+id/titPeriodoDespesas"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Periodicidade"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
-                        <Spinner
-                            android:id="@+id/dbPeriodoDespesas"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-                </TableRow>
-                <TableRow
+                    android:text="Parcelas"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <EditText
+                    android:id="@+id/txtParcelasDespesas"
+                    android:layout_width="108dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" >
+
+                    <requestFocus />
+                </EditText>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/titPeriodoDespesas"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:gravity="top" >
-                    <Button
-                        android:id="@+id/btConfirmarDespesas"
-                        style="?android:attr/buttonStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Confirmar" />
-                    <Button
-                        android:id="@+id/btCancelarDespesas"
-                        style="?android:attr/buttonStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
-                        android:text="Cancelar" />
-                </TableRow>
-            </TableLayout>
-        </LinearLayout>
-    </ScrollView>
+                    android:text="Periodicidade"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <Spinner
+                    android:id="@+id/dbPeriodoDespesas"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/titValorDespesas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Valor (R$)"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <EditText
+                    android:id="@+id/txtValorDespesas"
+                    android:layout_width="117dp"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="numberDecimal" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/titFormaPgtoDespesas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Forma de Pagamento"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <Spinner
+                    android:id="@+id/dbFormaPgtoDespesas"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/rowCartao"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+            <RadioGroup
+                android:id="@+id/rgFormaPagtoCartaoDespesas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+            <RadioButton
+                android:id="@+id/rdDebitoCartaoDespesas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:onClick="onClickFormaPagamentoCartao"
+                android:text="Debito" />
+
+            <RadioButton
+                android:id="@+id/rdCreditoCartaoDespesas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onClickFormaPagamentoCartao"
+                android:text="Crédito" />
+        </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/titNomeCartaoDespesas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nome do Cartão"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <Spinner
+                    android:id="@+id/dbCartaoDespesas"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+        </TableRow>
+    </TableLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:orientation="horizontal" >
+        
+    <ImageButton
+                android:id="@+id/btCancelarDespesas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/cancelar"
+                android:text="Cancelar" />
+ 
+            <ImageButton
+                android:id="@+id/btConfirmarDespesas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:src="@drawable/salvar"
+                android:text=" Salvar " />
 </LinearLayout>
+</LinearLayout>
+</LinearLayout>
+</ScrollView>
