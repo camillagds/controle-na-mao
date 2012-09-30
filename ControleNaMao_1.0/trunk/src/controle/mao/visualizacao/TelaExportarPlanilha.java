@@ -1,7 +1,7 @@
 package controle.mao.visualizacao;
 
 import controle.mao.R;
-import controle.mao.negocio.util.DialogoData;
+import controle.mao.controle.util.DialogoData;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
