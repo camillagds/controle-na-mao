@@ -17,20 +17,10 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.util.Log;
 
 /**
- * <pre>
- * Repositório para controles que utiliza o SQLite internamente
+ * Tabela de Controle de lançamentos
  * 
- * Para visualizar o banco pelo adb shell:
  * 
- * &gt;&gt; sqlite3 /data/data/br.livro.android.exemplos.banco/databases/BancoCarro
- * 
- * &gt;&gt; Mais info dos comandos em: http://www.sqlite.org/sqlite.html
- * 
- * &gt;&gt; .exit para sair
- * 
- * </pre>
- * 
- * @author rlecheta
+ * @author camilas
  * 
  */
 public class ControleUtil {

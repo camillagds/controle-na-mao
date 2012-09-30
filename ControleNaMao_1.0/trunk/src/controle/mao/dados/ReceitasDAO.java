@@ -19,7 +19,7 @@ public class ReceitasDAO {
 	/**
 	 * Pacote do Content Provider. Precisa ser único.
 	 */
-	public static final String AUTHORITY = "controle.mao.provider.receitas";
+	public static final String AUTHORITY = "controle.mao.provider.dados";
 
 	public long id;
 	public String nome_receitas;

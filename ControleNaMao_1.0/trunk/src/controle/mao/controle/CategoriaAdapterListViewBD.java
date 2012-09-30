@@ -1,4 +1,4 @@
-package controle.mao.negocio;
+package controle.mao.controle;
 
 import java.util.List;
 

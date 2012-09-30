@@ -12,7 +12,6 @@
 <LinearLayout 
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/fundo"
     android:orientation="vertical" >
 
 <LinearLayout
@@ -87,22 +86,25 @@
     <TableRow
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:gravity="center" >
-
-        <ImageButton
-            android:id="@+id/btSalvarReceitas"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/salvar"
-            android:text=" Salvar " />
 
         <ImageButton
             android:id="@+id/btCancelarReceitas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
             android:src="@drawable/cancelar"
             android:text=" Cancelar " />
+        
+        <ImageButton
+            android:id="@+id/btSalvarReceitas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:src="@drawable/salvar"
+            android:text=" Salvar " />
+
+        
     </TableRow>
 </LinearLayout>
 

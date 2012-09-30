@@ -5,7 +5,7 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 
 /**
- * Classe entidade para armazenar os valores de Carro
+ * Classe entidade para armazenar os valores de Categoria
  * 
  * @author ricardo
  * 
@@ -17,7 +17,7 @@ public class CategoriaDAO {
 	/**
 	 * Pacote do Content Provider. Precisa ser único.
 	 */
-	public static final String AUTHORITY = "controle.mao.provider.categoria";
+	public static final String AUTHORITY = "controle.mao.provider.dados";
 
 	public long id;
 	public String nome_categoria;

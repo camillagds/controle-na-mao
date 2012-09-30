@@ -11,10 +11,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import controle.mao.controle.CategoriaAdapterListViewBD;
 import controle.mao.dados.CategoriaDAO;
 import controle.mao.dados.CategoriaDAO.Categorias;
 import controle.mao.dados.CategoriasUtil;
-import controle.mao.negocio.CategoriaAdapterListViewBD;
 
 
 public class TelaListaCategorias extends ListActivity{
@@ -51,7 +51,7 @@ public class TelaListaCategorias extends ListActivity{
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		menu.add(0, INSERIR_EDITAR, 0, "Inserir Novo").setIcon(R.drawable.novo);
-		menu.add(0, BUSCAR, 0, "Buscar").setIcon(R.drawable.pesquisar);
+//		menu.add(0, BUSCAR, 0, "Buscar").setIcon(R.drawable.pesquisar);
 		return true;
 	}
 
