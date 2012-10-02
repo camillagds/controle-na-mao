@@ -59,6 +59,26 @@ public class ControleNaMaoActivity extends Activity {
         	}
         });
         
+        //Tela Lista Fatura
+        btFatura.setOnClickListener(new ImageView.OnClickListener(){
+        	public void onClick(View v){
+        		Intent trocatela = new
+        		Intent(ControleNaMaoActivity.this,TelaListaFatura.class);
+        		ControleNaMaoActivity.this.startActivity(trocatela);
+        		ControleNaMaoActivity.this.finish();
+        	}
+        });
+        
+        //Tela Lista Consulta
+        btConsulta.setOnClickListener(new ImageView.OnClickListener(){
+        	public void onClick(View v){
+        		Intent trocatela = new
+        		Intent(ControleNaMaoActivity.this,TelaListaConsulta.class);
+        		ControleNaMaoActivity.this.startActivity(trocatela);
+        		ControleNaMaoActivity.this.finish();
+        	}
+        });
+        
         //Tela Exportar Planilha
         btExportarPlanilha.setOnClickListener(new ImageView.OnClickListener(){
         	public void onClick(View v){

@@ -66,7 +66,7 @@ public class TelaListaCategorias extends ListActivity{
 		case BUSCAR:
 			//TODO Implementar Busca
 			// Abre a tela para buscar o carro pelo nome
-			//startActivity(new Intent(this, BuscarCarro.class));
+			//startActivity(new Intent(this, TelaBuscarFatura.class));
 			break;
 		}
 		return true;
