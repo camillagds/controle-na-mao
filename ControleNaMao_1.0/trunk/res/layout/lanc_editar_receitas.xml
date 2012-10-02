@@ -1,0 +1,117 @@
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/fundo"     
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbarStyle="insideOverlay"
+        android:scrollbars="vertical"
+         >
+<LinearLayout 
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginLeft="17dp"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/titTelaEditarReceitas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Receitas"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#005566"
+        android:textSize="12pt"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/titDescricaoEditarReceitas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Descrição"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/txtDescricaoEditarReceitas"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:ems="10" />
+
+    <TextView
+        android:id="@+id/titCategoriaEditarReceitas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Categoria"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Spinner
+        android:id="@+id/dbCategoriaEditarReceitas"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/titValorEditarReceitas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Valor (R$)"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/txtValorEditarReceitas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="numberDecimal" />
+
+    <TextView
+        android:id="@+id/titDtCreditoEditarReceitas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Data do Crédito"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <DatePicker
+        android:id="@+id/dtCreditoEditarReceitas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.10" />
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center" >
+
+        <ImageButton
+            android:id="@+id/btCancelarEditarReceitas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/cancelar"
+            android:text=" Cancelar " />
+        
+        <ImageButton
+            android:id="@+id/btSalvarEditarReceitas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:src="@drawable/salvar"
+            android:text=" Salvar " />
+
+        <ImageButton
+            android:id="@+id/btExcluirEditarReceitas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:src="@drawable/excluir"
+            android:text=" Excluir " />
+    </TableRow>
+</LinearLayout>
+
+</LinearLayout>
+</ScrollView>

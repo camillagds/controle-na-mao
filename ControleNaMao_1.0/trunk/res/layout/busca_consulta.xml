@@ -1,0 +1,92 @@
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/fundo"
+        
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbarStyle="insideOverlay"
+        android:scrollbars="vertical"
+         >
+<LinearLayout 
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginLeft="17dp"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/titTelaBuscaConsulta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Consulta"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#005566"
+        android:textSize="12pt"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/titDataBuscaConsulta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10pt"
+        android:text="Período"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            >
+            <Button
+                android:id="@+id/btDataInicialConsulta"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginLeft="17dp"
+                android:text="Data Inicial" />
+            <Button
+                android:id="@+id/btDataFinalConsulta"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="Data Final" />
+        </TableRow>
+    
+        <TextView
+        android:id="@+id/titCategoriaBuscaConsulta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Categoria"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Spinner
+        android:id="@+id/dbCategoriaBuscaConsulta"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content" />
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center" >
+        
+        <ImageButton
+            android:id="@+id/btBuscaConsulta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/pesquisar"
+            android:text=" Pesquisar " />
+        
+    </TableRow>
+</LinearLayout>
+
+</LinearLayout>
+</ScrollView>
