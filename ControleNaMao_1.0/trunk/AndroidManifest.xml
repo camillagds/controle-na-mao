@@ -73,8 +73,36 @@
                 android:value="controle.mao.visualizacao.ControleNaMaoActivity" />
         </activity>
         <activity
-            android:name=".visualizacao.TelaConsultas"
+            android:name=".visualizacao.TelaListaConsulta"
             android:label="@string/title_activity_tela_consultas" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="controle.mao.visualizacao.ControleNaMaoActivity" />
+        </activity>
+        <activity
+            android:name=".visualizacao.TelaListaFatura"
+            android:label="Fatura" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="controle.mao.visualizacao.ControleNaMaoActivity" />
+        </activity>
+        <activity
+            android:name=".visualizacao.TelaBuscarConsulta"
+            android:label="Consulta" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="controle.mao.visualizacao.ControleNaMaoActivity" />
+        </activity>
+        <activity
+            android:name=".visualizacao.TelaEditarDespesas"
+            android:label="Editar Receitas" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="controle.mao.visualizacao.ControleNaMaoActivity" />
+        </activity>
+        <activity
+            android:name=".visualizacao.TelaEditarReceitas"
+            android:label="Editar Despesa" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="controle.mao.visualizacao.ControleNaMaoActivity" />
