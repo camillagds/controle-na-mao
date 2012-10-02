@@ -43,6 +43,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1.10" />
+    
+                    <TextView
+                        android:id="@+id/titNomeCartaoBuscarFatura"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Nome do Cartão"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <Spinner
+                    android:id="@+id/dbCartaoBuscarFatura"
+                    android:layout_width="257dp"
+                    android:layout_height="wrap_content" />
 
     <TableRow
         android:layout_width="fill_parent"
