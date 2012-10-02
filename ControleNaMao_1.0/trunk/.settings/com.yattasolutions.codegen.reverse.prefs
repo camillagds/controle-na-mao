@@ -1,0 +1,3 @@
+com.yattasolutions.codegen.reverse.frontend.PriorityCodestyle=UMLLabProfile\:\:StyledElement,UMLLabProfile\:\:Simple,PHPProfile\:\:CakePHPStyledElement,PHPProfile\:\:PHPMySQLStyledElement,ZENDStyle\:\:ZendStyledElement,Persistency\:\:JPA1StyledElement
+com.yattasolutions.codegen.reverse.frontend.PriorityValue=0,0,-1,-1,-1,0
+eclipse.preferences.version=1

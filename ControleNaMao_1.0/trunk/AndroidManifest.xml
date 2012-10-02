@@ -88,7 +88,14 @@
         </activity>
         <activity
             android:name=".visualizacao.TelaBuscarConsulta"
-            android:label="Consulta" >
+            android:label="Buscar Lançamento" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="controle.mao.visualizacao.ControleNaMaoActivity" />
+        </activity>
+        <activity
+            android:name=".visualizacao.TelaBuscarFatura"
+            android:label="Buscar Fatura" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="controle.mao.visualizacao.ControleNaMaoActivity" />
