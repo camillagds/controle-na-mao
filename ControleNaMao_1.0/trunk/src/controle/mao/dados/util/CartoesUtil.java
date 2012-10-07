@@ -1,4 +1,4 @@
-package controle.mao.dados;
+package controle.mao.dados.util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,9 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.util.Log;
-import controle.mao.dados.CartaoDAO.Cartoes;
+import controle.mao.dados.SQLiteHelper;
+import controle.mao.dados.dao.CartaoDAO;
+import controle.mao.dados.dao.CartaoDAO.Cartoes;
 
 /**
  * Tabela de Cartões

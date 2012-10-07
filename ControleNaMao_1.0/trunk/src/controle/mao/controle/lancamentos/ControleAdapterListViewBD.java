@@ -1,9 +1,10 @@
-package controle.mao.controle;
+package controle.mao.controle.lancamentos;
 
 import java.util.List;
 
 import controle.mao.R;
-import controle.mao.dados.CategoriaDAO;
+import controle.mao.dados.dao.CategoriaDAO;
+import controle.mao.dados.dao.ControleDAO;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,12 +13,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-public class CategoriaAdapterListViewBD extends BaseAdapter{
+public class ControleAdapterListViewBD extends BaseAdapter{
 
 		private Context context;
-	    private List<CategoriaDAO> lista;
+	    private List<ControleDAO> lista;
 
-	    public CategoriaAdapterListViewBD(Context context, List<CategoriaDAO> lista) {
+	    public ControleAdapterListViewBD(Context context, List<ControleDAO> lista) {
 	    	//Itens que preencheram o listview
 	        this.lista = lista;
 	        //responsavel por pegar o Layout do item.
@@ -39,7 +40,7 @@ public class CategoriaAdapterListViewBD extends BaseAdapter{
 	     * @param position
 	     * @return
 	     */
-	    public CategoriaDAO getItem(int position) {
+	    public ControleDAO getItem(int position) {
 	        return lista.get(position);
 	    }
 
@@ -55,7 +56,7 @@ public class CategoriaAdapterListViewBD extends BaseAdapter{
 
 	    public View getView(int position, View convertView, ViewGroup parent) {
 	        //Pega o item de acordo com a posção.
-	        CategoriaDAO item = lista.get(position);
+	        ControleDAO item = lista.get(position);
 	        
 	        //infla o layout para podermos preencher os dados
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -63,7 +64,7 @@ public class CategoriaAdapterListViewBD extends BaseAdapter{
 
 	        //Atualiza o valor do TextView
 	        TextView nome = (TextView) view.findViewById(R.id.listItemCategoria);
-	        nome.setText(item.nome_categoria);
+//	        nome.setText(item.nome_categoria);
 	        
 	        return view;
 	    }

@@ -11,39 +11,39 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
-import controle.mao.controle.CategoriaAdapterListViewBD;
-import controle.mao.dados.CategoriaDAO;
-import controle.mao.dados.CategoriaDAO.Categorias;
-import controle.mao.dados.CategoriasUtil;
+import controle.mao.controle.categoria.Categoria;
+import controle.mao.controle.categoria.CategoriaAdapterListViewBD;
+import controle.mao.dados.dao.CategoriaDAO;
+import controle.mao.dados.dao.CategoriaDAO.Categorias;
+import controle.mao.dados.util.CategoriasUtil;
 
 
 public class TelaListaCategorias extends ListActivity{
 	
-	public static CategoriasUtil bdScript;
 	protected static final int INSERIR_EDITAR = 1;
 	protected static final int BUSCAR = 2;
 	
 	private List<CategoriaDAO> categorias;
+	static Categoria bdScript;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        bdScript = new CategoriasUtil(this);
-		atualizarLista();
+        bdScript = new Categoria(new CategoriasUtil(this));
+        atualizarLista();
         getListView().setBackgroundResource(R.drawable.fundo);
     }
 
-	protected void atualizarLista() {
-		// Pega a lista de categorias e exibe na tela
-		categorias = bdScript.listarCategorias();
-		Log.e("cnm", "Nenhum Registro?: " + categorias.isEmpty());
-		// Se não tiver dados, ele vai pra tela de adicionar categoria.
-		if (categorias.isEmpty()){
-			startActivityForResult(new Intent(this, TelaAddCategoria.class), INSERIR_EDITAR);
-//			setListAdapter(new CategoriaAdapterListViewBD(this, categorias));
-		} else{
-		// Adaptador de lista customizado para cada linha de uma categoria
-			setListAdapter(new CategoriaAdapterListViewBD(this, categorias));
+	
+
+	@Override
+	protected void onActivityResult(int codigo, int codigoRetorno, Intent it) {
+		super.onActivityResult(codigo, codigoRetorno, it);
+
+		// Quando a activity TelaAddCategoria retornar, seja se foi para adicionar vamos atualizar a lista
+		if (codigoRetorno == RESULT_OK) {
+			// atualiza a lista na tela
+			atualizarLista();
 		}
 	}
 	
@@ -77,6 +77,20 @@ public class TelaListaCategorias extends ListActivity{
 		super.onListItemClick(l, v, posicao, id);
 		editarCategoria(posicao);
 	}
+	
+	public void atualizarLista() {
+		// Pega a lista de categorias e exibe na tela
+		categorias = bdScript.listaCategorias();
+		Log.e("cnm", "Nenhum Registro?: " + categorias.isEmpty());
+		// Se não tiver dados, ele vai pra tela de adicionar categoria.
+		if (categorias.isEmpty()){
+			startActivityForResult(new Intent(this, TelaAddCategoria.class), INSERIR_EDITAR);
+//			setListAdapter(new CategoriaAdapterListViewBD(this, categorias));
+		} else{
+		// Adaptador de lista customizado para cada linha de uma categoria
+			setListAdapter(new CategoriaAdapterListViewBD(this, categorias));
+		}
+	}
 
 	// Recupera o id do carro, e abre a tela de edição
 	protected void editarCategoria(int posicao) {
@@ -92,22 +106,11 @@ public class TelaListaCategorias extends ListActivity{
 	}
 
 	@Override
-	protected void onActivityResult(int codigo, int codigoRetorno, Intent it) {
-		super.onActivityResult(codigo, codigoRetorno, it);
-
-		// Quando a activity TelaAddCategoria retornar, seja se foi para adicionar vamos atualizar a lista
-		if (codigoRetorno == RESULT_OK) {
-			// atualiza a lista na tela
-			atualizarLista();
-		}
-	}
-
-	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 
 		// Fecha o banco
-		bdScript.fechar();
+		Categoria.bdScript.fechar();
 	}
 
 }

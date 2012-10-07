@@ -1,9 +1,9 @@
-package controle.mao.controle;
+package controle.mao.controle.cartoes;
 
 import java.util.List;
 
 import controle.mao.R;
-import controle.mao.dados.CartaoDAO;
+import controle.mao.dados.dao.CartaoDAO;
 
 import android.content.Context;
 import android.view.LayoutInflater;

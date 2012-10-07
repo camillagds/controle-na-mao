@@ -1,19 +1,11 @@
 package controle.mao.visualizacao;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
 import controle.mao.R;
-import controle.mao.R.id;
-import controle.mao.R.layout;
-import controle.mao.dados.CartaoDAO;
-import controle.mao.dados.CartoesUtil;
-import controle.mao.dados.CategoriaDAO;
-import controle.mao.dados.CategoriasUtil;
-import controle.mao.dados.ReceitasDAO;
-
+import controle.mao.controle.cartoes.Cartao;
+import controle.mao.controle.categoria.Categoria;
+import controle.mao.controle.lancamentos.Despesa;
+import controle.mao.controle.lancamentos.Receita;
+import controle.mao.dados.util.DespesasUtil;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
@@ -21,7 +13,6 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -30,29 +21,21 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TableRow;
-import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 public class TelaAddDespesas extends Activity {
 
-	public static CartoesUtil bdScriptCartoes;
-	public static CategoriasUtil bdScriptCategorias;
-	private DatePicker dtDebitoDespesas;
-	private int year;
-	private int month;
-	private int day;
-	private List<CartaoDAO> cartoes;
-	private List<CategoriaDAO> categorias;
+	private Despesa bdScript;
 
 	// Elementos
 	private ImageButton btConfirmar;
 	private ImageButton btCancelar;
 	
 	// Campos
+	private static DatePicker dtDebitoDespesas;
 	private Spinner dbFormaPgtoDespesas;
 	private Spinner dbCategoriaDespesas;
 	private Spinner dbPeriodoDespesas;
@@ -61,15 +44,14 @@ public class TelaAddDespesas extends Activity {
 	private RadioGroup rgFormaPagtoCartaoDespesas;
 	private TableRow rowParcelamentos;
 	private TableRow rowCartoes;
-	private RadioButton rdCreditoCartaoDespesas;
-	private RadioButton rdDebitoCartaoDespesas;
-	private RadioButton rdAVistaDespesas;
-	private RadioButton rdParcelasDespesas;
 	
 	//BD
 	private String nomeCartaoBD;
-	private String nomeCategoriaBD;
-	private String nomeFormaPagtoBD;
+	private static EditText txtValorDespesas;
+	private static String nomeCategoriaBD;
+	private static EditText txtDescricaoCartao;
+	public static String nomeFormaPagtoBD;
+	private static String nomeTipoCartaoBD;
 	
 	
 	
@@ -78,27 +60,26 @@ public class TelaAddDespesas extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.lanc_despesas);
-		bdScriptCartoes = new CartoesUtil(this);
-		//TODO tem que fechar as duas conexões
-		bdScriptCategorias = new CategoriasUtil(this);
+	    bdScript = new Despesa(new DespesasUtil(this));
 		//Ocultar Teclado
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
 		// Elementos
 		btConfirmar = (ImageButton) findViewById(R.id.btConfirmarDespesas);
 		btCancelar = (ImageButton) findViewById(R.id.btCancelarDespesas);
+		setTxtDescricaoCartao((EditText) findViewById(R.id.txtDescricaoDespesas));
+		setTxtValorDespesas((EditText) findViewById(R.id.txtValorDespesas));
 		dbFormaPgtoDespesas = (Spinner) findViewById(R.id.dbFormaPgtoDespesas);
 		dbCategoriaDespesas = (Spinner) findViewById(R.id.dbCategoriaDespesas);
 		dbPeriodoDespesas = (Spinner) findViewById(R.id.dbPeriodoDespesas);
 		rgFormaPagtoDespesas = (RadioGroup) findViewById(R.id.rgFormaPagtoDespesas);
 		dbNomeCartaoDespesas = (Spinner) findViewById(R.id.dbCartaoDespesas);
+		dtDebitoDespesas = (DatePicker) findViewById(R.id.dtDebitoDespesas);
 		rgFormaPagtoCartaoDespesas = (RadioGroup) findViewById(R.id.rgFormaPagtoCartaoDespesas);
 		rowParcelamentos = (TableRow) findViewById(R.id.rowParcelamentos);
 		rowParcelamentos.setVisibility(View.INVISIBLE);
 		rowCartoes = (TableRow) findViewById(R.id.rowCartao);
-//		rowCartoes.setVisibility(View.INVISIBLE);
-//		rowCartoes.set
-		setCurrentDateOnView();
+		Despesa.setCurrentDateOnView(dtDebitoDespesas);
 
 		// Lista - Forma de Pagamento
 		ArrayAdapter<CharSequence> listaFormaPgto = ArrayAdapter
@@ -110,10 +91,10 @@ public class TelaAddDespesas extends Activity {
 		dbFormaPgtoDespesas.setOnItemSelectedListener(new OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
             	//Pega Nome Pela Posição
-            	String formaPgt = parentView.getItemAtPosition(position).toString().substring(0, 2);
-            	String result = "Ca";
-            	Log.e("cnm", formaPgt);
-            	if (formaPgt.equalsIgnoreCase(result)){
+            	setNomeFormaPagtoBD(parentView.getItemAtPosition(position).toString());
+            	String result = "Cartão";
+            	Log.e("cnm", getNomeFormaPagtoBD());
+            	if (getNomeFormaPagtoBD().equalsIgnoreCase(result)){
             		rowCartoes.setVisibility(View.VISIBLE);
             	Log.e("cnm", "visivel");
             	}else{
@@ -129,13 +110,8 @@ public class TelaAddDespesas extends Activity {
         });
 
 		// Lista - Categorias
-		categorias = bdScriptCategorias.listarCategorias();
-		List<String> nomesCategorias = new ArrayList<String>();
-		for (int i = 0; i < categorias.size(); i++) {
-			nomesCategorias.add(categorias.get(i).nome_categoria);
-		}
 		ArrayAdapter<String> listaCategorias = new ArrayAdapter<String>
-				(this, android.R.layout.simple_spinner_item, nomesCategorias);
+				(this, android.R.layout.simple_spinner_item, Categoria.SpinnerCategorias());
 		
 		listaCategorias
 				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -143,7 +119,7 @@ public class TelaAddDespesas extends Activity {
 		dbCategoriaDespesas.setOnItemSelectedListener(new OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
             	//Pega Nome Pela Posição
-            	nomeCategoriaBD = parentView.getItemAtPosition(position).toString();
+            	setNomeCategoriaBD(parentView.getItemAtPosition(position).toString());
             }
 
             public void onNothingSelected(AdapterView<?> parentView) {
@@ -161,13 +137,8 @@ public class TelaAddDespesas extends Activity {
 		dbPeriodoDespesas.setAdapter(listaPeriodicidade);
 		
 		// Lista - Cartões
-		cartoes = bdScriptCartoes.listarCartao();
-		List<String> nomesCartao = new ArrayList<String>();
-		for (int i = 0; i < cartoes.size(); i++) {
-			nomesCartao.add(cartoes.get(i).nome_cartao);
-		}
 		ArrayAdapter<String> listaCartoes = new ArrayAdapter<String>
-				(this, android.R.layout.simple_spinner_item, nomesCartao);
+				(this, android.R.layout.simple_spinner_item, Cartao.SpinnerCartoes());
 		listaCartoes
 				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		dbNomeCartaoDespesas.setAdapter(listaCartoes);
@@ -175,7 +146,7 @@ public class TelaAddDespesas extends Activity {
 		dbNomeCartaoDespesas.setOnItemSelectedListener(new OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
             	//Pega Nome Pela Posição
-            	nomeCartaoBD = parentView.getItemAtPosition(position).toString();
+            	setNomeCartaoBD(parentView.getItemAtPosition(position).toString());
             }
 
             public void onNothingSelected(AdapterView<?> parentView) {
@@ -187,6 +158,14 @@ public class TelaAddDespesas extends Activity {
 		// Bt Confirmar
 		btConfirmar.setOnClickListener(new ImageView.OnClickListener() {
 			public void onClick(View v) {
+				bdScript.salvar();
+				// OK
+				setResult(RESULT_OK, new Intent());
+
+				// Fecha a tela
+				finish();
+				
+				// Trocar Tela
 				Intent trocatela = new Intent(TelaAddDespesas.this,
 						ControleNaMaoActivity.class);
 				TelaAddDespesas.this.startActivity(trocatela);
@@ -197,27 +176,16 @@ public class TelaAddDespesas extends Activity {
 		// Bt Cancelar
 		btCancelar.setOnClickListener(new ImageView.OnClickListener() {
 			public void onClick(View v) {
+				setResult(RESULT_CANCELED);
+				// Fecha a tela
+				finish();
+				
 				Intent trocatela = new Intent(TelaAddDespesas.this,
 						ControleNaMaoActivity.class);
 				TelaAddDespesas.this.startActivity(trocatela);
 				TelaAddDespesas.this.finish();
 			}
 		});
-
-	}
-
-	/**
-	 * Método que retorna a data atual para o campo "Data do Crédito
-	 */
-	public void setCurrentDateOnView() {
-		dtDebitoDespesas = (DatePicker) findViewById(R.id.dtDebitoDespesas);
-		final Calendar c = Calendar.getInstance();
-		year = c.get(Calendar.YEAR);
-		month = c.get(Calendar.MONTH);
-		day = c.get(Calendar.DAY_OF_MONTH);
-
-		// set current date into datepicker
-		dtDebitoDespesas.init(year, month, day, null);
 	}
 
 	/**
@@ -248,8 +216,10 @@ public class TelaAddDespesas extends Activity {
 		// RadioGroup button = (RadioGroup) v;
 		switch (rgFormaPagtoCartaoDespesas.getCheckedRadioButtonId()) {
 		case R.id.rdCreditoCartaoDespesas:
+			setNomeTipoCartaoBD("Credito");
 			break;
 		case R.id.rdDebitoCartaoDespesas:
+			setNomeTipoCartaoBD("Debito");
 			break;
 		}
 	}
@@ -285,8 +255,82 @@ public class TelaAddDespesas extends Activity {
 protected void onDestroy() {
 	super.onDestroy();
 	// Fecha o banco
-	bdScriptCategorias.fechar();
-	bdScriptCartoes.fechar();
+	Despesa.bdScript.fechar();
+	Categoria.bdScript.fechar();
+	Cartao.bdScript.fechar();
+}
+
+@Override
+protected void onPause() {
+	super.onPause();
+	// Cancela para não ficar nada na tela pendente
+	setResult(RESULT_CANCELED);
+
+	// Fecha a tela
+	finish();
+	
+	// Fecha o banco
+	Receita.bdScript.fechar();
+	Categoria.bdScript.fechar();
+	Cartao.bdScript.fechar();
+	}
+
+public static String getNomeTipoCartaoBD() {
+	return nomeTipoCartaoBD;
+}
+
+public void setNomeTipoCartaoBD(String nomeTipoCartaoBD) {
+	TelaAddDespesas.nomeTipoCartaoBD = nomeTipoCartaoBD;
+}
+
+public String getNomeFormaPagtoBD() {
+	return nomeFormaPagtoBD;
+}
+
+public void setNomeFormaPagtoBD(String nomeFormaPagtoBD) {
+	TelaAddDespesas.nomeFormaPagtoBD = nomeFormaPagtoBD;
+}
+
+public static EditText getTxtDescricaoCartao() {
+	return txtDescricaoCartao;
+}
+
+public void setTxtDescricaoCartao(EditText txtDescricaoCartao) {
+	TelaAddDespesas.txtDescricaoCartao = txtDescricaoCartao;
+}
+
+public static String getNomeCategoriaBD() {
+	Log.e("cnm", nomeCategoriaBD);
+	return nomeCategoriaBD;
+}
+
+public void setNomeCategoriaBD(String nomeCategoriaBD) {
+	TelaAddDespesas.nomeCategoriaBD = nomeCategoriaBD;
+	Log.e("cnm", nomeCategoriaBD);
+}
+
+public static DatePicker getDtDebitoDespesas() {
+	return dtDebitoDespesas;
+}
+
+public void setDtDebitoDespesas(DatePicker dtDebitoDespesas) {
+	TelaAddDespesas.dtDebitoDespesas = dtDebitoDespesas;
+}
+
+public static EditText getTxtValorDespesas() {
+	return txtValorDespesas;
+}
+
+public void setTxtValorDespesas(EditText txtValorDespesas) {
+	TelaAddDespesas.txtValorDespesas = txtValorDespesas;
+}
+
+public String getNomeCartaoBD() {
+	return nomeCartaoBD;
+}
+
+public void setNomeCartaoBD(String nomeCartaoBD) {
+	this.nomeCartaoBD = nomeCartaoBD;
 }
 
 }

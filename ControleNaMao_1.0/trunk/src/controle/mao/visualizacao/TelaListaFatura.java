@@ -2,25 +2,20 @@ package controle.mao.visualizacao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-
-import controle.mao.R;
 
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
+import controle.mao.R;
 
 
 public class TelaListaFatura extends ListActivity {
-	protected static final int INSERIR_EDITAR = 1;
-	protected static final int BUSCAR = 2;
+	protected static final int BUSCAR = 1;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -75,7 +70,6 @@ public class TelaListaFatura extends ListActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-//		menu.add(0, INSERIR_EDITAR, 0, "Inserir Novo").setIcon(R.drawable.novo);
 		menu.add(0, BUSCAR, 0, "Buscar").setIcon(R.drawable.pesquisar);
 		return true;
 	}
@@ -84,12 +78,7 @@ public class TelaListaFatura extends ListActivity {
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		// Clicou no menu
 		switch (item.getItemId()) {
-		case INSERIR_EDITAR:
-			// Abre a tela com o formulário para adicionar
-//			startActivityForResult(new Intent(this, EditarCarro.class), INSERIR_EDITAR);
-			break;
 		case BUSCAR:
-			// Abre a tela para buscar o carro pelo nome
 			startActivity(new Intent(this, TelaBuscarFatura.class));
 			break;
 		}
