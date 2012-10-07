@@ -1,4 +1,4 @@
-package controle.mao.dados;
+package controle.mao.dados.dao;
 
 import android.content.ContentUris;
 import android.net.Uri;
@@ -7,7 +7,7 @@ import android.provider.BaseColumns;
 /**
  * Classe entidade para armazenar os valores de Categoria
  * 
- * @author ricardo
+ * @author camilas
  * 
  */
 public class CategoriaDAO {

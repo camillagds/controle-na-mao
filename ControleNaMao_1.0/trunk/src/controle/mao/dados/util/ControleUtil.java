@@ -1,4 +1,4 @@
-package controle.mao.dados;
+package controle.mao.dados.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import controle.mao.dados.ControleDAO.Controles;
+import controle.mao.dados.SQLiteHelper;
+import controle.mao.dados.dao.ControleDAO;
+import controle.mao.dados.dao.ControleDAO.Controles;
 
 import android.content.ContentValues;
 import android.content.Context;

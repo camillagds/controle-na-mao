@@ -8,11 +8,11 @@ import java.util.List;
 import controle.mao.R;
 import controle.mao.R.id;
 import controle.mao.R.layout;
-import controle.mao.dados.CartaoDAO;
-import controle.mao.dados.CartoesUtil;
-import controle.mao.dados.CategoriaDAO;
-import controle.mao.dados.CategoriasUtil;
-import controle.mao.dados.ReceitasDAO;
+import controle.mao.dados.dao.CartaoDAO;
+import controle.mao.dados.dao.CategoriaDAO;
+import controle.mao.dados.dao.ReceitasDAO;
+import controle.mao.dados.util.CartoesUtil;
+import controle.mao.dados.util.CategoriasUtil;
 
 import android.os.Bundle;
 import android.app.Activity;

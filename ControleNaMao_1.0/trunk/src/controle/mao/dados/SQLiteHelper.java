@@ -10,9 +10,9 @@ import android.util.Log;
  * 
  * Classe utilitária para abrir, criar, e atualizar o banco de dados
  * 
- * @author ricardo
+ * @author camilas
  */
-class SQLiteHelper extends SQLiteOpenHelper {
+public class SQLiteHelper extends SQLiteOpenHelper {
 
 	private static final String CATEGORIA = "cnm";
 
@@ -68,9 +68,5 @@ class SQLiteHelper extends SQLiteOpenHelper {
 @Override
 public void onOpen(SQLiteDatabase db) {
     super.onOpen(db);
-    if (!db.isReadOnly()) {
-        // Enable foreign key constraints
-        db.execSQL("PRAGMA foreign_keys=ON;");
-    }
 }
 }

@@ -1,4 +1,4 @@
-package controle.mao.dados;
+package controle.mao.dados.dao;
 
 import java.util.Date;
 
@@ -9,7 +9,7 @@ import android.provider.BaseColumns;
 /**
  * Classe entidade para armazenar os valores
  * 
- * @author ricardo
+ * @author camilas
  * 
  */
 public class ReceitasDAO {

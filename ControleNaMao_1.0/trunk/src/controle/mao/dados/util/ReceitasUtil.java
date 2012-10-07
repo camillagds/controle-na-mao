@@ -1,4 +1,4 @@
-package controle.mao.dados;
+package controle.mao.dados.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import controle.mao.dados.ReceitasDAO.Receitas;
+import controle.mao.dados.SQLiteHelper;
+import controle.mao.dados.dao.ReceitasDAO;
+import controle.mao.dados.dao.ReceitasDAO.Receitas;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -31,7 +33,7 @@ public class ReceitasUtil {
 	private static final String NOME_BANCO = "bd_cnm";
 
 	// Nome das tabelas
-	public static final String TABELA_RECEITAS = "tb_recebimentos";
+	public static final String TABELA_RECEITAS = "tb_recebimento";
 
 	private SQLiteHelper dbHelper;
 	public SQLiteDatabase db;

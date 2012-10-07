@@ -4,8 +4,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 import controle.mao.R;
-import controle.mao.dados.CartaoDAO;
-import controle.mao.dados.CartaoDAO.Cartoes;
+import controle.mao.controle.cartoes.Cartao;
+import controle.mao.dados.dao.CartaoDAO;
+import controle.mao.dados.dao.CartaoDAO.Cartoes;
 
 
 import android.os.Bundle;
@@ -22,23 +23,18 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 
 public class TelaAddCartoes extends Activity {
-
 	
-	private int year;
-	private int month;
-	private int day;
-	
-	private String valorBandeira;
+	private static String valorBandeira;
 	
 	static final int RESULT_SALVAR = 1;
 	static final int RESULT_EXCLUIR = 2;
 	
 	// Campos texto
-	private EditText campoNome;
+	private static EditText campoNome;
 	private Spinner campoBandeira;
 //	private DatePicker campoVencimento;
-	private EditText campoFechamento;
-	private Long id;
+	private static EditText campoFechamento;
+	private static Long id;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,13 +48,13 @@ public class TelaAddCartoes extends Activity {
         listaBandeira
 				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         
-        campoNome = (EditText) findViewById(R.id.txtDescricaoCartao);
+        setCampoNome((EditText) findViewById(R.id.txtDescricaoCartao));
         campoBandeira = (Spinner) findViewById(R.id.dbBandeiraCartao);
 		campoBandeira.setAdapter(listaBandeira);		
 		campoBandeira.setOnItemSelectedListener(new OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
             	//Pega Nome Pela Posição
-            	valorBandeira = parentView.getItemAtPosition(position).toString();
+            	setValorBandeira(parentView.getItemAtPosition(position).toString());
             }
 
             public void onNothingSelected(AdapterView<?> parentView) {
@@ -67,7 +63,7 @@ public class TelaAddCartoes extends Activity {
 
         });
 //        campoVencimento = (DatePicker) findViewById(R.id.dtVencimentoCartao); 
-        campoFechamento = (EditText) findViewById(R.id.txtFechamentoCartao); 
+        setCampoFechamento((EditText) findViewById(R.id.txtFechamentoCartao)); 
 		
         id = null;
 		
@@ -78,8 +74,8 @@ public class TelaAddCartoes extends Activity {
 
 			if (id != null) {
 				// é uma edição, busca o carro...
-				CartaoDAO c = buscarCartao(id);
-				campoNome.setText(c.nome_cartao);
+				CartaoDAO c = TelaListaCartoes.bdScript.buscarCartao(id);
+				getCampoNome().setText(c.nome_cartao);
 //				int pos = listaBandeira.getPosition(c.bandeira_Cartao);
 //				campoBandeira.setSelection(pos);
 				
@@ -93,18 +89,7 @@ public class TelaAddCartoes extends Activity {
 				//set the default according to value
 				campoBandeira.setSelection(spinnerPosition);
 				
-//				campoVencimento = setDataPersonalizada(c.vencimento_cartao, campoVencimento);
-//				Calendar calendar = Calendar.getInstance();    
-//				calendar.setTimeInMillis(c.vencimento_cartao);
-//				Date data = new Date(c.vencimento_cartao);
-//				data.setTime(dataBD);
-//				year = data.getYear();
-//				month = data.getMonth();
-//				day = data.getDay();
-//				java.util.Date data = calendar.getTime();
-//				campoVencimento.updateDate(year, month, day);
-				
-				campoFechamento.setText(String.valueOf(c.fechaFatura_cartao));
+				getCampoFechamento().setText(String.valueOf(c.fechaFatura_cartao));
 			}
 		}
         
@@ -122,7 +107,12 @@ public class TelaAddCartoes extends Activity {
 		ImageButton btSalvar = (ImageButton) findViewById(R.id.btSalvarCartao);
 		btSalvar.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
-				salvar();
+				TelaListaCartoes.bdScript.salvar();
+				// OK
+				setResult(RESULT_OK, new Intent());
+
+				// Fecha a tela
+				finish();
 			}
 		});
 
@@ -136,12 +126,21 @@ public class TelaAddCartoes extends Activity {
 			// Listener para excluir o carro
 			btExcluir.setOnClickListener(new OnClickListener() {
 				public void onClick(View view) {
-					excluir();
+					TelaListaCartoes.bdScript.excluir();
+					// OK
+					setResult(RESULT_OK, new Intent());
+
+					// Fecha a tela
+					finish();
 				}
 			});
 		}  
         
     }
+    
+	public static Long getID(){
+		return id;
+	}
     
     @Override
 	protected void onPause() {
@@ -153,73 +152,30 @@ public class TelaAddCartoes extends Activity {
 		finish();
 	}
 
-	public void salvar() {
-		int fechamento = 0;
-//		long dataVencimento = 0;
-		try {
-			fechamento = Integer.parseInt(campoFechamento.getText().toString());
-		} catch (NumberFormatException e) {
-			// ok neste exemplo, tratar isto em aplicações reais
-		}
-		
-		CartaoDAO cartao = new CartaoDAO();
-		if (id != null) {
-			// É uma atualização
-			cartao.id = id;
-		}
-		cartao.nome_cartao = campoNome.getText().toString();
-		cartao.bandeira_Cartao = valorBandeira;
-		cartao.fechaFatura_cartao = fechamento;
-//		cartao.vencimento_cartao = dataVencimento;
-
-		// Salvar
-		salvarCartao(cartao);
-
-		// OK
-		setResult(RESULT_OK, new Intent());
-
-		// Fecha a tela
-		finish();
+	public static String getValorBandeira() {
+		return valorBandeira;
 	}
 
-	public void excluir() {
-		if (id != null) {
-			excluirCartao(id);
-		}
-
-		// OK
-		setResult(RESULT_OK, new Intent());
-
-		// Fecha a tela
-		finish();
+	public void setValorBandeira(String valorBandeira) {
+		this.valorBandeira = valorBandeira;
 	}
 
-	// Buscar a cartao pelo id
-	protected CartaoDAO buscarCartao(long id) {
-		return TelaListaCartoes.bdScript.buscarCartao(id);
+	public static EditText getCampoFechamento() {
+		return campoFechamento;
 	}
 
-	// Salvar a cartao
-	protected void salvarCartao(CartaoDAO cartao) {
-		TelaListaCartoes.bdScript.salvar(cartao);
+	public void setCampoFechamento(EditText campoFechamento) {
+		this.campoFechamento = campoFechamento;
 	}
 
-	// Excluir a cartao
-	protected void excluirCartao(long id) {
-		TelaListaCartoes.bdScript.deletar(id);
+	public static EditText getCampoNome() {
+		return campoNome;
 	}
-    
-	public DatePicker setDataPersonalizada(long dataBD, DatePicker campoData){	
-		Calendar calendar = Calendar.getInstance();    
-		calendar.setTimeInMillis(dataBD);
-		Date data = new Date(dataBD);
-//		data.setTime(dataBD);
-		year = data.getYear();
-		month = data.getMonth();
-		day = data.getDay();
-//		java.util.Date data = calendar.getTime();
-		campoData.updateDate(year, month, day);
-		return campoData;
+
+	public void setCampoNome(EditText campoNome) {
+		this.campoNome = campoNome;
 	}
+
+	
 	
 }

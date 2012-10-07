@@ -13,9 +13,9 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 /**
- * Buscar o Carro.
+ * Tela de Consulta de Lançamentos.
  * 
- * @author rlecheta
+ * @author camilas
  * 
  */
 public class TelaBuscarConsulta extends Activity implements OnClickListener {

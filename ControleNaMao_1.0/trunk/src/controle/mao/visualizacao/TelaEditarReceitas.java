@@ -8,12 +8,12 @@ import java.util.List;
 import org.xml.sax.DTDHandler;
 
 import controle.mao.R;
-import controle.mao.dados.CartaoDAO;
-import controle.mao.dados.CategoriaDAO;
-import controle.mao.dados.CategoriasUtil;
-import controle.mao.dados.ControleDAO;
-import controle.mao.dados.ReceitasDAO;
-import controle.mao.dados.ReceitasUtil;
+import controle.mao.dados.dao.CartaoDAO;
+import controle.mao.dados.dao.CategoriaDAO;
+import controle.mao.dados.dao.ControleDAO;
+import controle.mao.dados.dao.ReceitasDAO;
+import controle.mao.dados.util.CategoriasUtil;
+import controle.mao.dados.util.ReceitasUtil;
 
 import android.os.Bundle;
 import android.app.Activity;

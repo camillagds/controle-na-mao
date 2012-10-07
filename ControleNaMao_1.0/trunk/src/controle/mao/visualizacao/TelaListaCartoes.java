@@ -3,10 +3,13 @@ package controle.mao.visualizacao;
 import java.util.List;
 
 import controle.mao.R;
-import controle.mao.controle.CartaoAdapterListViewBD;
-import controle.mao.dados.CartaoDAO;
-import controle.mao.dados.CartaoDAO.Cartoes;
-import controle.mao.dados.CartoesUtil;
+import controle.mao.controle.cartoes.Cartao;
+import controle.mao.controle.cartoes.CartaoAdapterListViewBD;
+import controle.mao.controle.categoria.Categoria;
+import controle.mao.dados.dao.CartaoDAO;
+import controle.mao.dados.dao.CartaoDAO.Cartoes;
+import controle.mao.dados.util.CartoesUtil;
+import controle.mao.dados.util.CategoriasUtil;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -18,7 +21,7 @@ import android.content.Intent;
 
 public class TelaListaCartoes extends ListActivity {
 	
-	public static CartoesUtil bdScript;
+	public static Cartao bdScript;
 	protected static final int INSERIR_EDITAR = 1;
 	protected static final int BUSCAR = 2;
 	
@@ -28,15 +31,15 @@ public class TelaListaCartoes extends ListActivity {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
 //        setContentView(R.layout.cartoes); 
-        bdScript = new CartoesUtil(this);
-		atualizarLista();
+        bdScript = new Cartao(new CartoesUtil(this));
+        atualizarLista();
 		getListView().setBackgroundResource(R.drawable.fundo);
     }
 
 
 protected void atualizarLista() {
 	// Pega a lista de categorias e exibe na tela
-	cartoes = bdScript.listarCartao();
+	cartoes = bdScript.listaCartoes();
 	Log.e("cnm", "Nenhum Registro?: " + cartoes.isEmpty());
 	// Se não tiver dados, ele vai pra tela de adicionar categoria.
 	if (cartoes.isEmpty()){
@@ -107,7 +110,7 @@ protected void onDestroy() {
 	super.onDestroy();
 
 	// Fecha o banco
-	bdScript.fechar();
+	Cartao.bdScript.fechar();
 }
 
 }

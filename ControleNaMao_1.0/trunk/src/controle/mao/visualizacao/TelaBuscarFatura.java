@@ -11,9 +11,9 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 /**
- * Buscar o Carro.
+ * Tela de Fatura do Cartão de Credito.
  * 
- * @author rlecheta
+ * @author camilas
  * 
  */
 public class TelaBuscarFatura extends Activity implements OnClickListener {
