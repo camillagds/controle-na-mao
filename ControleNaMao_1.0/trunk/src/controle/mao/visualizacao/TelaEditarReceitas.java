@@ -10,7 +10,7 @@ import org.xml.sax.DTDHandler;
 import controle.mao.R;
 import controle.mao.dados.dao.CartaoDAO;
 import controle.mao.dados.dao.CategoriaDAO;
-import controle.mao.dados.dao.ControleDAO;
+import controle.mao.dados.dao.LancamentoDAO;
 import controle.mao.dados.dao.ReceitasDAO;
 import controle.mao.dados.util.CategoriasUtil;
 import controle.mao.dados.util.ReceitasUtil;
@@ -156,10 +156,8 @@ public void salvar() {
 		// É uma atualização
 		receita.id = id;
 	}
-	receita.nome_receitas = txtDescricaoReceitas.getText().toString();
-	receita.categoria_receitas = nomeCategoriaBD;
-	receita.valor_receitas = valorReceita;
-	receita.dataPagamento_receitas = converteData(dtCreditoReceitas);
+	receita.dataCredito_receitas = converteData(dtCreditoReceitas);
+
 
 	// Salvar
 	salvarReceita(receita);
@@ -190,7 +188,8 @@ protected ReceitasDAO buscarReceita(long id) {
 
 // Salvar a receita
 protected void salvarReceita(ReceitasDAO receita) {
-	bdScript.salvar(receita);
+//TODO alterar
+		bdScript.salvar(null, receita);
 }
 
 // Excluir a receita

@@ -120,4 +120,10 @@ public class Cartao  extends Activity{
  		
  		return nomesCartoes;
 	}
+	
+	public static long BuscarIdCartao(String nome){
+		long id = 0;
+		id = bdScript.buscarCartaoPorNome(nome).id;
+		return id;
+	}
 }

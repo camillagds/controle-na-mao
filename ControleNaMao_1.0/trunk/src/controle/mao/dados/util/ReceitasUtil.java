@@ -7,7 +7,9 @@ import java.util.Date;
 import java.util.List;
 
 import controle.mao.dados.SQLiteHelper;
+import controle.mao.dados.dao.LancamentoDAO;
 import controle.mao.dados.dao.ReceitasDAO;
+import controle.mao.dados.dao.LancamentoDAO.Lancamentos;
 import controle.mao.dados.dao.ReceitasDAO.Receitas;
 
 import android.content.ContentValues;
@@ -35,6 +37,8 @@ public class ReceitasUtil {
 	// Nome das tabelas
 	public static final String TABELA_RECEITAS = "tb_recebimento";
 
+	private static final String TABELA_LANCAMENTO = "tb_lancamento";
+
 	private SQLiteHelper dbHelper;
 	public SQLiteDatabase db;
 
@@ -48,53 +52,70 @@ public class ReceitasUtil {
 	}
 
 	// Salva o receita, insere um novo ou atualiza
-	public long salvar(ReceitasDAO receita) {
+	public long salvar(LancamentoDAO lancamento, ReceitasDAO receita) {
 		long id = receita.id;
 
 		if (id != 0) {
-			atualizar(receita);
+			atualizar(lancamento, receita);
 		} else {
 			// Insere novo
-			id = inserir(receita);
+			id = inserir(lancamento, receita);
 		}
 
 		return id;
 	}
 
 	// Insere um novo receita
-	public long inserir(ReceitasDAO receita) {
-		ContentValues values = new ContentValues();
-		values.put(Receitas.NOME, receita.nome_receitas);
-		values.put(Receitas.CATEGORIA, receita.categoria_receitas);
-		values.put(Receitas.VALOR, receita.valor_receitas);
-		values.put(Receitas.DATA_PAGAMENTO, receita.dataPagamento_receitas.toString());
-		long id = inserir(values);
-		return id;
+	public long inserir(LancamentoDAO lancamento, ReceitasDAO receita) {
+		ContentValues valuesL = new ContentValues();
+		valuesL.put(Lancamentos.TIPO_LANCAMENTO, lancamento.tipoLancamento_lancamentos);
+		valuesL.put(Lancamentos.DESCRICAO, lancamento.descricao_lancamentos);
+		valuesL.put(Lancamentos.ID_CATEGORIA, lancamento.idCategoria_lancamentos);
+		valuesL.put(Lancamentos.DATA_BAIXA, "0");
+		valuesL.put(Lancamentos.VALOR, lancamento.valor_lancamentos);
+		long idL = inserir(valuesL,TABELA_LANCAMENTO);
+		
+		ContentValues valuesR = new ContentValues();
+		receita.idLancamento_receitas = idL;
+		valuesR.put(Receitas.ID_LANCAMENTO, idL);
+		valuesR.put(Receitas.DATA_CREDITO, receita.dataCredito_receitas.toString());
+		long idR = inserir(valuesR,TABELA_RECEITAS);
+		return idR;
 	}
 
 	// Insere um novo receita
-	public long inserir(ContentValues valores) {
-		long id = db.insert(TABELA_RECEITAS, "", valores);
+	public long inserir(ContentValues valores, String tabela) {
+		long id = db.insert(tabela, "", valores);
 		return id;
 	}
 
 	// Atualiza o receita no banco. O id do receita é utilizado.
-	public int atualizar(ReceitasDAO receita) {
-		ContentValues values = new ContentValues();
-		values.put(Receitas.NOME, receita.nome_receitas);
-		values.put(Receitas.CATEGORIA, receita.categoria_receitas);
-		values.put(Receitas.VALOR, receita.valor_receitas);
-		values.put(Receitas.DATA_PAGAMENTO, receita.dataPagamento_receitas.toString());
+	public int atualizar(LancamentoDAO lancamento, ReceitasDAO receita) {
+		ContentValues valuesL = new ContentValues();
+		valuesL.put(Lancamentos.TIPO_LANCAMENTO, lancamento.tipoLancamento_lancamentos);
+		valuesL.put(Lancamentos.DESCRICAO, lancamento.descricao_lancamentos);
+		valuesL.put(Lancamentos.ID_CATEGORIA, lancamento.idCategoria_lancamentos);
+		valuesL.put(Lancamentos.DATA_BAIXA, lancamento.dataBaixa_lancamentos.toString());
+		valuesL.put(Lancamentos.VALOR, lancamento.valor_lancamentos);
 		
+		ContentValues valuesR = new ContentValues();
+		valuesR.put(Receitas.ID_LANCAMENTO, receita.idLancamento_receitas);
+		valuesR.put(Receitas.DATA_CREDITO, receita.dataCredito_receitas.toString());
 
-		String _id = String.valueOf(receita.id);
+		String _idL = String.valueOf(lancamento.id);
+		String _idR = String.valueOf(receita.id);
 
-		String where = Receitas._ID + "=?";
-		String[] whereArgs = new String[] { _id };
+		// Atualliza Lancamentos
+		String whereL = Lancamentos._ID + "=?";
+		String[] whereArgsL = new String[] { _idL };
+		int countL = atualizar(valuesL, whereL, whereArgsL);
 
-		int count = atualizar(values, where, whereArgs);
-
-		return count;
+		// Atualliza Recebimentos
+		String whereR = Receitas._ID + "=?";
+		String[] whereArgsR = new String[] { _idR };
+		int countR = atualizar(valuesR, whereR, whereArgsR);
+		
+		return countR;
 	}
 
 	// Atualiza o receita com os valores abaixo
@@ -136,13 +157,11 @@ public class ReceitasUtil {
 
 			ReceitasDAO receita = new ReceitasDAO();
 
-			// Lê os dados
+			// Lê os dados		
 			receita.id = c.getLong(0);
-			receita.nome_receitas = c.getString(1);
-			receita.categoria_receitas = c.getString(2);
-			receita.valor_receitas = c.getFloat(3);
-			receita.dataPagamento_receitas = converteData(c, 4);
-						
+			receita.idLancamento_receitas = c.getLong(1);
+			receita.dataCredito_receitas = converteData(c, 2);
+
 			return receita;
 		}
 
@@ -174,10 +193,8 @@ public class ReceitasUtil {
 
 			// Recupera os índices das colunas
 			int idxId = c.getColumnIndex(Receitas._ID);
-			int idxNome = c.getColumnIndex(Receitas.NOME);
-			int idxCategoria = c.getColumnIndex(Receitas.CATEGORIA);
-			int idxValor = c.getColumnIndex(Receitas.VALOR);
-			int idxDataPagamento = c.getColumnIndex(Receitas.DATA_PAGAMENTO);
+			int idxLancamento = c.getColumnIndex(Receitas.ID_LANCAMENTO);
+			int idxDataCredito = c.getColumnIndex(Receitas.DATA_CREDITO);
 
 			// Loop até o final
 			do {
@@ -186,10 +203,8 @@ public class ReceitasUtil {
 
 				// recupera os atributos de receita
 				receita.id = c.getLong(idxId);
-				receita.nome_receitas = c.getString(idxNome);
-				receita.categoria_receitas = c.getString(idxCategoria);
-				receita.valor_receitas = c.getInt(idxValor);
-	            receita.dataPagamento_receitas = converteData(c, idxDataPagamento);
+				receita.idLancamento_receitas = c.getLong(idxLancamento);
+	            receita.dataCredito_receitas = converteData(c, idxDataCredito);
 
 			} while (c.moveToNext());
 		}
@@ -203,7 +218,7 @@ public class ReceitasUtil {
 
 		try {
 			// Idem a: SELECT _id,nome,placa,ano from CARRO where nome = ?
-			Cursor c = db.query(TABELA_RECEITAS, ReceitasDAO.colunas, Receitas.NOME + "='" + nome + "'", null, null, null, null);
+			Cursor c = db.query(TABELA_RECEITAS, ReceitasDAO.colunas, Receitas.ID_LANCAMENTO + "='" + nome + "'", null, null, null, null);
 
 			// Se encontrou...
 			if (c.moveToNext()) {
@@ -212,10 +227,8 @@ public class ReceitasUtil {
 
 				// utiliza os métodos getLong(), getString(), getInt(), etc para recuperar os valores
 				receita.id = c.getLong(0);
-				receita.nome_receitas = c.getString(1);
-				receita.categoria_receitas = c.getString(2);
-				receita.valor_receitas = c.getFloat(3);
-	            receita.dataPagamento_receitas = converteData(c, 4);
+				receita.idLancamento_receitas = c.getLong(1);
+				receita.dataCredito_receitas = converteData(c, 2);
 			}
 		} catch (SQLException e) {
 			Log.e(CATEGORIA, "Erro ao buscar o receita pelo nome: " + e.toString());

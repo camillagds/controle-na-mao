@@ -10,6 +10,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.util.Log;
+import controle.mao.controle.categoria.Categoria;
 import controle.mao.dados.SQLiteHelper;
 import controle.mao.dados.dao.CategoriaDAO;
 import controle.mao.dados.dao.CategoriaDAO.Categorias;
@@ -28,7 +29,7 @@ public class CategoriasUtil {
 	private static final String NOME_BANCO = "bd_cnm";
 
 	// Nome das tabelas
-	public static final String TABELA_CATEGORIAS = "tb_categorias";
+	public static final String TABELA_CATEGORIAS = "tb_categoria";
 
 	private SQLiteHelper dbHelper;
 	public SQLiteDatabase db;
@@ -175,7 +176,6 @@ public class CategoriasUtil {
 
 			} while (c.moveToNext());
 		}
-
 		return categorias;
 	}
 

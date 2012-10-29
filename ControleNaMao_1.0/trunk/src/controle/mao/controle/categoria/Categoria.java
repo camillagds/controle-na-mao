@@ -12,8 +12,11 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
+import controle.mao.controle.cartoes.Cartao;
+import controle.mao.controle.lancamentos.Despesa;
 import controle.mao.dados.dao.CategoriaDAO;
 import controle.mao.dados.util.CategoriasUtil;
+import controle.mao.dados.util.DespesasUtil;
 import controle.mao.visualizacao.TelaAddCategoria;
 
 public class Categoria extends Activity{
@@ -88,7 +91,7 @@ public class Categoria extends Activity{
 		// TODO Auto-generated method stub
 		return bdScript.listarCategorias();
 	}
-		
+	
 	public static List<String> SpinnerCategorias(){
 		// Lista - Categorias
 		List<CategoriaDAO> categorias = listaCategorias();
@@ -96,8 +99,13 @@ public class Categoria extends Activity{
  		for (int i = 0; i < categorias.size(); i++) {
  			nomesCategorias.add(categorias.get(i).nome_categoria);
  		}
- 		
  		return nomesCategorias;
+	}
+	
+	public static long BuscarIdCategoria(String nome){
+		long id = 0;
+		id = bdScript.buscarCategoriaPorNome(nome).id;
+		return id;
 	}
 	
 }

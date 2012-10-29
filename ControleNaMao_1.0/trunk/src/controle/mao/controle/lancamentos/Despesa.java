@@ -10,12 +10,11 @@ import android.util.Log;
 import android.widget.DatePicker;
 import controle.mao.controle.cartoes.Cartao;
 import controle.mao.controle.categoria.Categoria;
-import controle.mao.dados.dao.CategoriaDAO;
 import controle.mao.dados.dao.DespesasDAO;
-import controle.mao.dados.util.CartoesUtil;
-import controle.mao.dados.util.CategoriasUtil;
+import controle.mao.dados.dao.LancamentoDAO;
 import controle.mao.dados.util.DespesasUtil;
 import controle.mao.visualizacao.TelaAddDespesas;
+import controle.mao.visualizacao.TelaAddReceitas;
 
 public class Despesa extends Activity{
 	
@@ -25,6 +24,7 @@ public class Despesa extends Activity{
 	// Campos texto
 	private static Long id;
 	public static DespesasUtil bdScript;
+
 	
 //	private static CategoriasUtil bdScriptCategorias;
 	
@@ -41,23 +41,31 @@ public class Despesa extends Activity{
 		}
 		
 		DespesasDAO despesa = new DespesasDAO();
+		LancamentoDAO lancamento = new LancamentoDAO();
+
 		if (id != null) {
 			// É uma atualização
 			despesa.id = id;
 		}
-		despesa.descricao = TelaAddDespesas.getTxtDescricaoCartao().getText().toString();
+		//todo arrumar tudo isso ai
+		lancamento.tipoLancamento_lancamentos = "D";
+		lancamento.descricao_lancamentos = TelaAddDespesas.getTxtDescricaoDespesas().getText().toString();
 		String temp = TelaAddDespesas.getNomeCategoriaBD();
 		Log.e("cnm", TelaAddDespesas.getNomeCategoriaBD());
-		despesa.id_categorias = Categoria.bdScript.buscarCategoriaPorNome(temp).id;
-		despesa.tipo_cartao = TelaAddDespesas.getNomeTipoCartaoBD();
-		despesa.modalidade = TelaAddDespesas.nomeFormaPagtoBD;
-		despesa.data_pagamento = converteData(TelaAddDespesas.getDtDebitoDespesas());
-		despesa.valor = valorDespesa;
-		despesa.id_cartao = Cartao.bdScript.buscarCartaoPorNome(TelaAddDespesas.nomeFormaPagtoBD).id;
+		lancamento.idCategoria_lancamentos = Categoria.BuscarIdCategoria(temp);
+		lancamento.dataBaixa_lancamentos = null;
+		lancamento.valor_lancamentos = valorDespesa;
 
+		despesa.tipoCartao = TelaAddDespesas.getNomeTipoCartaoBD();
+		despesa.formaPagto = TelaAddDespesas.nomeFormaPagtoBD;
+		despesa.dataVencimento = converteData(TelaAddDespesas.getDtDebitoDespesas());
+		despesa.id_cartao = Cartao.BuscarIdCartao(TelaAddDespesas.getNomeCartaoBD());
+		
 		// Salvar
-		salvarDespesa(despesa);
-
+		salvarDespesa(lancamento, despesa);
+		Log.i("cnm", lancamento.toString());
+		Log.i("cnm", despesa.toString());
+		
 		// OK
 		setResult(RESULT_OK, new Intent());
 
@@ -85,8 +93,8 @@ public class Despesa extends Activity{
 	}
 
 	// Salvar a receita
-	protected void salvarDespesa(DespesasDAO despesa) {
-		bdScript.salvar(despesa);
+	protected void salvarDespesa(LancamentoDAO lancamento, DespesasDAO despesa) {
+		bdScript.salvar(lancamento, despesa);
 	}
 
 	// Excluir a receita
@@ -94,8 +102,22 @@ public class Despesa extends Activity{
 		bdScript.deletar(id);
 	}
 	
+//    public String converteData(DatePicker campoData) {  	 
+//    	campoData = TelaAddDespesas.getDtDebitoDespesas();
+//		Date data = new Date(campoData.getYear(), campoData.getMonth(), campoData.getDayOfMonth());
+//	        String dataTransf = null;
+////	        SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd");
+//	        
+//	        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+//	        formato.applyPattern("yyyy-MM-dd");
+//	        
+//	        dataTransf  = formato.format(data);
+//		
+//		return dataTransf;
+//	}
+    
     public Date converteData(DatePicker campoData) {  	 
-    	campoData = TelaAddDespesas.getDtDebitoDespesas();
+//    	campoData = TelaAddReceitas.getDtCreditoReceitas();
 		Date data = new Date(campoData.getYear(), campoData.getMonth(), campoData.getDayOfMonth());
 		return data;
 	}
@@ -111,7 +133,7 @@ public class Despesa extends Activity{
 	}
     
 	
-	public List<DespesasDAO> listaReceitas() {
+	public List<DespesasDAO> listaDespesas() {
 		// TODO Auto-generated method stub
 		return bdScript.listarDespesas();
 	}

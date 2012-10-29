@@ -28,7 +28,7 @@ public class CartoesUtil {
 	private static final String NOME_BANCO = "bd_cnm";
 
 	// Nome das tabelas
-	public static final String TABELA_CARTOES = "tb_cartoes";
+	public static final String TABELA_CARTOES = "tb_cartao";
 
 	private SQLiteHelper dbHelper;
 	public SQLiteDatabase db;

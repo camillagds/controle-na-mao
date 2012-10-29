@@ -9,6 +9,9 @@ import java.util.List;
 import controle.mao.dados.SQLiteHelper;
 import controle.mao.dados.dao.DespesasDAO;
 import controle.mao.dados.dao.DespesasDAO.Despesas;
+import controle.mao.dados.dao.LancamentoDAO;
+import controle.mao.dados.dao.LancamentoDAO.Lancamentos;
+import controle.mao.dados.dao.ReceitasDAO.Receitas;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -34,7 +37,8 @@ public class DespesasUtil {
 
 	// Nome das tabelas
 	public static final String TABELA_DESPESAS = "tb_despesa";
-
+	public static final String TABELA_LANCAMENTOS = "tb_lancamento";
+	
 	private SQLiteHelper dbHelper;
 	public SQLiteDatabase db;
 
@@ -48,59 +52,80 @@ public class DespesasUtil {
 	}
 
 	// Salva a despesa, insere uma nova ou atualiza
-	public long salvar(DespesasDAO receita) {
+	public long salvar(LancamentoDAO lancamento, DespesasDAO receita) {
 		long id = receita.id;
 
 		if (id != 0) {
-			atualizar(receita);
+			atualizar(lancamento, receita);
 		} else {
 			// Insere novo
-			id = inserir(receita);
+			id = inserir(lancamento, receita);
 		}
 
 		return id;
 	}
 
 	// Insere uma nova despesa
-	public long inserir(DespesasDAO despesa) {
-		ContentValues values = new ContentValues();
-		values.put(Despesas.DESCRICAO, despesa.descricao);
-		values.put(Despesas.CATEGORIA, despesa.id_categorias);
-		values.put(Despesas.TIPO_CARTAO, despesa.tipo_cartao);
-		values.put(Despesas.MODALIDADE, despesa.modalidade);
-		values.put(Despesas.DATA_PAGAMENTO, despesa.data_pagamento.toString());
-		values.put(Despesas.VALOR, despesa.valor);
-		values.put(Despesas.CARTAO, despesa.id_cartao);
-		long id = inserir(values);
-		return id;
+	public long inserir(LancamentoDAO lancamento, DespesasDAO despesa) {
+		
+		ContentValues valuesL = new ContentValues();
+		valuesL.put(Lancamentos.TIPO_LANCAMENTO, lancamento.tipoLancamento_lancamentos);
+		valuesL.put(Lancamentos.DESCRICAO, lancamento.descricao_lancamentos);
+		valuesL.put(Lancamentos.ID_CATEGORIA, lancamento.idCategoria_lancamentos);
+		valuesL.put(Lancamentos.DATA_BAIXA, "0");
+		valuesL.put(Lancamentos.VALOR, lancamento.valor_lancamentos);
+		long idL = inserir(TABELA_LANCAMENTOS,valuesL);
+		
+		ContentValues valuesD = new ContentValues();
+		despesa.idLancamento = idL;
+		valuesD.put(Despesas.LANCAMENTO, idL);
+		valuesD.put(Despesas.DATA_VENCIMENTO, despesa.dataVencimento.toString());
+		valuesD.put(Despesas.FORMA_PAGTO, despesa.formaPagto);
+		valuesD.put(Despesas.TIPO_CARTAO, despesa.tipoCartao);
+		valuesD.put(Despesas.CARTAO, despesa.id_cartao);
+		long idD = inserir(TABELA_DESPESAS,valuesD);
+		return idD;
 	}
 
 	// Insere uma nova despesa
-	public long inserir(ContentValues valores) {
-		long id = db.insert(TABELA_DESPESAS, "", valores);
+	public long inserir(String tabela, ContentValues valores) {
+		long id = db.insert(tabela, "", valores);
 		return id;
 	}
 
 	// Atualiza a despesa no banco. O id do receita é utilizado.
-	public int atualizar(DespesasDAO despesa) {
-		ContentValues values = new ContentValues();
-		values.put(Despesas.DESCRICAO, despesa.descricao);
-		values.put(Despesas.CATEGORIA, despesa.id_categorias);
-		values.put(Despesas.TIPO_CARTAO, despesa.tipo_cartao);
-		values.put(Despesas.MODALIDADE, despesa.modalidade);
-		values.put(Despesas.DATA_PAGAMENTO, despesa.data_pagamento.toString());
-		values.put(Despesas.VALOR, despesa.valor);
-		values.put(Despesas.CARTAO, despesa.id_cartao);
+	public int atualizar(LancamentoDAO lancamento, DespesasDAO despesa) {
+		ContentValues valuesL = new ContentValues();
+		valuesL.put(Lancamentos.TIPO_LANCAMENTO, lancamento.tipoLancamento_lancamentos);
+		valuesL.put(Lancamentos.DESCRICAO, lancamento.descricao_lancamentos);
+		valuesL.put(Lancamentos.ID_CATEGORIA, lancamento.idCategoria_lancamentos);
+		valuesL.put(Lancamentos.DATA_BAIXA, lancamento.dataBaixa_lancamentos.toString());
+		valuesL.put(Lancamentos.VALOR, lancamento.valor_lancamentos);
+		long idL = inserir(TABELA_LANCAMENTOS,valuesL);
 		
+		ContentValues valuesD = new ContentValues();
+		despesa.idLancamento = idL;
+		valuesD.put(Despesas.LANCAMENTO, idL);
+		valuesD.put(Despesas.DATA_VENCIMENTO, despesa.dataVencimento.toString());
+		valuesD.put(Despesas.FORMA_PAGTO, despesa.formaPagto);
+		valuesD.put(Despesas.TIPO_CARTAO, despesa.tipoCartao);
+		valuesD.put(Despesas.CARTAO, despesa.id_cartao);
+		long idD = inserir(TABELA_DESPESAS,valuesD);
+		
+		String _idL = String.valueOf(lancamento.id);
+		String _idD = String.valueOf(despesa.id);
 
-		String _id = String.valueOf(despesa.id);
+		// Atualliza Lancamentos
+		String whereL = Lancamentos._ID + "=?";
+		String[] whereArgsL = new String[] { _idL };
+		int countL = atualizar(valuesL, whereL, whereArgsL);
 
-		String where = Despesas._ID + "=?";
-		String[] whereArgs = new String[] { _id };
+		// Atualliza Recebimentos
+		String whereD = Receitas._ID + "=?";
+		String[] whereArgsD = new String[] { _idD };
+		int countD = atualizar(valuesD, whereD, whereArgsD);
 
-		int count = atualizar(values, where, whereArgs);
-
-		return count;
+		return countD;
 	}
 
 	// Atualiza a despesa com os valores abaixo
@@ -144,13 +169,11 @@ public class DespesasUtil {
 
 			// Lê os dados
 			despesa.id = c.getLong(0);
-			despesa.descricao = c.getString(1);
-			despesa.id_categorias = c.getInt(2);
-			despesa.tipo_cartao = c.getString(3);
-			despesa.modalidade = c.getString(4);
-			despesa.data_pagamento = converteData(c, 5);
-			despesa.valor = c.getFloat(6);		
-			despesa.id_cartao = c.getInt(7);
+			despesa.idLancamento = c.getLong(1);
+			despesa.dataVencimento = converteData(c,2);
+			despesa.formaPagto = c.getString(3);
+			despesa.tipoCartao = c.getString(4);
+			despesa.id_cartao = c.getInt(5);
 			
 			return despesa;
 		}
@@ -183,27 +206,23 @@ public class DespesasUtil {
 
 			// Recupera os índices das colunas
 			int idxId = c.getColumnIndex(Despesas._ID);
-			int idxDescricao = c.getColumnIndex(Despesas.DESCRICAO);
-			int idxCategoria = c.getColumnIndex(Despesas.CATEGORIA);
+			int idxLancamento = c.getColumnIndex(Despesas.LANCAMENTO);
+			int idxDataVencimento = c.getColumnIndex(Despesas.DATA_VENCIMENTO);
+			int idxFormaPagto = c.getColumnIndex(Despesas.FORMA_PAGTO);
 			int idxTipoCartao = c.getColumnIndex(Despesas.TIPO_CARTAO);
-			int idxModalidade = c.getColumnIndex(Despesas.MODALIDADE);
-			int idxDataPagamento = c.getColumnIndex(Despesas.DATA_PAGAMENTO);
-			int idxValor = c.getColumnIndex(Despesas.VALOR);
 			int idxCartao = c.getColumnIndex(Despesas.CARTAO);
 			// Loop até o final
 			do {
-				DespesasDAO receita = new DespesasDAO();
-				despesas.add(receita);
+				DespesasDAO despesa = new DespesasDAO();
+				despesas.add(despesa);
 
 				// recupera os atributos de receita
-				receita.id = c.getLong(idxId);
-				receita.descricao = c.getString(idxDescricao);
-				receita.id_categorias = c.getInt(idxCategoria);
-				receita.tipo_cartao = c.getString(idxTipoCartao);
-				receita.modalidade = c.getString(idxModalidade);
-	            receita.data_pagamento = converteData(c, idxDataPagamento);
-	            receita.valor = c.getFloat(idxValor);
-	            receita.id_cartao = c.getInt(idxCartao);
+				despesa.id = c.getLong(idxId);
+				despesa.idLancamento = c.getLong(idxLancamento);
+				despesa.dataVencimento = converteData(c, idxDataVencimento);
+				despesa.formaPagto = c.getString(idxFormaPagto);
+				despesa.tipoCartao = c.getString(idxTipoCartao);
+	            despesa.id_cartao = c.getInt(idxCartao);
 	            
 			} while (c.moveToNext());
 		}
@@ -214,32 +233,30 @@ public class DespesasUtil {
 	// Busca a despesa pelo nome "select * from tb_despesas where descricao=?"
 	public DespesasDAO buscarDespesaPorNome(String nome) {
 		DespesasDAO despesa = null;
-
-		try {
-			// Idem a: SELECT _id,nome,placa,ano from CARRO where nome = ?
-			Cursor c = db.query(TABELA_DESPESAS, DespesasDAO.colunas, Despesas.DESCRICAO + "='" + nome + "'", null, null, null, null);
-
-			// Se encontrou...
-			if (c.moveToNext()) {
-
-				despesa = new DespesasDAO();
-
-				// utiliza os métodos getLong(), getString(), getInt(), etc para recuperar os valores
-				despesa.id = c.getLong(0);
-				despesa.descricao = c.getString(1);
-				despesa.id_categorias = c.getInt(2);
-				despesa.tipo_cartao = c.getString(3);
-				despesa.modalidade = c.getString(4);
-				despesa.data_pagamento = converteData(c, 5);
-				despesa.valor = c.getFloat(6);		
-				despesa.id_cartao = c.getInt(7);
-				
-			}
-		} catch (SQLException e) {
-			Log.e(CATEGORIA, "Erro ao buscar a despesa pelo nome: " + e.toString());
-			return null;
-		}
-
+//
+//		try {
+//			// Idem a: SELECT _id,nome,placa,ano from CARRO where nome = ?
+//			Cursor c = db.query(TABELA_DESPESAS, DespesasDAO.colunas, Despesas.DESCRICAO + "='" + nome + "'", null, null, null, null);
+//
+//			// Se encontrou...
+//			if (c.moveToNext()) {
+//
+//				despesa = new DespesasDAO();
+//
+//				// utiliza os métodos getLong(), getString(), getInt(), etc para recuperar os valores
+//				despesa.id = c.getLong(0);
+//				despesa.idLancamento = c.getLong(1);
+//				despesa.dataVencimento = converteData(c,2);
+//				despesa.formaPagto = c.getString(3);
+//				despesa.tipoCartao = c.getString(4);
+//				despesa.id_cartao = c.getInt(5);
+//				
+//			}
+//		} catch (SQLException e) {
+//			Log.e(CATEGORIA, "Erro ao buscar a despesa pelo nome: " + e.toString());
+//			return null;
+//		}
+//
 		return despesa;
 	}
 	
