@@ -14,7 +14,7 @@ import android.provider.BaseColumns;
  */
 public class ReceitasDAO {
 
-	public static String[] colunas = new String[] { Receitas._ID, Receitas.NOME, Receitas.CATEGORIA, Receitas.VALOR, Receitas.DATA_PAGAMENTO};
+	public static String[] colunas = new String[] { Receitas._ID, Receitas.ID_LANCAMENTO, Receitas.DATA_CREDITO};
 
 	/**
 	 * Pacote do Content Provider. Precisa ser único.
@@ -22,29 +22,23 @@ public class ReceitasDAO {
 	public static final String AUTHORITY = "controle.mao.provider.dados";
 
 	public long id;
-	public String nome_receitas;
-	public String categoria_receitas;
-	public float valor_receitas;
-	public Date dataPagamento_receitas;
+	public long idLancamento_receitas;
+	public Date dataCredito_receitas;
 
 	public ReceitasDAO() {
 	}
 
-	public ReceitasDAO(String nome, String categoria, float valor, Date dataPagamento) {
+	public ReceitasDAO(long idLancamento, Date dataCredito) {
 		super();
-		this.nome_receitas = nome;
-		this.categoria_receitas = categoria;
-		this.valor_receitas = valor;
-		this.dataPagamento_receitas = dataPagamento;
+		this.idLancamento_receitas = idLancamento;
+		this.dataCredito_receitas = dataCredito;
 	}
 
-	public ReceitasDAO(long id, String nome, String categoria, float valor, Date dataPagamento) {
+	public ReceitasDAO(long id, long idLancamento, Date dataCredito) {
 		super();
 		this.id = id;
-		this.nome_receitas = nome;
-		this.categoria_receitas = categoria;
-		this.valor_receitas = valor;
-		this.dataPagamento_receitas = dataPagamento;
+		this.idLancamento_receitas = idLancamento;
+		this.dataCredito_receitas = dataCredito;
 	}
 
 	/**
@@ -72,10 +66,8 @@ public class ReceitasDAO {
 		// Ordenação default para inserir no order by
 		public static final String DEFAULT_SORT_ORDER = "_id ASC";
 		
-		public static final String NOME = "descricao";
-		public static final String CATEGORIA = "id_categoria";
-		public static final String VALOR = "valor";
-		public static final String DATA_PAGAMENTO = "data_pagamento";
+		public static final String ID_LANCAMENTO = "id_lancamento";
+		public static final String DATA_CREDITO = "data_credito";
 
 	
 		// Método que constrói uma Uri para um Carro específico, com o seu id
@@ -89,6 +81,6 @@ public class ReceitasDAO {
 
 	@Override
 	public String toString() {
-		return "Nome: " + nome_receitas +"Categoria: " + categoria_receitas + "Valor: " + valor_receitas + "Data Pagamento" + dataPagamento_receitas;
+		return "Lancamento: " + idLancamento_receitas +" Data de Credito: " + dataCredito_receitas;
 	}
 }

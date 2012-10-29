@@ -5,6 +5,8 @@ import controle.mao.controle.cartoes.Cartao;
 import controle.mao.controle.categoria.Categoria;
 import controle.mao.controle.lancamentos.Despesa;
 import controle.mao.controle.lancamentos.Receita;
+import controle.mao.dados.util.CartoesUtil;
+import controle.mao.dados.util.CategoriasUtil;
 import controle.mao.dados.util.DespesasUtil;
 import android.os.Bundle;
 import android.app.Activity;
@@ -46,28 +48,32 @@ public class TelaAddDespesas extends Activity {
 	private TableRow rowCartoes;
 	
 	//BD
-	private String nomeCartaoBD;
+	private static String nomeCartaoBD;
+
+	private Categoria bdScriptCategorias;
+
+	private Cartao bdScriptCartoes;
 	private static EditText txtValorDespesas;
 	private static String nomeCategoriaBD;
-	private static EditText txtDescricaoCartao;
+	private static EditText txtDescricaoDespesas;
 	public static String nomeFormaPagtoBD;
-	private static String nomeTipoCartaoBD;
-	
-	
-	
+	private static String nomeTipoCartaoBD;	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.lanc_despesas);
 	    bdScript = new Despesa(new DespesasUtil(this));
+	    bdScriptCategorias = new Categoria(new CategoriasUtil(this));
+	    bdScriptCartoes = new Cartao(new CartoesUtil(this));
+
 		//Ocultar Teclado
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
 		// Elementos
 		btConfirmar = (ImageButton) findViewById(R.id.btConfirmarDespesas);
 		btCancelar = (ImageButton) findViewById(R.id.btCancelarDespesas);
-		setTxtDescricaoCartao((EditText) findViewById(R.id.txtDescricaoDespesas));
+		setTxtDescricaoDespesas((EditText) findViewById(R.id.txtDescricaoDespesas));
 		setTxtValorDespesas((EditText) findViewById(R.id.txtValorDespesas));
 		dbFormaPgtoDespesas = (Spinner) findViewById(R.id.dbFormaPgtoDespesas);
 		dbCategoriaDespesas = (Spinner) findViewById(R.id.dbCategoriaDespesas);
@@ -109,12 +115,15 @@ public class TelaAddDespesas extends Activity {
 
         });
 
+        //Lista - Categorias
+        Spinner dbCategoriaDespesas = (Spinner) findViewById(R.id.dbCategoriaDespesas);
+		
 		// Lista - Categorias
 		ArrayAdapter<String> listaCategorias = new ArrayAdapter<String>
-				(this, android.R.layout.simple_spinner_item, Categoria.SpinnerCategorias());
-		
+			(this, android.R.layout.simple_spinner_item, Categoria.SpinnerCategorias());
+	
 		listaCategorias
-				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		dbCategoriaDespesas.setAdapter(listaCategorias);
 		dbCategoriaDespesas.setOnItemSelectedListener(new OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -158,7 +167,9 @@ public class TelaAddDespesas extends Activity {
 		// Bt Confirmar
 		btConfirmar.setOnClickListener(new ImageView.OnClickListener() {
 			public void onClick(View v) {
+//				Categoria.bdScript.fechar();
 				bdScript.salvar();
+
 				// OK
 				setResult(RESULT_OK, new Intent());
 
@@ -183,7 +194,7 @@ public class TelaAddDespesas extends Activity {
 				Intent trocatela = new Intent(TelaAddDespesas.this,
 						ControleNaMaoActivity.class);
 				TelaAddDespesas.this.startActivity(trocatela);
-				TelaAddDespesas.this.finish();
+//				TelaAddDespesas.this.finish();
 			}
 		});
 	}
@@ -220,7 +231,7 @@ public class TelaAddDespesas extends Activity {
 			break;
 		case R.id.rdDebitoCartaoDespesas:
 			setNomeTipoCartaoBD("Debito");
-			break;
+			break; 
 		}
 	}
 	
@@ -250,6 +261,19 @@ public class TelaAddDespesas extends Activity {
 	return ret;
 	}
 	
+	protected void onPause() {
+		super.onPause();
+		// Cancela para não ficar nada na tela pendente
+		setResult(RESULT_CANCELED);
+
+		// Fecha a tela
+		finish();
+		
+		// Fecha o banco
+		Despesa.bdScript.fechar();
+		Categoria.bdScript.fechar();
+	}
+	
 
 @Override
 protected void onDestroy() {
@@ -259,21 +283,6 @@ protected void onDestroy() {
 	Categoria.bdScript.fechar();
 	Cartao.bdScript.fechar();
 }
-
-@Override
-protected void onPause() {
-	super.onPause();
-	// Cancela para não ficar nada na tela pendente
-	setResult(RESULT_CANCELED);
-
-	// Fecha a tela
-	finish();
-	
-	// Fecha o banco
-	Receita.bdScript.fechar();
-	Categoria.bdScript.fechar();
-	Cartao.bdScript.fechar();
-	}
 
 public static String getNomeTipoCartaoBD() {
 	return nomeTipoCartaoBD;
@@ -291,16 +300,16 @@ public void setNomeFormaPagtoBD(String nomeFormaPagtoBD) {
 	TelaAddDespesas.nomeFormaPagtoBD = nomeFormaPagtoBD;
 }
 
-public static EditText getTxtDescricaoCartao() {
-	return txtDescricaoCartao;
+public static EditText getTxtDescricaoDespesas() {
+	return txtDescricaoDespesas;
 }
 
-public void setTxtDescricaoCartao(EditText txtDescricaoCartao) {
-	TelaAddDespesas.txtDescricaoCartao = txtDescricaoCartao;
+public void setTxtDescricaoDespesas(EditText txtDescricaoCartao) {
+	TelaAddDespesas.txtDescricaoDespesas = txtDescricaoCartao;
 }
 
 public static String getNomeCategoriaBD() {
-	Log.e("cnm", nomeCategoriaBD);
+	Log.e("cnm-D", nomeCategoriaBD);
 	return nomeCategoriaBD;
 }
 
@@ -325,12 +334,12 @@ public void setTxtValorDespesas(EditText txtValorDespesas) {
 	TelaAddDespesas.txtValorDespesas = txtValorDespesas;
 }
 
-public String getNomeCartaoBD() {
+public static String getNomeCartaoBD() {
 	return nomeCartaoBD;
 }
 
 public void setNomeCartaoBD(String nomeCartaoBD) {
-	this.nomeCartaoBD = nomeCartaoBD;
+	TelaAddDespesas.nomeCartaoBD = nomeCartaoBD;
 }
 
 }

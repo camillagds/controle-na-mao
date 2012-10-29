@@ -1,21 +1,8 @@
 package controle.mao.visualizacao;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
-import org.xml.sax.DTDHandler;
-
 import controle.mao.R;
-import controle.mao.controle.cartoes.Cartao;
 import controle.mao.controle.categoria.Categoria;
 import controle.mao.controle.lancamentos.Receita;
-import controle.mao.dados.dao.CartaoDAO;
-import controle.mao.dados.dao.CategoriaDAO;
-import controle.mao.dados.dao.ControleDAO;
-import controle.mao.dados.dao.ReceitasDAO;
-import controle.mao.dados.util.CartoesUtil;
 import controle.mao.dados.util.CategoriasUtil;
 import controle.mao.dados.util.ReceitasUtil;
 
@@ -30,11 +17,9 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.AdapterView.OnItemSelectedListener;
 
@@ -53,8 +38,6 @@ public class TelaAddReceitas extends Activity {
 	private static EditText txtDescricaoReceitas;
 	private Spinner dbCategoriaReceitas;
 	private static EditText txtValorReceitas;
-	private Long id;
-	
 	protected static final int INSERIR_EDITAR = 1;
 	protected static final int BUSCAR = 2;
 	
@@ -70,7 +53,7 @@ public class TelaAddReceitas extends Activity {
         
         //Elementos
         setTxtDescricaoReceitas((EditText) findViewById(R.id.txtDescricaoReceitas));
-        dbCategoriaReceitas = (Spinner) findViewById(R.id.dbCategoriaReceitas);
+//        dbCategoriaReceitas = (Spinner) findViewById(R.id.dbCategoriaReceitas);
         setTxtValorReceitas((EditText) findViewById(R.id.txtValorReceitas));
         setDtCreditoReceitas((DatePicker) findViewById(R.id.dtCreditoReceitas));
         Receita.setCurrentDateOnView(getDtCreditoReceitas());
@@ -89,10 +72,15 @@ public class TelaAddReceitas extends Activity {
 				public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                  	//Pega Nome Pela Posição
                  	setNomeCategoriaBD(parentView.getItemAtPosition(position).toString());
+//                 	setNomeCategoriaBD(String.valueOf(parentView.getId()));
+                 	System.out.println(getNomeCategoriaBD());
+                 	
                  }
 
                  public void onNothingSelected(AdapterView<?> parentView) {
                      // your code here
+//                  	setNomeCategoriaBD(String.valueOf(parentView.getId()));
+//                 	System.out.println(getNomeCategoriaBD());
                  }
 
              });
@@ -101,11 +89,13 @@ public class TelaAddReceitas extends Activity {
     		btSalvar = (ImageButton) findViewById(R.id.btSalvarReceitas);
     		btSalvar.setOnClickListener(new OnClickListener() {
     			public void onClick(View view) {
+//    				Categoria.bdScript.fechar();
     				bdScript.salvar();
 					// OK
 					setResult(RESULT_OK, new Intent());
 
 					// Fecha a tela
+					
 					finish();
 					
 					// Trocar Tela
@@ -184,6 +174,7 @@ public static String getNomeCategoriaBD() {
 
 
 public void setNomeCategoriaBD(String nomeCategoriaBD) {
+	Log.e("cnm-R", nomeCategoriaBD);
 	TelaAddReceitas.nomeCategoriaBD = nomeCategoriaBD;
 }
 

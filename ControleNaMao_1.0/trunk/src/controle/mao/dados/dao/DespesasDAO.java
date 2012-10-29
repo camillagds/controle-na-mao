@@ -14,7 +14,7 @@ import android.provider.BaseColumns;
  */
 public class DespesasDAO {
 
-	public static String[] colunas = new String[] { Despesas._ID, Despesas.DESCRICAO, Despesas.CATEGORIA, Despesas.TIPO_CARTAO, Despesas.MODALIDADE, Despesas.DATA_PAGAMENTO, Despesas.VALOR, Despesas.CARTAO};
+	public static String[] colunas = new String[] { Despesas._ID, Despesas.LANCAMENTO, Despesas.DATA_VENCIMENTO, Despesas.FORMA_PAGTO, Despesas.TIPO_CARTAO, Despesas.CARTAO};
 
 	/**
 	 * Pacote do Content Provider. Precisa ser único.
@@ -22,39 +22,31 @@ public class DespesasDAO {
 	public static final String AUTHORITY = "controle.mao.provider.dados";
 
 	public long id;
-	public String descricao;
-	public long id_categorias;
-	public String tipo_cartao;
-	public String modalidade;
-	public Date data_pagamento;
-	public Float valor;
+	public long idLancamento;
+	public Date dataVencimento;
+	public String formaPagto;
+	public String tipoCartao;
 	public long id_cartao;
-	
 
 	public DespesasDAO() {
 	}
 
-	public DespesasDAO(String descricao, long id_categorias, String tipo_cartao, String modalidade, Date data_pagamento, Float valor, long parcelas, String periodo, long id_cartao) {
-		super();
-		
-		this.descricao = descricao;
-		this.id_categorias = id_categorias;
-		this.tipo_cartao = tipo_cartao;
-		this.modalidade = modalidade;
-		this.data_pagamento = data_pagamento;
-		this.valor = valor;
+	public DespesasDAO(long id_lancamento, Date dataVencimento, String formaPagto, String tipo_cartao, long id_cartao) {
+		super();	
+		this.idLancamento = id_lancamento;
+		this.dataVencimento = dataVencimento;
+		this.formaPagto = formaPagto;
+		this.tipoCartao = tipo_cartao;
 		this.id_cartao = id_cartao;
 	}
 
-	public DespesasDAO(long id, String descricao, long id_categorias, String tipo_cartao, String modalidade, Date data_pagamento, Float valor, long parcelas, String periodo, long id_cartao) {
+	public DespesasDAO(long id, long id_lancamento, Date dataVencimento, String formaPagto, String tipo_cartao, long id_cartao) {
 		super();
 		this.id = id;
-		this.descricao = descricao;
-		this.id_categorias = id_categorias;
-		this.tipo_cartao = tipo_cartao;
-		this.modalidade = modalidade;
-		this.data_pagamento = data_pagamento;
-		this.valor = valor;
+		this.idLancamento = id_lancamento;
+		this.dataVencimento = dataVencimento;
+		this.formaPagto = formaPagto;
+		this.tipoCartao = tipo_cartao;
 		this.id_cartao = id_cartao;
 	}
 
@@ -83,12 +75,10 @@ public class DespesasDAO {
 		// Ordenação default para inserir no order by
 		public static final String DEFAULT_SORT_ORDER = "_id ASC";
 		
-		public static final String DESCRICAO = "descricao";
-		public static final String CATEGORIA = "id_categoria";
-		public static final String TIPO_CARTAO = "tipo_cartao";
-		public static final String MODALIDADE = "modalidade";		
-		public static final String DATA_PAGAMENTO = "data_pagamento";
-		public static final String VALOR = "valor";
+		public static final String LANCAMENTO = "id_lancamento";
+		public static final String DATA_VENCIMENTO = "data_vencimento";
+		public static final String FORMA_PAGTO = "forma_pagto";
+		public static final String TIPO_CARTAO = "tipo_cartao";		
 		public static final String CARTAO = "id_cartao";
 	
 		// Método que constrói uma Uri para um Carro específico, com o seu id
@@ -102,6 +92,6 @@ public class DespesasDAO {
 
 	@Override
 	public String toString() {
-		return "Nome: " + descricao +"Categoria: " + id_categorias + "Tipo do Cartão: " + tipo_cartao + "Modalidade: " + modalidade + "Data para Pagamento: " + data_pagamento + "Valor: "+valor + "Cartão: " + id_cartao;
+		return "Lancamento: " + idLancamento +" Data de Vencimento: " + dataVencimento + "Forma de Pagamento: "+ formaPagto +"Tipo do Cartão: " + tipoCartao + "Cartão: " + id_cartao;
 	}
 }

@@ -6,11 +6,14 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.DatePicker;
-import controle.mao.dados.dao.CategoriaDAO;
+import controle.mao.controle.cartoes.Cartao;
+import controle.mao.controle.categoria.Categoria;
+import controle.mao.dados.dao.LancamentoDAO;
 import controle.mao.dados.dao.ReceitasDAO;
-import controle.mao.dados.util.CategoriasUtil;
 import controle.mao.dados.util.ReceitasUtil;
+import controle.mao.visualizacao.TelaAddDespesas;
 import controle.mao.visualizacao.TelaAddReceitas;
 
 public class Receita extends Activity{
@@ -21,32 +24,37 @@ public class Receita extends Activity{
 	// Campos texto
 	private static Long id;
 	public static ReceitasUtil bdScript;
-//	private static CategoriasUtil bdScriptCategorias;
-	
 	public Receita(ReceitasUtil bd){
 		Receita.bdScript = bd;
 	}
 
 	public void salvar() {
-		float valorReceita = 0;
+		float valorLancamento = 0;
 		try {
-			valorReceita = Float.parseFloat(TelaAddReceitas.getTxtValorReceitas().getText().toString());
+			valorLancamento = Float.parseFloat(TelaAddReceitas.getTxtValorReceitas().getText().toString());
 		} catch (NumberFormatException e) {
-			// ok neste exemplo, tratar isto em aplicações reais
+			//tratar isto 
 		}
-		
+		LancamentoDAO lancamento = new LancamentoDAO();		
 		ReceitasDAO receita = new ReceitasDAO();
 		if (id != null) {
 			// É uma atualização
-			receita.id = id;
+			lancamento.id = id;
 		}
-		receita.nome_receitas = TelaAddReceitas.getTxtDescricaoReceitas().getText().toString();
-		receita.categoria_receitas = TelaAddReceitas.getNomeCategoriaBD();
-		receita.valor_receitas = valorReceita;
-		receita.dataPagamento_receitas = converteData(TelaAddReceitas.getDtCreditoReceitas());
+		//TODO declarar as variaveis do BD
+		lancamento.tipoLancamento_lancamentos = "R";
+		lancamento.descricao_lancamentos = TelaAddReceitas.getTxtDescricaoReceitas().getText().toString();
+		String temp = TelaAddReceitas.getNomeCategoriaBD();
+		Log.e("cnm", TelaAddReceitas.getNomeCategoriaBD());
+		lancamento.idCategoria_lancamentos = Categoria.BuscarIdCategoria(temp);
+		lancamento.dataBaixa_lancamentos = converteData(TelaAddReceitas.getDtCreditoReceitas());
+		lancamento.valor_lancamentos = valorLancamento;
+		receita.dataCredito_receitas = converteData(TelaAddReceitas.getDtCreditoReceitas());
 
 		// Salvar
-		salvarReceita(receita);
+		salvarReceita(lancamento, receita);
+		Log.i("cnm", lancamento.toString());
+		Log.i("cnm", receita.toString());
 
 		// OK
 		setResult(RESULT_OK, new Intent());
@@ -75,8 +83,9 @@ public class Receita extends Activity{
 	}
 
 	// Salvar a receita
-	protected void salvarReceita(ReceitasDAO receita) {
-		bdScript.salvar(receita);
+	protected void salvarReceita(LancamentoDAO controle, ReceitasDAO receita) {
+		//TODO alterar
+		bdScript.salvar(controle,receita);
 	}
 
 	// Excluir a receita
