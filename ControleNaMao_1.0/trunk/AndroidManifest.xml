@@ -72,8 +72,8 @@
                 android:value="controle.mao.visualizacao.ControleNaMaoActivity" />
         </activity>
         <activity
-            android:name=".visualizacao.TelaListaConsulta"
-            android:label="@string/title_activity_tela_consultas" >
+            android:name=".visualizacao.TelaListaLancamentos"
+            android:label="Lista de Lançamentos" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="controle.mao.visualizacao.ControleNaMaoActivity" />

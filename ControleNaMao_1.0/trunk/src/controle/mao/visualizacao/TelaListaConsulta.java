@@ -62,7 +62,8 @@ public class TelaListaConsulta extends ListActivity {
 			String[] from = new String[] { "data", "conta", "valor" };
 
 			// nome e fone são definidos no layout_contatos
-			int[] to = new int[] { R.id.listItemDataReceita, R.id.listItemNomeReceita, R.id.listItemValorReceita };
+			
+			int[] to = new int[] { R.id.listItemDataLancamento, R.id.listItemNomeLancamento, R.id.listItemValorLancamento };
 
 			SimpleAdapter adaptador = new SimpleAdapter(this, list, R.layout.item_lista_consulta, from, to);
 			return adaptador;

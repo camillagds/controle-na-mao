@@ -1,5 +1,6 @@
 package controle.mao.controle.lancamentos;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -47,9 +48,9 @@ public class Receita extends Activity{
 		String temp = TelaAddReceitas.getNomeCategoriaBD();
 		Log.e("cnm", TelaAddReceitas.getNomeCategoriaBD());
 		lancamento.idCategoria_lancamentos = Categoria.BuscarIdCategoria(temp);
-		lancamento.dataBaixa_lancamentos = converteData(TelaAddReceitas.getDtCreditoReceitas());
+		lancamento.dataBaixa_lancamentos = converteDataString(TelaAddReceitas.getDtCreditoReceitas());
 		lancamento.valor_lancamentos = valorLancamento;
-		receita.dataCredito_receitas = converteData(TelaAddReceitas.getDtCreditoReceitas());
+		receita.dataCredito_receitas = converteDataString(TelaAddReceitas.getDtCreditoReceitas());
 
 		// Salvar
 		salvarReceita(lancamento, receita);
@@ -78,7 +79,7 @@ public class Receita extends Activity{
 	}
 
 	// Buscar a receita pelo id
-	protected ReceitasDAO buscarReceita(long id) {
+	public ReceitasDAO buscarReceita(long id) {
 		return bdScript.buscarReceitas(id);
 	}
 
@@ -93,8 +94,22 @@ public class Receita extends Activity{
 		bdScript.deletar(id);
 	}
 	
-    public Date converteData(DatePicker campoData) {  	 
-    	campoData = TelaAddReceitas.getDtCreditoReceitas();
+    public String converteDataString(DatePicker campoData) {  	 
+//    	campoData = TelaAddReceitas.getDtDebitoDespesas();
+		Date data = new Date(campoData.getYear(), campoData.getMonth(), campoData.getDayOfMonth());
+	        String dataTransf = null;
+	        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+	        
+//	        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+	        formato.applyPattern("yyyy-MM-dd");
+	        
+	        dataTransf  = formato.format(data);
+		
+		return dataTransf;
+	}
+    
+    public Date converteDataDate(DatePicker campoData) {  	 
+//    	campoData = TelaAddReceitas.getDtCreditoReceitas();
 		Date data = new Date(campoData.getYear(), campoData.getMonth(), campoData.getDayOfMonth());
 		return data;
 	}
@@ -114,4 +129,15 @@ public class Receita extends Activity{
 		// TODO Auto-generated method stub
 		return bdScript.listarReceitas();
 	}
+
+	public ReceitasDAO buscarLancamentoReceitas(Long id) {
+		// TODO Auto-generated method stub
+		return bdScript.buscarLancamentoReceitas(id);
+	}
+
+	public void deletar(long id2) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

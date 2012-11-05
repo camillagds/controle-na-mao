@@ -2,6 +2,8 @@ package controle.mao.dados.dao;
 
 import java.util.Date;
 
+import controle.mao.dados.util.LancamentosUtil;
+
 import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.BaseColumns;
@@ -25,13 +27,13 @@ public class LancamentoDAO {
 	public String tipoLancamento_lancamentos;
 	public String descricao_lancamentos;
 	public long idCategoria_lancamentos;
-	public Date dataBaixa_lancamentos;
+	public String dataBaixa_lancamentos;
 	public float valor_lancamentos;
 
 	public LancamentoDAO() {
 	}
 
-	public LancamentoDAO(String tipoLancamento, String descricao, int idCategoria, Date dataBaixa, float valor) {
+	public LancamentoDAO(String tipoLancamento, String descricao, int idCategoria, String dataBaixa, float valor) {
 		super();
 		this.tipoLancamento_lancamentos = tipoLancamento;
 		this.descricao_lancamentos = descricao;
@@ -40,7 +42,7 @@ public class LancamentoDAO {
 		this.valor_lancamentos = valor;
 	}
 
-	public LancamentoDAO(long id, String tipoLancamento, String descricao, int idCategoria, Date dataBaixa, float valor) {
+	public LancamentoDAO(long id, String tipoLancamento, String descricao, int idCategoria, String dataBaixa, float valor) {
 		super();
 		this.id = id;
 		this.tipoLancamento_lancamentos = tipoLancamento;

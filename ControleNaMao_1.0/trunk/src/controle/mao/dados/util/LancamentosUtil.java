@@ -66,7 +66,7 @@ public class LancamentosUtil {
 			lancamento.tipoLancamento_lancamentos = c.getString(1);
 			lancamento.descricao_lancamentos = c.getString(2);
 			lancamento.idCategoria_lancamentos = c.getLong(3);
-			lancamento.dataBaixa_lancamentos = converteData(c,4);
+			lancamento.dataBaixa_lancamentos = c.getString(4);
 			lancamento.valor_lancamentos = c.getFloat(5);		
 			return lancamento;
 		}
@@ -90,7 +90,7 @@ public class LancamentosUtil {
 	}
 
 	// Retorna uma lista com todos os controles
-	public List<LancamentoDAO> listarControle() {
+	public List<LancamentoDAO> listarLancamentos() {
 		Cursor c = getCursor();
 
 		List<LancamentoDAO> controles = new ArrayList<LancamentoDAO>();
@@ -115,7 +115,7 @@ public class LancamentosUtil {
 				controle.tipoLancamento_lancamentos = c.getString(idxTipoLancamento);
 				controle.descricao_lancamentos = c.getString(idxDescricao);
 				controle.idCategoria_lancamentos = c.getInt(idxCategoria);
-				controle.dataBaixa_lancamentos = converteData(c, idxDataBaixa);
+				controle.dataBaixa_lancamentos = c.getString(idxDataBaixa);
 	            controle.valor_lancamentos = c.getFloat(idxValor);
 
 			} while (c.moveToNext());
@@ -123,6 +123,7 @@ public class LancamentosUtil {
 
 		return controles;
 	}
+	
 //TODO dar um jeito nisso ai
 	// Busca o controle pelo nome "select * from controle where nome=?"
 	public LancamentoDAO buscarControlePorData(String data) {
@@ -142,7 +143,7 @@ public class LancamentosUtil {
 				lancamento.tipoLancamento_lancamentos = c.getString(1);
 				lancamento.descricao_lancamentos = c.getString(2);
 				lancamento.idCategoria_lancamentos = c.getLong(3);
-				lancamento.dataBaixa_lancamentos = converteData(c,4);
+				lancamento.dataBaixa_lancamentos = c.getString(4);
 				lancamento.valor_lancamentos = c.getFloat(5);				
 			}
 		} catch (SQLException e) {
@@ -157,7 +158,7 @@ public class LancamentosUtil {
 		//Pegando o valor do index da coluna dos tipos DATETIME
         String extr = c.getString(posicao);
         Date data = null;
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
         
         try {
         	data  = formato.parse(extr);

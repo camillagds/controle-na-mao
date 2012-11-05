@@ -71,7 +71,8 @@ public class ReceitasUtil {
 		valuesL.put(Lancamentos.TIPO_LANCAMENTO, lancamento.tipoLancamento_lancamentos);
 		valuesL.put(Lancamentos.DESCRICAO, lancamento.descricao_lancamentos);
 		valuesL.put(Lancamentos.ID_CATEGORIA, lancamento.idCategoria_lancamentos);
-		valuesL.put(Lancamentos.DATA_BAIXA, "0");
+		//TODO arrumar Gambiarra
+		valuesL.put(Lancamentos.DATA_BAIXA, receita.dataCredito_receitas.toString());
 		valuesL.put(Lancamentos.VALOR, lancamento.valor_lancamentos);
 		long idL = inserir(valuesL,TABELA_LANCAMENTO);
 		
@@ -160,7 +161,29 @@ public class ReceitasUtil {
 			// Lê os dados		
 			receita.id = c.getLong(0);
 			receita.idLancamento_receitas = c.getLong(1);
-			receita.dataCredito_receitas = converteData(c, 2);
+			receita.dataCredito_receitas = c.getString(2);
+
+			return receita;
+		}
+
+		return null;
+	}
+	
+	public ReceitasDAO buscarLancamentoReceitas(long id) {
+		// select * from receita where _id=?
+		Cursor c = db.query(true, TABELA_RECEITAS, ReceitasDAO.colunas, Receitas.ID_LANCAMENTO + "=" + id, null, null, null, null, null);
+
+		if (c.getCount() > 0) {
+
+			// Posicinoa no primeiro elemento do cursor
+			c.moveToFirst();
+
+			ReceitasDAO receita = new ReceitasDAO();
+
+			// Lê os dados		
+			receita.id = c.getLong(0);
+			receita.idLancamento_receitas = c.getLong(1);
+			receita.dataCredito_receitas = c.getString(2);
 
 			return receita;
 		}
@@ -204,7 +227,7 @@ public class ReceitasUtil {
 				// recupera os atributos de receita
 				receita.id = c.getLong(idxId);
 				receita.idLancamento_receitas = c.getLong(idxLancamento);
-	            receita.dataCredito_receitas = converteData(c, idxDataCredito);
+	            receita.dataCredito_receitas = c.getString(idxDataCredito);
 
 			} while (c.moveToNext());
 		}
@@ -228,7 +251,7 @@ public class ReceitasUtil {
 				// utiliza os métodos getLong(), getString(), getInt(), etc para recuperar os valores
 				receita.id = c.getLong(0);
 				receita.idLancamento_receitas = c.getLong(1);
-				receita.dataCredito_receitas = converteData(c, 2);
+				receita.dataCredito_receitas = c.getString(2);
 			}
 		} catch (SQLException e) {
 			Log.e(CATEGORIA, "Erro ao buscar o receita pelo nome: " + e.toString());
@@ -242,7 +265,7 @@ public class ReceitasUtil {
 		//Pegando o valor do index da coluna dos tipos DATETIME
         String extr = c.getString(posicao);
         Date data = null;
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
         
         try {
         	data  = formato.parse(extr);

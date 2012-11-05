@@ -1,39 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
-        android:layout_gravity="center"
-        android:orientation="horizontal" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center"
+    android:orientation="horizontal"
+    android:paddingBottom="15dp"
+    android:paddingTop="15dp" >
 
-        <TextView
-            android:id="@+id/listItemDataReceita"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#FF000000"
-            android:textSize="7pt"
-             />
-         <TextView 
-  android:layout_width="wrap_content" android:layout_height="wrap_content" 
-  android:text="  - " android:textColor="#000000" />
-        <TextView
-            android:id="@+id/listItemNomeReceita"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#FF000000"
-            android:textSize="7pt"
-             />
-         <TextView 
-  android:layout_width="wrap_content" android:layout_height="wrap_content" 
-  android:text="  - " android:textColor="#000000" />
-        <TextView
-            android:id="@+id/listItemValorReceita"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#FF000000"
-            android:textSize="7pt"
-             />
+    <TextView
+        android:paddingLeft="10dp"
+        android:id="@+id/listItemTipoLancamento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FF000000"
+        android:textSize="7pt" />
 
-    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="  - "
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/listItemDataLancamento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FF000000"
+        android:textSize="7pt" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="  - "
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/listItemNomeLancamento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FF000000"
+        android:textSize="7pt" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="  - "
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/listItemValorLancamento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FF000000"
+        android:textSize="7pt" />
+
+</LinearLayout>

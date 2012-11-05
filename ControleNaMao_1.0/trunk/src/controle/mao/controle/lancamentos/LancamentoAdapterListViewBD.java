@@ -1,5 +1,7 @@
 package controle.mao.controle.lancamentos;
 
+import java.text.DecimalFormat;
+import java.util.Date;
 import java.util.List;
 
 import controle.mao.R;
@@ -7,18 +9,19 @@ import controle.mao.dados.dao.CategoriaDAO;
 import controle.mao.dados.dao.LancamentoDAO;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-public class ControleAdapterListViewBD extends BaseAdapter{
+public class LancamentoAdapterListViewBD extends BaseAdapter{
 
 		private Context context;
 	    private List<LancamentoDAO> lista;
 
-	    public ControleAdapterListViewBD(Context context, List<LancamentoDAO> lista) {
+	    public LancamentoAdapterListViewBD(Context context, List<LancamentoDAO> lista) {
 	    	//Itens que preencheram o listview
 	        this.lista = lista;
 	        //responsavel por pegar o Layout do item.
@@ -61,20 +64,27 @@ public class ControleAdapterListViewBD extends BaseAdapter{
 	        
 	        //infla o layout para podermos preencher os dados
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			View view = inflater.inflate(R.layout.item_lista_categoria, null);
+			View view = inflater.inflate(R.layout.item_lista_consulta, null);
 
 			//TODO Jogar um if ai pra saber se eh D ou R e assim montar o set certo da data do registro correspondente.
 			
 			
 	        //Atualiza o valor do TextView
-	        TextView data = (TextView) view.findViewById(R.id.listItemDataReceita);
-//	        data.setText(item.dataLanc_lancamentos.toString());
+	        TextView tipo = (TextView) view.findViewById(R.id.listItemTipoLancamento);
+	        tipo.setText(item.tipoLancamento_lancamentos.toString());
+	        Log.i("cnm",item.tipoLancamento_lancamentos);
+
 	        
-	        TextView nome = (TextView) view.findViewById(R.id.listItemNomeReceita);
+	        TextView data = (TextView) view.findViewById(R.id.listItemDataLancamento);
+	        //TODO tratar data
+//	        data.setText(item.dataBaixa_lancamentos.toLocaleString());
+	        data.setText("03/11/2012");
+	        TextView nome = (TextView) view.findViewById(R.id.listItemNomeLancamento);
 	        nome.setText(item.descricao_lancamentos.toString());
 	        
-	        TextView valor = (TextView) view.findViewById(R.id.listItemValorReceita);
-	        valor.setText(String.valueOf(item.valor_lancamentos));
+	        TextView valor = (TextView) view.findViewById(R.id.listItemValorLancamento);
+	        String valorT = new DecimalFormat("00.00").format(item.valor_lancamentos);
+	        valor.setText("R$ " + valorT);
 	        
 	        return view;
 	    }

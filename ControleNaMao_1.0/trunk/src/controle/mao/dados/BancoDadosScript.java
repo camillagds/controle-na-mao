@@ -34,10 +34,10 @@ public class BancoDadosScript{
 		"CREATE TABLE [tb_cartao] ( [_id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, [nome_cartao] CHAR(30) NOT NULL, [bandeira_Cartao] CHAR(15) NOT NULL, [fechaFatura_cartao] INTEGER(2) NULL);",
 		"CREATE TABLE [tb_categoria] ( [_id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, [nome_categoria] CHAR(15) NOT NULL);",
 		"INSERT INTO [tb_categoria]([nome_categoria]) VALUES ('Geral');",
-		"CREATE TABLE [tb_lancamento] ( [_id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,[tipo_Lancamento] CHAR(1) NOT NULL,[descricao] CHAR(35) NOT NULL, [id_categoria] INTEGER NOT NULL CONSTRAINT [_id] REFERENCES [tb_categoria]([_id]) ON DELETE NO ACTION ON UPDATE NO ACTION,[data_baixa] DATE, [valor] FLOAT(9));",
-		"CREATE TABLE [tb_recebimento] ( [_id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, [id_lancamento] INTEGER NOT NULL CONSTRAINT [_id] REFERENCES [tb_lancamento]([_id]) ON DELETE CASCADE ON UPDATE CASCADE,[data_credito] DATE NOT NULL);",
-		"CREATE TABLE [tb_despesa] ( [_id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, [id_lancamento] INTEGER NOT NULL CONSTRAINT [_id] REFERENCES [tb_lancamento]([_id]) ON DELETE CASCADE ON UPDATE CASCADE,[data_vencimento] DATE NOT NULL, [forma_pagto] CHAR(8) NOT NULL, [tipo_cartao] CHAR(7) NULL, [id_cartao] INTEGER NULL CONSTRAINT [_id] REFERENCES [tb_cartoes]([_id]) ON DELETE NO ACTION);"
-		};
+		"CREATE TABLE [tb_lancamento] ( [_id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,[tipo_Lancamento] CHAR(1) NOT NULL,[descricao] CHAR(35) NOT NULL, [id_categoria] INTEGER NOT NULL CONSTRAINT [_id] REFERENCES [tb_categoria]([_id]) ON DELETE NO ACTION ON UPDATE NO ACTION,[data_baixa] TEXT NULL, [valor] FLOAT(9), [pago] BOOLEAN NULL);",
+		"CREATE TABLE [tb_recebimento] ( [_id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, [id_lancamento] INTEGER NOT NULL CONSTRAINT [_id] REFERENCES [tb_lancamento]([_id]) ON DELETE CASCADE ON UPDATE CASCADE,[data_credito] TEXT NOT NULL);",
+		"CREATE TABLE [tb_despesa] ( [_id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, [id_lancamento] INTEGER NOT NULL CONSTRAINT [_id] REFERENCES [tb_lancamento]([_id]) ON DELETE CASCADE ON UPDATE CASCADE,[data_vencimento] TEXT NOT NULL, [forma_pagto] CHAR(8) NOT NULL, [tipo_cartao] CHAR(7) NULL, [id_cartao] INTEGER NULL CONSTRAINT [_id] REFERENCES [tb_cartoes]([_id]) ON DELETE NO ACTION NULL);"
+};
 
 	// Nome do banco
 	private static final String NOME_BANCO = "bd_cnm";
