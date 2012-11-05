@@ -27,7 +27,7 @@ public class TelaAddReceitas extends Activity {
 
 	private static DatePicker dtCreditoReceitas;
 
-	private Receita bdScript;
+	public static Receita bdScript;
 	private Categoria bdScriptCategorias;
 	
 	private ImageButton btSalvar;
@@ -56,8 +56,8 @@ public class TelaAddReceitas extends Activity {
 //        dbCategoriaReceitas = (Spinner) findViewById(R.id.dbCategoriaReceitas);
         setTxtValorReceitas((EditText) findViewById(R.id.txtValorReceitas));
         setDtCreditoReceitas((DatePicker) findViewById(R.id.dtCreditoReceitas));
-        Receita.setCurrentDateOnView(getDtCreditoReceitas());
-       
+        Receita.setCurrentDateOnView(dtCreditoReceitas);
+//        setDtCreditoReceitas(dtCreditoReceitas);
         //Lista - Categorias
         Spinner dbCategoriaReceitas = (Spinner) findViewById(R.id.dbCategoriaReceitas);
         
@@ -143,6 +143,7 @@ protected void onDestroy() {
 	super.onDestroy();
 
 	// Fecha o banco
+	
 	Receita.bdScript.fechar();
 	Categoria.bdScript.fechar();
 }

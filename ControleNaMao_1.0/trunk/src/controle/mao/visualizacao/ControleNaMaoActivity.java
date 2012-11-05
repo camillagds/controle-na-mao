@@ -73,7 +73,7 @@ public class ControleNaMaoActivity extends Activity {
         btConsulta.setOnClickListener(new ImageView.OnClickListener(){
         	public void onClick(View v){
         		Intent trocatela = new
-        		Intent(ControleNaMaoActivity.this,TelaListaConsulta.class);
+        		Intent(ControleNaMaoActivity.this,TelaListaLancamentos.class);
         		ControleNaMaoActivity.this.startActivity(trocatela);
         		ControleNaMaoActivity.this.finish();
         	}

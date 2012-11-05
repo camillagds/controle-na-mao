@@ -72,7 +72,8 @@ public class DespesasUtil {
 		valuesL.put(Lancamentos.TIPO_LANCAMENTO, lancamento.tipoLancamento_lancamentos);
 		valuesL.put(Lancamentos.DESCRICAO, lancamento.descricao_lancamentos);
 		valuesL.put(Lancamentos.ID_CATEGORIA, lancamento.idCategoria_lancamentos);
-		valuesL.put(Lancamentos.DATA_BAIXA, "0");
+		//TODO arrumar a Gambiarra
+		valuesL.put(Lancamentos.DATA_BAIXA, despesa.dataVencimento.toString());
 		valuesL.put(Lancamentos.VALOR, lancamento.valor_lancamentos);
 		long idL = inserir(TABELA_LANCAMENTOS,valuesL);
 		
@@ -99,7 +100,7 @@ public class DespesasUtil {
 		valuesL.put(Lancamentos.TIPO_LANCAMENTO, lancamento.tipoLancamento_lancamentos);
 		valuesL.put(Lancamentos.DESCRICAO, lancamento.descricao_lancamentos);
 		valuesL.put(Lancamentos.ID_CATEGORIA, lancamento.idCategoria_lancamentos);
-		valuesL.put(Lancamentos.DATA_BAIXA, lancamento.dataBaixa_lancamentos.toString());
+		valuesL.put(Lancamentos.DATA_BAIXA, despesa.dataVencimento.toString());
 		valuesL.put(Lancamentos.VALOR, lancamento.valor_lancamentos);
 		long idL = inserir(TABELA_LANCAMENTOS,valuesL);
 		
@@ -170,7 +171,7 @@ public class DespesasUtil {
 			// Lê os dados
 			despesa.id = c.getLong(0);
 			despesa.idLancamento = c.getLong(1);
-			despesa.dataVencimento = converteData(c,2);
+			despesa.dataVencimento = c.getString(2);
 			despesa.formaPagto = c.getString(3);
 			despesa.tipoCartao = c.getString(4);
 			despesa.id_cartao = c.getInt(5);
@@ -219,7 +220,7 @@ public class DespesasUtil {
 				// recupera os atributos de receita
 				despesa.id = c.getLong(idxId);
 				despesa.idLancamento = c.getLong(idxLancamento);
-				despesa.dataVencimento = converteData(c, idxDataVencimento);
+				despesa.dataVencimento = c.getString(idxDataVencimento);
 				despesa.formaPagto = c.getString(idxFormaPagto);
 				despesa.tipoCartao = c.getString(idxTipoCartao);
 	            despesa.id_cartao = c.getInt(idxCartao);
@@ -264,7 +265,7 @@ public class DespesasUtil {
 		//Pegando o valor do index da coluna dos tipos DATETIME
         String extr = c.getString(posicao);
         Date data = null;
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
         
         try {
         	data  = formato.parse(extr);

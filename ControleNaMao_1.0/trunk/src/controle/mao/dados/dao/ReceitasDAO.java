@@ -23,18 +23,18 @@ public class ReceitasDAO {
 
 	public long id;
 	public long idLancamento_receitas;
-	public Date dataCredito_receitas;
+	public String dataCredito_receitas;
 
 	public ReceitasDAO() {
 	}
 
-	public ReceitasDAO(long idLancamento, Date dataCredito) {
+	public ReceitasDAO(long idLancamento, String dataCredito) {
 		super();
 		this.idLancamento_receitas = idLancamento;
 		this.dataCredito_receitas = dataCredito;
 	}
 
-	public ReceitasDAO(long id, long idLancamento, Date dataCredito) {
+	public ReceitasDAO(long id, long idLancamento, String dataCredito) {
 		super();
 		this.id = id;
 		this.idLancamento_receitas = idLancamento;

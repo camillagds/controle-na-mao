@@ -1,5 +1,6 @@
 package controle.mao.controle.lancamentos;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -12,6 +13,7 @@ import controle.mao.controle.cartoes.Cartao;
 import controle.mao.controle.categoria.Categoria;
 import controle.mao.dados.dao.DespesasDAO;
 import controle.mao.dados.dao.LancamentoDAO;
+import controle.mao.dados.util.CategoriasUtil;
 import controle.mao.dados.util.DespesasUtil;
 import controle.mao.visualizacao.TelaAddDespesas;
 import controle.mao.visualizacao.TelaAddReceitas;
@@ -58,7 +60,7 @@ public class Despesa extends Activity{
 
 		despesa.tipoCartao = TelaAddDespesas.getNomeTipoCartaoBD();
 		despesa.formaPagto = TelaAddDespesas.nomeFormaPagtoBD;
-		despesa.dataVencimento = converteData(TelaAddDespesas.getDtDebitoDespesas());
+		despesa.dataVencimento = converteDataString(TelaAddDespesas.getDtDebitoDespesas());
 		despesa.id_cartao = Cartao.BuscarIdCartao(TelaAddDespesas.getNomeCartaoBD());
 		
 		// Salvar
@@ -102,21 +104,21 @@ public class Despesa extends Activity{
 		bdScript.deletar(id);
 	}
 	
-//    public String converteData(DatePicker campoData) {  	 
+    public String converteDataString(DatePicker campoData) {  	 
 //    	campoData = TelaAddDespesas.getDtDebitoDespesas();
-//		Date data = new Date(campoData.getYear(), campoData.getMonth(), campoData.getDayOfMonth());
-//	        String dataTransf = null;
-////	        SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd");
-//	        
+		Date data = new Date(campoData.getYear(), campoData.getMonth(), campoData.getDayOfMonth());
+	        String dataTransf = null;
+	        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+	        
 //	        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-//	        formato.applyPattern("yyyy-MM-dd");
-//	        
-//	        dataTransf  = formato.format(data);
-//		
-//		return dataTransf;
-//	}
+	        formato.applyPattern("yyyy-MM-dd");
+	        
+	        dataTransf  = formato.format(data);
+		
+		return dataTransf;
+	}
     
-    public Date converteData(DatePicker campoData) {  	 
+    public Date converteDataDate(DatePicker campoData) {  	 
 //    	campoData = TelaAddReceitas.getDtCreditoReceitas();
 		Date data = new Date(campoData.getYear(), campoData.getMonth(), campoData.getDayOfMonth());
 		return data;

@@ -23,7 +23,7 @@ public class DespesasDAO {
 
 	public long id;
 	public long idLancamento;
-	public Date dataVencimento;
+	public String dataVencimento;
 	public String formaPagto;
 	public String tipoCartao;
 	public long id_cartao;
@@ -31,7 +31,7 @@ public class DespesasDAO {
 	public DespesasDAO() {
 	}
 
-	public DespesasDAO(long id_lancamento, Date dataVencimento, String formaPagto, String tipo_cartao, long id_cartao) {
+	public DespesasDAO(long id_lancamento, String dataVencimento, String formaPagto, String tipo_cartao, long id_cartao) {
 		super();	
 		this.idLancamento = id_lancamento;
 		this.dataVencimento = dataVencimento;
@@ -40,7 +40,7 @@ public class DespesasDAO {
 		this.id_cartao = id_cartao;
 	}
 
-	public DespesasDAO(long id, long id_lancamento, Date dataVencimento, String formaPagto, String tipo_cartao, long id_cartao) {
+	public DespesasDAO(long id, long id_lancamento, String dataVencimento, String formaPagto, String tipo_cartao, long id_cartao) {
 		super();
 		this.id = id;
 		this.idLancamento = id_lancamento;
