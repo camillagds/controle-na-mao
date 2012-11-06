@@ -214,4 +214,14 @@ public boolean dispatchTouchEvent(MotionEvent event) {
     }
 return ret;
 }
+
+@Override
+public void onBackPressed() {
+// Toast.makeText(this, "Back key pressed =)", Toast.LENGTH_SHORT).show();
+	Intent trocatela = new
+	Intent(TelaAddReceitas.this,ControleNaMaoActivity.class);
+	TelaAddReceitas.this.startActivity(trocatela);
+	TelaAddReceitas.this.finish();
+// super.onBackPressed();
+}
 }

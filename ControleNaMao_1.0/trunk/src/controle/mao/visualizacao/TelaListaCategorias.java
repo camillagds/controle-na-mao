@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 import controle.mao.controle.categoria.Categoria;
 import controle.mao.controle.categoria.CategoriaAdapterListViewBD;
 import controle.mao.dados.dao.CategoriaDAO;
@@ -29,7 +31,8 @@ public class TelaListaCategorias extends ListActivity{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        bdScript = new Categoria(new CategoriasUtil(this));
+//        bdScript = new Categoria(new CategoriasUtil(this));
+        bdScript = new Categoria(this);
         atualizarLista();
         getListView().setBackgroundResource(R.drawable.fundo);
     }
@@ -111,6 +114,27 @@ public class TelaListaCategorias extends ListActivity{
 
 		// Fecha o banco
 		Categoria.bdScript.fechar();
+	}
+	
+	private static final int NONE = -1;
+
+//	@Override
+//	public boolean onKeyDown(int keyCode, KeyEvent event) {
+//
+//	    if (keyCode == KeyEvent.KEYCODE_BACK) {
+//	        finish();
+//	    }
+//	    return super.onKeyDown(keyCode, event);
+//	}
+
+	@Override
+	public void onBackPressed() {
+//	 Toast.makeText(this, "Back key pressed =)", Toast.LENGTH_SHORT).show();
+		Intent trocatela = new
+		Intent(TelaListaCategorias.this,ControleNaMaoActivity.class);
+		TelaListaCategorias.this.startActivity(trocatela);
+		TelaListaCategorias.this.finish();
+//	 super.onBackPressed();
 	}
 
 }

@@ -112,4 +112,15 @@ public class TelaListaConsulta extends ListActivity {
 		}
 		return true;
 	}
+	
+	@Override
+	public void onBackPressed() {
+	// Toast.makeText(this, "Back key pressed =)", Toast.LENGTH_SHORT).show();
+		Intent trocatela = new
+		Intent(TelaListaConsulta.this,ControleNaMaoActivity.class);
+		TelaListaConsulta.this.startActivity(trocatela);
+		TelaListaConsulta.this.finish();
+	// super.onBackPressed();
+	}
+	
 }

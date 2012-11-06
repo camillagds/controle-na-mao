@@ -113,4 +113,14 @@ protected void onDestroy() {
 	Cartao.bdScript.fechar();
 }
 
+@Override
+public void onBackPressed() {
+// Toast.makeText(this, "Back key pressed =)", Toast.LENGTH_SHORT).show();
+	Intent trocatela = new
+	Intent(TelaListaCartoes.this,ControleNaMaoActivity.class);
+	TelaListaCartoes.this.startActivity(trocatela);
+	TelaListaCartoes.this.finish();
+// super.onBackPressed();
+}
+
 }

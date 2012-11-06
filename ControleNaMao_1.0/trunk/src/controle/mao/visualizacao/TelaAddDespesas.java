@@ -342,4 +342,14 @@ public void setNomeCartaoBD(String nomeCartaoBD) {
 	TelaAddDespesas.nomeCartaoBD = nomeCartaoBD;
 }
 
+@Override
+public void onBackPressed() {
+// Toast.makeText(this, "Back key pressed =)", Toast.LENGTH_SHORT).show();
+	Intent trocatela = new
+	Intent(TelaAddDespesas.this,ControleNaMaoActivity.class);
+	TelaAddDespesas.this.startActivity(trocatela);
+	TelaAddDespesas.this.finish();
+// super.onBackPressed();
+}
+
 }
