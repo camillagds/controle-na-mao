@@ -84,4 +84,14 @@ public class TelaListaFatura extends ListActivity {
 		}
 		return true;
 	}
+	
+	@Override
+	public void onBackPressed() {
+	// Toast.makeText(this, "Back key pressed =)", Toast.LENGTH_SHORT).show();
+		Intent trocatela = new
+		Intent(TelaListaFatura.this,ControleNaMaoActivity.class);
+		TelaListaFatura.this.startActivity(trocatela);
+		TelaListaFatura.this.finish();
+	// super.onBackPressed();
+	}
 }

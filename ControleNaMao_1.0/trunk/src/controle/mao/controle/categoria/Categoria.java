@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
@@ -32,6 +33,10 @@ public class Categoria extends Activity{
 
 	public Categoria(CategoriasUtil bdScript){
 		Categoria.bdScript = bdScript;
+	}
+	
+	public Categoria(Context ctx){
+		Categoria.bdScript = new CategoriasUtil(ctx);
 	}
 	
 	public void salvar() {
@@ -107,5 +112,5 @@ public class Categoria extends Activity{
 		id = bdScript.buscarCategoriaPorNome(nome).id;
 		return id;
 	}
-	
+		
 }

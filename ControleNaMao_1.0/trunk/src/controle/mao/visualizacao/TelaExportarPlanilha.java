@@ -126,4 +126,14 @@ public class TelaExportarPlanilha extends FragmentActivity {
 	    }
 	return ret;
 	}
+	
+	@Override
+	public void onBackPressed() {
+	// Toast.makeText(this, "Back key pressed =)", Toast.LENGTH_SHORT).show();
+		Intent trocatela = new
+		Intent(TelaExportarPlanilha.this,ControleNaMaoActivity.class);
+		TelaExportarPlanilha.this.startActivity(trocatela);
+		TelaExportarPlanilha.this.finish();
+	// super.onBackPressed();
+	}
 }
