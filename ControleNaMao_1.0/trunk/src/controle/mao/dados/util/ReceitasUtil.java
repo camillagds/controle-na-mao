@@ -71,7 +71,6 @@ public class ReceitasUtil {
 		valuesL.put(Lancamentos.TIPO_LANCAMENTO, lancamento.tipoLancamento_lancamentos);
 		valuesL.put(Lancamentos.DESCRICAO, lancamento.descricao_lancamentos);
 		valuesL.put(Lancamentos.ID_CATEGORIA, lancamento.idCategoria_lancamentos);
-		//TODO arrumar Gambiarra
 		valuesL.put(Lancamentos.DATA_BAIXA, receita.dataCredito_receitas.toString());
 		valuesL.put(Lancamentos.VALOR, lancamento.valor_lancamentos);
 		long idL = inserir(valuesL,TABELA_LANCAMENTO);
@@ -93,6 +92,7 @@ public class ReceitasUtil {
 	// Atualiza o receita no banco. O id do receita é utilizado.
 	public int atualizar(LancamentoDAO lancamento, ReceitasDAO receita) {
 		ContentValues valuesL = new ContentValues();
+		Log.i("cnm",receita.toString());
 		valuesL.put(Lancamentos.TIPO_LANCAMENTO, lancamento.tipoLancamento_lancamentos);
 		valuesL.put(Lancamentos.DESCRICAO, lancamento.descricao_lancamentos);
 		valuesL.put(Lancamentos.ID_CATEGORIA, lancamento.idCategoria_lancamentos);
@@ -109,20 +109,20 @@ public class ReceitasUtil {
 		// Atualliza Lancamentos
 		String whereL = Lancamentos._ID + "=?";
 		String[] whereArgsL = new String[] { _idL };
-		int countL = atualizar(valuesL, whereL, whereArgsL);
+		int countL = atualizar(TABELA_LANCAMENTO, valuesL, whereL, whereArgsL);
 
 		// Atualliza Recebimentos
 		String whereR = Receitas._ID + "=?";
 		String[] whereArgsR = new String[] { _idR };
-		int countR = atualizar(valuesR, whereR, whereArgsR);
+		int countR = atualizar(TABELA_RECEITAS, valuesR, whereR, whereArgsR);
 		
 		return countR;
 	}
 
 	// Atualiza o receita com os valores abaixo
 	// A cláusula where é utilizada para identificar o receita a ser atualizado
-	public int atualizar(ContentValues valores, String where, String[] whereArgs) {
-		int count = db.update(TABELA_RECEITAS, valores, where, whereArgs);
+	public int atualizar(String tabela, ContentValues valores, String where, String[] whereArgs) {
+		int count = db.update(tabela, valores, where, whereArgs);
 		Log.i(CATEGORIA, "Atualizou [" + count + "] registros");
 		return count;
 	}

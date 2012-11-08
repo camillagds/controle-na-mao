@@ -16,7 +16,7 @@ import android.provider.BaseColumns;
  */
 public class LancamentoDAO {
 
-	public static String[] colunas = new String[] { Lancamentos._ID, Lancamentos.TIPO_LANCAMENTO, Lancamentos.DESCRICAO, Lancamentos.ID_CATEGORIA, Lancamentos.DATA_BAIXA, Lancamentos.VALOR};
+	public static String[] colunas = new String[] { Lancamentos._ID, Lancamentos.TIPO_LANCAMENTO, Lancamentos.DESCRICAO, Lancamentos.ID_CATEGORIA, Lancamentos.DATA_BAIXA, Lancamentos.VALOR, Lancamentos.PAGO};
 
 	/**
 	 * Pacote do Content Provider. Precisa ser único.
@@ -29,20 +29,22 @@ public class LancamentoDAO {
 	public long idCategoria_lancamentos;
 	public String dataBaixa_lancamentos;
 	public float valor_lancamentos;
+	public int pago;
 
 	public LancamentoDAO() {
 	}
 
-	public LancamentoDAO(String tipoLancamento, String descricao, int idCategoria, String dataBaixa, float valor) {
+	public LancamentoDAO(String tipoLancamento, String descricao, int idCategoria, String dataBaixa, float valor, int pago) {
 		super();
 		this.tipoLancamento_lancamentos = tipoLancamento;
 		this.descricao_lancamentos = descricao;
 		this.idCategoria_lancamentos = idCategoria;
 		this.dataBaixa_lancamentos = dataBaixa;
 		this.valor_lancamentos = valor;
+		this.pago = pago;
 	}
 
-	public LancamentoDAO(long id, String tipoLancamento, String descricao, int idCategoria, String dataBaixa, float valor) {
+	public LancamentoDAO(long id, String tipoLancamento, String descricao, int idCategoria, String dataBaixa, float valor, int pago) {
 		super();
 		this.id = id;
 		this.tipoLancamento_lancamentos = tipoLancamento;
@@ -50,6 +52,7 @@ public class LancamentoDAO {
 		this.idCategoria_lancamentos = idCategoria;
 		this.dataBaixa_lancamentos = dataBaixa;
 		this.valor_lancamentos = valor;
+		this.pago = pago;
 	}
 
 	/**
@@ -82,6 +85,7 @@ public class LancamentoDAO {
 		public static final String ID_CATEGORIA = "id_categoria";
 		public static final String DATA_BAIXA = "data_baixa";
 		public static final String VALOR = "valor";
+		public static final String PAGO = "pago";
 
 		// Método que constrói uma Uri para um Carro específico, com o seu id
 		// A Uri é no formato "content://br.livro.android.provider.carro/carros/id"
@@ -94,6 +98,6 @@ public class LancamentoDAO {
 
 	@Override
 	public String toString() {
-		return "Tipo de Lançamento: " + tipoLancamento_lancamentos + " Descricao: " + descricao_lancamentos +" Categoria: " + idCategoria_lancamentos + " Data Baixa: " + dataBaixa_lancamentos + "Valor: " + valor_lancamentos;
+		return "Tipo de Lançamento: " + tipoLancamento_lancamentos + " Descricao: " + descricao_lancamentos +" Categoria: " + idCategoria_lancamentos + " Data Baixa: " + dataBaixa_lancamentos + "Valor: " + valor_lancamentos + " Pago: " + pago;
 	}
 }

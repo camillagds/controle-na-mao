@@ -77,8 +77,8 @@ public class LancamentoAdapterListViewBD extends BaseAdapter{
 	        
 	        TextView data = (TextView) view.findViewById(R.id.listItemDataLancamento);
 	        //TODO tratar data
-//	        data.setText(item.dataBaixa_lancamentos.toLocaleString());
-	        data.setText("03/11/2012");
+	        data.setText(item.dataBaixa_lancamentos.toString());
+//	        data.setText("03/11/2012");
 	        TextView nome = (TextView) view.findViewById(R.id.listItemNomeLancamento);
 	        nome.setText(item.descricao_lancamentos.toString());
 	        
@@ -88,6 +88,8 @@ public class LancamentoAdapterListViewBD extends BaseAdapter{
 	        
 	        return view;
 	    }
+	    
+	    
 	
 
 }

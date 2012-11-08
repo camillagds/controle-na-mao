@@ -14,7 +14,7 @@ import android.provider.BaseColumns;
  */
 public class DespesasDAO {
 
-	public static String[] colunas = new String[] { Despesas._ID, Despesas.LANCAMENTO, Despesas.DATA_VENCIMENTO, Despesas.FORMA_PAGTO, Despesas.TIPO_CARTAO, Despesas.CARTAO};
+	public static String[] colunas = new String[] { Despesas._ID, Despesas.ID_LANCAMENTO, Despesas.DATA_VENCIMENTO, Despesas.FORMA_PAGTO, Despesas.TIPO_CARTAO, Despesas.CARTAO};
 
 	/**
 	 * Pacote do Content Provider. Precisa ser único.
@@ -75,7 +75,7 @@ public class DespesasDAO {
 		// Ordenação default para inserir no order by
 		public static final String DEFAULT_SORT_ORDER = "_id ASC";
 		
-		public static final String LANCAMENTO = "id_lancamento";
+		public static final String ID_LANCAMENTO = "id_lancamento";
 		public static final String DATA_VENCIMENTO = "data_vencimento";
 		public static final String FORMA_PAGTO = "forma_pagto";
 		public static final String TIPO_CARTAO = "tipo_cartao";		
