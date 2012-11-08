@@ -8,9 +8,14 @@ import java.util.List;
 import controle.mao.R;
 import controle.mao.R.id;
 import controle.mao.R.layout;
+import controle.mao.controle.lancamentos.Receita;
 import controle.mao.dados.dao.CartaoDAO;
 import controle.mao.dados.dao.CategoriaDAO;
+import controle.mao.dados.dao.DespesasDAO;
+import controle.mao.dados.dao.LancamentoDAO;
 import controle.mao.dados.dao.ReceitasDAO;
+import controle.mao.dados.dao.LancamentoDAO.Lancamentos;
+import controle.mao.dados.dao.ReceitasDAO.Receitas;
 import controle.mao.dados.util.CartoesUtil;
 import controle.mao.dados.util.CategoriasUtil;
 
@@ -71,6 +76,10 @@ public class TelaEditarDespesas extends Activity {
 	private String nomeCategoriaBD;
 	private String nomeFormaPagtoBD;
 	private ImageButton btExcluir;
+	private Long idL;
+	private Long idD;
+	private EditText txtDescricaoDespesas;
+	private EditText txtValorDespesas;
 	
 	
 	
@@ -89,6 +98,8 @@ public class TelaEditarDespesas extends Activity {
 		btConfirmar = (ImageButton) findViewById(R.id.btConfirmarEditarDespesas);
 		btCancelar = (ImageButton) findViewById(R.id.btCancelarEditarDespesas);
 		btExcluir = (ImageButton) findViewById(R.id.btExcluirEditarDespesas);
+        txtDescricaoDespesas = (EditText) findViewById(R.id.txtDescricaoEditarDespesas);
+        txtValorDespesas = (EditText) findViewById(R.id.txtValorEditarDespesas);
 		dbFormaPgtoDespesas = (Spinner) findViewById(R.id.dbFormaPgtoEditarDespesas);
 		dbCategoriaDespesas = (Spinner) findViewById(R.id.dbCategoriaEditarDespesas);
 		rgFormaPagtoDespesas = (RadioGroup) findViewById(R.id.rgFormaPagtoEditarDespesas);
@@ -172,6 +183,50 @@ public class TelaEditarDespesas extends Activity {
 
         });
 		
+		idL = null;
+ 		idD = null;
+        Bundle extras = getIntent().getExtras();
+		// Se for para Editar, recuperar os valores ...
+		if (extras != null) {
+			idL = extras.getLong(Lancamentos._ID);
+			idD = extras.getLong(Receitas._ID);
+			if (idL != null) {
+				// é uma edição, busca o carro...
+				LancamentoDAO l = TelaListaLancamentos.bdScript.buscarLancamento(idL);
+				DespesasDAO d = TelaListaLancamentos.bdScriptD.buscarLancamentoDespesas(idL);
+				
+				txtDescricaoDespesas.setText(l.descricao_lancamentos);
+				
+				dbCategoriaDespesas.setSelection((int) l.idCategoria_lancamentos);
+
+				txtValorDespesas.setText(String.valueOf(l.valor_lancamentos));
+				Calendar data = Receita.ConvertToDateBR(String.valueOf(d.dataVencimento));
+				day = data.get(Calendar.DAY_OF_MONTH);
+				month = data.get(Calendar.MONTH);
+				year = data.get(Calendar.YEAR);
+				
+				dtDebitoDespesas.updateDate(year, month, day);
+				dbFormaPgtoDespesas.setSelection((int) (listaFormaPgto.getPosition(d.formaPagto)));
+				//TODO implementar direito
+				dbNomeCartaoDespesas.setSelection((int) d.id_cartao);
+				String formaPgtCartao = d.tipoCartao.toString().substring(0, 1);
+            	String credito = "C";
+            	String debito = " D";
+            	rdCreditoCartaoDespesas.clearFocus();
+            	rdDebitoCartaoDespesas.clearFocus();
+            	Log.e("cnm", formaPgtCartao);
+            	if (formaPgtCartao.equalsIgnoreCase(credito)){
+            	rgFormaPagtoCartaoDespesas.check(0);
+            	
+            	Log.e("cnm", "credito");
+            	}else{
+            	rdDebitoCartaoDespesas.clearFocus();
+            	rgFormaPagtoCartaoDespesas.check(1);
+
+            	Log.e("cnm", "debito");
+            	}
+			}
+		}
 		
 		// Bt Excluir
 				btExcluir.setOnClickListener(new ImageView.OnClickListener() {

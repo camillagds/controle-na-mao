@@ -1,18 +1,22 @@
 package controle.mao.controle.lancamentos;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.widget.DatePicker;
 import controle.mao.controle.cartoes.Cartao;
 import controle.mao.controle.categoria.Categoria;
 import controle.mao.dados.dao.DespesasDAO;
 import controle.mao.dados.dao.LancamentoDAO;
+import controle.mao.dados.dao.ReceitasDAO;
 import controle.mao.dados.util.CategoriasUtil;
 import controle.mao.dados.util.DespesasUtil;
 import controle.mao.visualizacao.TelaAddDespesas;
@@ -104,25 +108,32 @@ public class Despesa extends Activity{
 		bdScript.deletar(id);
 	}
 	
-    public String converteDataString(DatePicker campoData) {  	 
-//    	campoData = TelaAddDespesas.getDtDebitoDespesas();
-		Date data = new Date(campoData.getYear(), campoData.getMonth(), campoData.getDayOfMonth());
-	        String dataTransf = null;
-	        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-	        
-//	        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-	        formato.applyPattern("yyyy-MM-dd");
-	        
-	        dataTransf  = formato.format(data);
-		
+    public static String converteDataString(DatePicker campoData) {  	 
+    	Calendar data = Calendar.getInstance();
+		data.set(campoData.getYear(), campoData.getMonth(), campoData.getDayOfMonth());
+	    String format = "dd/MM/yyyy";
+	    String dataTransf = String.valueOf(DateFormat.format(format, data));
 		return dataTransf;
 	}
     
-    public Date converteDataDate(DatePicker campoData) {  	 
-//    	campoData = TelaAddReceitas.getDtCreditoReceitas();
-		Date data = new Date(campoData.getYear(), campoData.getMonth(), campoData.getDayOfMonth());
-		return data;
-	}
+    public static Calendar ConvertToDateBR(String dateString){  
+
+    	//de STRING para CALENDAR
+
+    	SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
+
+    	String data = dateString;
+
+    	Calendar c = Calendar.getInstance();
+
+    	try {
+			c.setTime(formatoData.parse(data));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return c;
+}  
 
     public static void setCurrentDateOnView(DatePicker campoData) {
 		final Calendar c = Calendar.getInstance();
@@ -138,5 +149,10 @@ public class Despesa extends Activity{
 	public List<DespesasDAO> listaDespesas() {
 		// TODO Auto-generated method stub
 		return bdScript.listarDespesas();
+	}
+	
+	public DespesasDAO buscarLancamentoDespesas(Long id) {
+		// TODO Auto-generated method stub
+		return bdScript.buscarLancamentoDespesas(id);
 	}
 }

@@ -16,15 +16,22 @@ import controle.mao.dados.util.DespesasUtil;
 import controle.mao.dados.util.LancamentosUtil;
 import controle.mao.dados.util.ReceitasUtil;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
+import android.graphics.Color;
 
-public class TelaListaLancamentos extends ListActivity {
+public class TelaListaLancamentos extends Activity implements OnItemClickListener {
 	
 	public static Lancamento bdScript;
 	public static Receita bdScriptR;
@@ -34,18 +41,42 @@ public class TelaListaLancamentos extends ListActivity {
 	protected static final int BUSCAR = 2;
 	
 	private List<LancamentoDAO> lancamentos;
+	private ListView listView;  
+	private LancamentoAdapterListViewBD lancamentosAdapterList;
+	
+	private TextView valorDespesas;
+	private TextView valorReceitas;
+	private TextView valorSaldo;
+
+
 
 
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-//        setContentView(R.layout.cartoes); 
+        setContentView(R.layout.consultas); 
         bdScript = new Lancamento(new LancamentosUtil(this));
         bdScriptR = new Receita(new ReceitasUtil(this));
         bdScriptD = new Despesa(new DespesasUtil(this));
+        
+        //Lista
+        listView = (ListView)findViewById(R.id.listaLancamentos);
+        listView.setOnItemClickListener(this);
+        
+        valorDespesas = (TextView)findViewById(R.id.txtTotalDespesas);
+        valorReceitas = (TextView)findViewById(R.id.txtTotalReceitas);
+        valorSaldo = (TextView)findViewById(R.id.txtTotalSaldoLancamentos);
+
 
         atualizarLista();
-		getListView().setBackgroundResource(R.drawable.fundo);
+        
+        // Calcular Fluxo de Caixa
+    	Character R = 'R';
+    	Character D = 'D';
+        valorReceitas.setText(String.valueOf("R$ "+totalLancamentos(lancamentos, R)));
+        valorDespesas.setText(String.valueOf("R$ "+totalLancamentos(lancamentos, D)));
+        float valorTotal = totalLancamentos(lancamentos, R)-totalLancamentos(lancamentos, D);
+        valorSaldo.setText(String.valueOf("R$ "+valorTotal));
     }
 
 
@@ -58,9 +89,34 @@ protected void atualizarLista() {
 //		startActivityForResult(new Intent(this, TelaAddReceitas.class), INSERIR_EDITAR);
 	} else{
 	// Adaptador de lista customizado para cada linha de uma categoria
-		setListAdapter(new LancamentoAdapterListViewBD(this, lancamentos));
-	}
+//		setListAdapter(new LancamentoAdapterListViewBD(this, lancamentos));
+		
+
+	    //Cria o adapter
+		lancamentosAdapterList = new LancamentoAdapterListViewBD(this, lancamentos);
+		 
+		        //Define o Adapter
+		        listView.setAdapter(lancamentosAdapterList);
+
+		        //Cor quando a lista é selecionada para ralagem.
+
+		        listView.setCacheColorHint(Color.TRANSPARENT);
+		
+		}
 }
+
+public float totalLancamentos(List<LancamentoDAO> lista, Character tipoLancamento){
+	int total = 0;
+
+	for (int i = 0; i < lista.size(); i++){
+	    char[] temp = lista.get(i).tipoLancamento_lancamentos.toCharArray();
+		if (tipoLancamento.equals(temp[0]))
+			total+= lista.get(i).valor_lancamentos;
+	}
+	
+	return total;
+}
+
 
 @Override
 public boolean onCreateOptionsMenu(Menu menu) {
@@ -87,11 +143,17 @@ public boolean onMenuItemSelected(int featureId, MenuItem item) {
 	return true;
 }
 
-@Override
-protected void onListItemClick(ListView l, View v, int posicao, long id) {
-	super.onListItemClick(l, v, posicao, id);
+//@Override
+//protected void onListItemClick(ListView l, View v, int posicao, long id) {
+//	super.onListItemClick(l, v, posicao, id);
+//	editarLancamento(posicao);
+//}
+
+public void onItemClick(AdapterView<?> arg0, View arg1, int posicao, long id) {
 	editarLancamento(posicao);
 }
+
+
 
 // Recupera o id do carro, e abre a tela de edição
 protected void editarLancamento(int posicao) {
@@ -147,5 +209,8 @@ public void onBackPressed() {
 	TelaListaLancamentos.this.finish();
 // super.onBackPressed();
 }
+
+
+
 
 }

@@ -8,6 +8,7 @@ import java.util.List;
 
 import controle.mao.dados.SQLiteHelper;
 import controle.mao.dados.dao.DespesasDAO;
+import controle.mao.dados.dao.ReceitasDAO;
 import controle.mao.dados.dao.DespesasDAO.Despesas;
 import controle.mao.dados.dao.LancamentoDAO;
 import controle.mao.dados.dao.LancamentoDAO.Lancamentos;
@@ -79,7 +80,7 @@ public class DespesasUtil {
 		
 		ContentValues valuesD = new ContentValues();
 		despesa.idLancamento = idL;
-		valuesD.put(Despesas.LANCAMENTO, idL);
+		valuesD.put(Despesas.ID_LANCAMENTO, idL);
 		valuesD.put(Despesas.DATA_VENCIMENTO, despesa.dataVencimento.toString());
 		valuesD.put(Despesas.FORMA_PAGTO, despesa.formaPagto);
 		valuesD.put(Despesas.TIPO_CARTAO, despesa.tipoCartao);
@@ -106,7 +107,7 @@ public class DespesasUtil {
 		
 		ContentValues valuesD = new ContentValues();
 		despesa.idLancamento = idL;
-		valuesD.put(Despesas.LANCAMENTO, idL);
+		valuesD.put(Despesas.ID_LANCAMENTO, idL);
 		valuesD.put(Despesas.DATA_VENCIMENTO, despesa.dataVencimento.toString());
 		valuesD.put(Despesas.FORMA_PAGTO, despesa.formaPagto);
 		valuesD.put(Despesas.TIPO_CARTAO, despesa.tipoCartao);
@@ -181,6 +182,31 @@ public class DespesasUtil {
 
 		return null;
 	}
+	
+	public DespesasDAO buscarLancamentoDespesas(Long id) {
+		// select * from receita where _id=?
+				Cursor c = db.query(true, TABELA_DESPESAS, DespesasDAO.colunas, Despesas.ID_LANCAMENTO + "=" + id, null, null, null, null, null);
+
+				if (c.getCount() > 0) {
+
+					// Posicinoa no primeiro elemento do cursor
+					c.moveToFirst();
+
+					DespesasDAO despesa = new DespesasDAO();
+
+					// Lê os dados
+					despesa.id = c.getLong(0);
+					despesa.idLancamento = c.getLong(1);
+					despesa.dataVencimento = c.getString(2);
+					despesa.formaPagto = c.getString(3);
+					despesa.tipoCartao = c.getString(4);
+					despesa.id_cartao = c.getInt(5);
+					
+					return despesa;
+				}
+
+				return null;
+	}
 
 	// Retorna um cursor com todos as receitas
 	public Cursor getCursor() {
@@ -207,7 +233,7 @@ public class DespesasUtil {
 
 			// Recupera os índices das colunas
 			int idxId = c.getColumnIndex(Despesas._ID);
-			int idxLancamento = c.getColumnIndex(Despesas.LANCAMENTO);
+			int idxLancamento = c.getColumnIndex(Despesas.ID_LANCAMENTO);
 			int idxDataVencimento = c.getColumnIndex(Despesas.DATA_VENCIMENTO);
 			int idxFormaPagto = c.getColumnIndex(Despesas.FORMA_PAGTO);
 			int idxTipoCartao = c.getColumnIndex(Despesas.TIPO_CARTAO);
@@ -295,4 +321,6 @@ public class DespesasUtil {
 			dbHelper.close();
 		}
 	}
+
+
 }

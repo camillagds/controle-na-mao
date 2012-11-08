@@ -3,12 +3,19 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_gravity="center"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:paddingBottom="15dp"
-    android:paddingTop="15dp" >
+    android:paddingTop="15dp"
+    android:paddingLeft="10dp" >
 
+    <LinearLayout 
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center"
+    android:orientation="horizontal"
+     >
+    
     <TextView
-        android:paddingLeft="10dp"
         android:id="@+id/listItemTipoLancamento"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -35,20 +42,16 @@
         android:textColor="#000000" />
 
     <TextView
-        android:id="@+id/listItemNomeLancamento"
+        android:id="@+id/listItemValorLancamento"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#FF000000"
         android:textSize="7pt" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="  - "
-        android:textColor="#000000" />
-
-    <TextView
-        android:id="@+id/listItemValorLancamento"
+    </LinearLayout>
+    
+        <TextView
+        android:id="@+id/listItemNomeLancamento"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#FF000000"

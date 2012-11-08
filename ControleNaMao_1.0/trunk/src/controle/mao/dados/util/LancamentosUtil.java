@@ -67,7 +67,9 @@ public class LancamentosUtil {
 			lancamento.descricao_lancamentos = c.getString(2);
 			lancamento.idCategoria_lancamentos = c.getLong(3);
 			lancamento.dataBaixa_lancamentos = c.getString(4);
-			lancamento.valor_lancamentos = c.getFloat(5);		
+			lancamento.valor_lancamentos = c.getFloat(5);
+			lancamento.pago = c.getInt(6);
+
 			return lancamento;
 		}
 
@@ -104,6 +106,8 @@ public class LancamentosUtil {
 			int idxCategoria = c.getColumnIndex(Lancamentos.ID_CATEGORIA);
 			int idxDataBaixa = c.getColumnIndex(Lancamentos.DATA_BAIXA);
 			int idxValor = c.getColumnIndex(Lancamentos.VALOR);
+			int idxPago = c.getColumnIndex(Lancamentos.PAGO);
+
 
 			// Loop até o final
 			do {
@@ -117,11 +121,21 @@ public class LancamentosUtil {
 				controle.idCategoria_lancamentos = c.getInt(idxCategoria);
 				controle.dataBaixa_lancamentos = c.getString(idxDataBaixa);
 	            controle.valor_lancamentos = c.getFloat(idxValor);
+	            controle.pago = c.getInt(idxPago);
 
 			} while (c.moveToNext());
 		}
 
 		return controles;
+	}
+	
+	public int totalLancamentos(List<LancamentoDAO> lista, String tipoLancamento){
+		int total = 0;
+		for (int i = 0; i < lista.size(); i++){
+			if (lista.get(i).tipoLancamento_lancamentos == tipoLancamento)
+				total+= lista.get(i).valor_lancamentos;
+		}
+		return total;
 	}
 	
 //TODO dar um jeito nisso ai
@@ -145,6 +159,8 @@ public class LancamentosUtil {
 				lancamento.idCategoria_lancamentos = c.getLong(3);
 				lancamento.dataBaixa_lancamentos = c.getString(4);
 				lancamento.valor_lancamentos = c.getFloat(5);				
+				lancamento.pago = c.getInt(6);
+
 			}
 		} catch (SQLException e) {
 			Log.e(CATEGORIA, "Erro ao buscar o controle pela data: " + e.toString());
