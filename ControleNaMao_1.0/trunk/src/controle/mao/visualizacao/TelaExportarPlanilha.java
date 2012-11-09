@@ -17,7 +17,10 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 
 public class TelaExportarPlanilha extends FragmentActivity {
@@ -85,7 +88,28 @@ public class TelaExportarPlanilha extends FragmentActivity {
 		// Botão Gerar Planilha
 		btConfirmarExportar.setOnClickListener(new ImageView.OnClickListener() {
 			public void onClick(View v) {
-				// Chama o POI
+				AlertDialog alertDialog = new AlertDialog.Builder(
+                        TelaExportarPlanilha.this).create();
+ 
+        // Setting Dialog Title
+        alertDialog.setTitle("Exportar Planilha");
+ 
+        // Setting Dialog Message
+        alertDialog.setMessage("Arquivo gerado com sucesso!");
+ 
+        // Setting Icon to Dialog
+        alertDialog.setIcon(R.drawable.android);
+ 
+        // Setting OK Button
+        alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                // Write your code here to execute after dialog closed
+                Toast.makeText(getApplicationContext(), "Arquivo gerado com sucesso!", Toast.LENGTH_SHORT).show();
+                }
+        });
+ 
+        // Showing Alert Message
+        alertDialog.show();
 			}
 		});
 

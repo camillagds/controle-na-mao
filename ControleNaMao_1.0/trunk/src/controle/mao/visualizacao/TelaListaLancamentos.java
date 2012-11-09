@@ -94,7 +94,7 @@ protected void atualizarLista() {
 
 	    //Cria o adapter
 		lancamentosAdapterList = new LancamentoAdapterListViewBD(this, lancamentos);
-		 
+		
 		        //Define o Adapter
 		        listView.setAdapter(lancamentosAdapterList);
 

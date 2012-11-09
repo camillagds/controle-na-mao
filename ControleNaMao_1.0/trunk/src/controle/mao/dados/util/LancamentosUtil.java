@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import controle.mao.dados.SQLiteHelper;
+import controle.mao.dados.dao.DespesasDAO;
 import controle.mao.dados.dao.LancamentoDAO;
 import controle.mao.dados.dao.LancamentoDAO.Lancamentos;
 import controle.mao.dados.dao.ReceitasDAO;
@@ -124,6 +125,42 @@ public class LancamentosUtil {
 	            controle.pago = c.getInt(idxPago);
 
 			} while (c.moveToNext());
+		}
+
+		return controles;
+	}
+	
+	public List<LancamentoDAO> listarLancamentosCartao(List<LancamentoDAO> list) {
+
+		List<LancamentoDAO> controles = new ArrayList<LancamentoDAO>();
+
+		Character tipoLancamento = 'D';
+		Character tipoCartao = 'C';
+
+		// Loop até o final
+		for (int i = 0; i < list.size(); i++) {
+
+			LancamentoDAO controle = new LancamentoDAO();
+			DespesasDAO despesas = new DespesasDAO();
+			char[] temp = null;
+			char[] temp2 = null;
+			try {
+				temp = despesas.tipoCartao.toCharArray();
+			} catch (Exception e) {
+				temp[0] = 'x';
+			}
+			try {
+				temp2 = controle.tipoLancamento_lancamentos.toCharArray();
+			} catch (Exception e) {
+				temp2[0] = 'x';
+			}
+			if (tipoLancamento == temp2[0]) {
+				if (despesas.idLancamento == controle.id
+						&& tipoCartao.equals(temp[0])) {
+					controles.add(list.get(i));
+
+				}
+			}
 		}
 
 		return controles;
