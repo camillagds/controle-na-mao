@@ -65,7 +65,12 @@ public class Despesa extends Activity{
 		despesa.tipoCartao = TelaAddDespesas.getNomeTipoCartaoBD();
 		despesa.formaPagto = TelaAddDespesas.nomeFormaPagtoBD;
 		despesa.dataVencimento = converteDataString(TelaAddDespesas.getDtDebitoDespesas());
-		despesa.id_cartao = Cartao.BuscarIdCartao(TelaAddDespesas.getNomeCartaoBD());
+		try {
+			despesa.id_cartao = Cartao.BuscarIdCartao(TelaAddDespesas.getNomeCartaoBD());
+		} catch (Exception e) {
+			despesa.id_cartao = (Long) null;
+		}
+		
 		
 		// Salvar
 		salvarDespesa(lancamento, despesa);

@@ -175,7 +175,7 @@ public class DespesasUtil {
 			despesa.dataVencimento = c.getString(2);
 			despesa.formaPagto = c.getString(3);
 			despesa.tipoCartao = c.getString(4);
-			despesa.id_cartao = c.getInt(5);
+			despesa.id_cartao = c.getLong(5);
 			
 			return despesa;
 		}
@@ -200,7 +200,7 @@ public class DespesasUtil {
 					despesa.dataVencimento = c.getString(2);
 					despesa.formaPagto = c.getString(3);
 					despesa.tipoCartao = c.getString(4);
-					despesa.id_cartao = c.getInt(5);
+					despesa.id_cartao = c.getLong(5);
 					
 					return despesa;
 				}
@@ -249,7 +249,7 @@ public class DespesasUtil {
 				despesa.dataVencimento = c.getString(idxDataVencimento);
 				despesa.formaPagto = c.getString(idxFormaPagto);
 				despesa.tipoCartao = c.getString(idxTipoCartao);
-	            despesa.id_cartao = c.getInt(idxCartao);
+	            despesa.id_cartao = c.getLong(idxCartao);
 	            
 			} while (c.moveToNext());
 		}

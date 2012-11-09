@@ -26,7 +26,7 @@ public class DespesasDAO {
 	public String dataVencimento;
 	public String formaPagto;
 	public String tipoCartao;
-	public long id_cartao;
+	public Long id_cartao;
 
 	public DespesasDAO() {
 	}

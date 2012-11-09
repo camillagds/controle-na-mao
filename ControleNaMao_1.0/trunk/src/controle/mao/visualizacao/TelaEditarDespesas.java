@@ -201,14 +201,21 @@ public class TelaEditarDespesas extends Activity {
 
 				txtValorDespesas.setText(String.valueOf(l.valor_lancamentos));
 				Calendar data = Receita.ConvertToDateBR(String.valueOf(d.dataVencimento));
+				Log.i("cnm", data.toString());
 				day = data.get(Calendar.DAY_OF_MONTH);
 				month = data.get(Calendar.MONTH);
 				year = data.get(Calendar.YEAR);
 				
 				dtDebitoDespesas.updateDate(year, month, day);
-				dbFormaPgtoDespesas.setSelection((int) (listaFormaPgto.getPosition(d.formaPagto)));
+				
+				String formaPgt = d.tipoCartao.toString();
+						for (int i = 0;i<3;i++){
+							if (listaFormaPgto.getItem(i).equals(formaPgt))
+								dbFormaPgtoDespesas.setSelection(i);
+						}
+//				dbFormaPgtoDespesas.setSelection((int) (listaFormaPgto.getPosition(d.formaPagto.toString())));
 				//TODO implementar direito
-				dbNomeCartaoDespesas.setSelection((int) d.id_cartao);
+				dbNomeCartaoDespesas.setSelection(Integer.parseInt(d.id_cartao.toString()));
 				String formaPgtCartao = d.tipoCartao.toString().substring(0, 1);
             	String credito = "C";
             	String debito = " D";

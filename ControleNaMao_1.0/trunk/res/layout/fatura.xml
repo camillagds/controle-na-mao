@@ -1,0 +1,61 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/fundo"
+    android:scrollbarAlwaysDrawVerticalTrack="true"
+    android:scrollbarStyle="insideOverlay"
+    android:scrollbars="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="17dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/titTelaBuscaFatura"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fatura Cartão"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#005566"
+                android:textSize="12pt"
+                android:textStyle="bold" />
+
+            <ListView
+                android:id="@+id/listaLancamentosCartoes"
+                android:layout_width="fill_parent"
+                android:layout_height="370dp" >
+            </ListView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="horizontal"
+            android:layout_marginLeft="17dp" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total da Fatura: "
+                android:textSize="7pt"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtTotalFatura"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15pt"
+                android:textSize="7pt" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>
