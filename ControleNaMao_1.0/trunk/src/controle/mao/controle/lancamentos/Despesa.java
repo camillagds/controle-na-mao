@@ -61,7 +61,7 @@ public class Despesa extends Activity{
 		lancamento.idCategoria_lancamentos = Categoria.BuscarIdCategoria(temp);
 		lancamento.dataBaixa_lancamentos = null;
 		lancamento.valor_lancamentos = valorDespesa;
-
+		lancamento.pago = 0;
 		despesa.tipoCartao = TelaAddDespesas.getNomeTipoCartaoBD();
 		despesa.formaPagto = TelaAddDespesas.nomeFormaPagtoBD;
 		despesa.dataVencimento = converteDataString(TelaAddDespesas.getDtDebitoDespesas());
@@ -70,7 +70,6 @@ public class Despesa extends Activity{
 		} catch (Exception e) {
 			despesa.id_cartao = (Long) null;
 		}
-		
 		
 		// Salvar
 		salvarDespesa(lancamento, despesa);
@@ -86,17 +85,6 @@ public class Despesa extends Activity{
 		
 	}
 
-	public void excluir() {
-		if (id != null) {
-			excluirDespesa(id);
-		}
-
-		// OK
-		setResult(RESULT_OK, new Intent());
-
-		// Fecha a tela
-		finish();
-	}
 
 	// Buscar a receita pelo id
 	protected DespesasDAO buscarDespesa(long id) {
@@ -109,8 +97,8 @@ public class Despesa extends Activity{
 	}
 
 	// Excluir a receita
-	protected void excluirDespesa(long id) {
-		bdScript.deletar(id);
+	protected void excluirDespesa(long idL, long idD) {
+		bdScript.deletar(idL, idD);
 	}
 	
     public static String converteDataString(DatePicker campoData) {  	 
@@ -134,7 +122,6 @@ public class Despesa extends Activity{
     	try {
 			c.setTime(formatoData.parse(data));
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	return c;
@@ -152,12 +139,10 @@ public class Despesa extends Activity{
     
 	
 	public List<DespesasDAO> listaDespesas() {
-		// TODO Auto-generated method stub
 		return bdScript.listarDespesas();
 	}
 	
 	public DespesasDAO buscarLancamentoDespesas(Long id) {
-		// TODO Auto-generated method stub
 		return bdScript.buscarLancamentoDespesas(id);
 	}
 }

@@ -54,6 +54,12 @@ public class LancamentoDAO {
 		this.valor_lancamentos = valor;
 		this.pago = pago;
 	}
+	
+	public LancamentoDAO(long id, int pago) {
+		super();
+		this.id = id;
+		this.pago = pago;
+	}
 
 	/**
 	 * Classe interna para representar as colunas e ser utilizada por um Content
@@ -79,7 +85,6 @@ public class LancamentoDAO {
 	
 		// Ordenação default para inserir no order by
 		public static final String DEFAULT_SORT_ORDER = "_id ASC";
-		//TODO Colocar valores
 		public static final String TIPO_LANCAMENTO = "tipo_Lancamento";
 		public static final String DESCRICAO = "descricao";
 		public static final String ID_CATEGORIA = "id_categoria";

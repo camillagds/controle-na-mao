@@ -73,7 +73,6 @@ public class DespesasUtil {
 		valuesL.put(Lancamentos.TIPO_LANCAMENTO, lancamento.tipoLancamento_lancamentos);
 		valuesL.put(Lancamentos.DESCRICAO, lancamento.descricao_lancamentos);
 		valuesL.put(Lancamentos.ID_CATEGORIA, lancamento.idCategoria_lancamentos);
-		//TODO arrumar a Gambiarra
 		valuesL.put(Lancamentos.DATA_BAIXA, despesa.dataVencimento.toString());
 		valuesL.put(Lancamentos.VALOR, lancamento.valor_lancamentos);
 		long idL = inserir(TABELA_LANCAMENTOS,valuesL);
@@ -101,18 +100,16 @@ public class DespesasUtil {
 		valuesL.put(Lancamentos.TIPO_LANCAMENTO, lancamento.tipoLancamento_lancamentos);
 		valuesL.put(Lancamentos.DESCRICAO, lancamento.descricao_lancamentos);
 		valuesL.put(Lancamentos.ID_CATEGORIA, lancamento.idCategoria_lancamentos);
-		valuesL.put(Lancamentos.DATA_BAIXA, despesa.dataVencimento.toString());
+		valuesL.put(Lancamentos.DATA_BAIXA, lancamento.dataBaixa_lancamentos.toString());
 		valuesL.put(Lancamentos.VALOR, lancamento.valor_lancamentos);
-		long idL = inserir(TABELA_LANCAMENTOS,valuesL);
+		valuesL.put(Lancamentos.PAGO, lancamento.pago);
 		
 		ContentValues valuesD = new ContentValues();
-		despesa.idLancamento = idL;
-		valuesD.put(Despesas.ID_LANCAMENTO, idL);
+		valuesD.put(Despesas.ID_LANCAMENTO, despesa.idLancamento);
 		valuesD.put(Despesas.DATA_VENCIMENTO, despesa.dataVencimento.toString());
 		valuesD.put(Despesas.FORMA_PAGTO, despesa.formaPagto);
 		valuesD.put(Despesas.TIPO_CARTAO, despesa.tipoCartao);
 		valuesD.put(Despesas.CARTAO, despesa.id_cartao);
-		long idD = inserir(TABELA_DESPESAS,valuesD);
 		
 		String _idL = String.valueOf(lancamento.id);
 		String _idD = String.valueOf(despesa.id);
@@ -120,39 +117,43 @@ public class DespesasUtil {
 		// Atualliza Lancamentos
 		String whereL = Lancamentos._ID + "=?";
 		String[] whereArgsL = new String[] { _idL };
-		int countL = atualizar(valuesL, whereL, whereArgsL);
+		int countL = atualizar(valuesL, whereL, whereArgsL,TABELA_LANCAMENTOS);
 
 		// Atualliza Recebimentos
-		String whereD = Receitas._ID + "=?";
+		String whereD = Despesas._ID + "=?";
 		String[] whereArgsD = new String[] { _idD };
-		int countD = atualizar(valuesD, whereD, whereArgsD);
+		int countD = atualizar(valuesD, whereD, whereArgsD,TABELA_DESPESAS);
 
 		return countD;
 	}
 
 	// Atualiza a despesa com os valores abaixo
 	// A cláusula where é utilizada para identificar o receita a ser atualizado
-	public int atualizar(ContentValues valores, String where, String[] whereArgs) {
-		int count = db.update(TABELA_DESPESAS, valores, where, whereArgs);
+	public int atualizar(ContentValues valores, String where, String[] whereArgs,String tabela) {
+		int count = db.update(tabela, valores, where, whereArgs);
 		Log.i(CATEGORIA, "Atualizou [" + count + "] registros");
 		return count;
 	}
 
 	// Deleta a despesa com o id fornecido
-	public int deletar(long id) {
-		String where = Despesas._ID + "=?";
+	public int deletar(long idL, long idD) {
+		String whereL = Lancamentos._ID + "=?";
+		String whereD = Despesas._ID + "=?";
 
-		String _id = String.valueOf(id);
-		String[] whereArgs = new String[] { _id };
+		String _idL = String.valueOf(idL);
+		String _idD = String.valueOf(idD);
 
-		int count = deletar(where, whereArgs);
-
+		String[] whereArgsL = new String[] { _idL };
+		String[] whereArgsD = new String[] { _idD };
+		
+		int count2 = deletar(TABELA_DESPESAS,whereD, whereArgsD);
+		int count = deletar(TABELA_LANCAMENTOS,whereL, whereArgsL);
 		return count;
 	}
 
 	// Deleta o receita com os argumentos fornecidos
-	public int deletar(String where, String[] whereArgs) {
-		int count = db.delete(TABELA_DESPESAS, where, whereArgs);
+	public int deletar(String tabela, String where, String[] whereArgs) {
+		int count = db.delete(tabela, where, whereArgs);
 		Log.i(CATEGORIA, "Deletou [" + count + "] registros");
 		return count;
 	}
@@ -296,7 +297,6 @@ public class DespesasUtil {
         try {
         	data  = formato.parse(extr);
         } catch (ParseException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return data;

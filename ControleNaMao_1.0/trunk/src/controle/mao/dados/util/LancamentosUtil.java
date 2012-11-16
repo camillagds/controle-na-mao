@@ -216,7 +216,6 @@ public class LancamentosUtil {
         try {
         	data  = formato.parse(extr);
         } catch (ParseException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return data;

@@ -93,7 +93,6 @@ public class Categoria extends Activity{
 	}
 
 	public static List<CategoriaDAO> listaCategorias() {
-		// TODO Auto-generated method stub
 		return bdScript.listarCategorias();
 	}
 	

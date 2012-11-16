@@ -46,8 +46,6 @@ public class TelaAddReceitas extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lanc_receitas);
         
-
-      //TODO tem que fechar as duas conexões
       bdScriptCategorias = new Categoria(new CategoriasUtil(this));
       bdScript = new Receita(new ReceitasUtil(this));
         
