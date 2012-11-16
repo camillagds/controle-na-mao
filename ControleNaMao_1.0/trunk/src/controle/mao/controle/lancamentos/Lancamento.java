@@ -23,12 +23,10 @@ public class Lancamento extends Activity{
     
 	
 	public List<LancamentoDAO> listaLancamentos() {
-		// TODO Auto-generated method stub
 		return bdScript.listarLancamentos();
 	}
 	
 	public List<LancamentoDAO> listaLancamentosCartao(List<LancamentoDAO> list) {
-		// TODO Auto-generated method stub
 		return bdScript.listarLancamentosCartao(list);
 	}
 

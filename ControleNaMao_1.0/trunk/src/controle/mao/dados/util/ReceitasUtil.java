@@ -9,6 +9,7 @@ import java.util.List;
 import controle.mao.dados.SQLiteHelper;
 import controle.mao.dados.dao.LancamentoDAO;
 import controle.mao.dados.dao.ReceitasDAO;
+import controle.mao.dados.dao.DespesasDAO.Despesas;
 import controle.mao.dados.dao.LancamentoDAO.Lancamentos;
 import controle.mao.dados.dao.ReceitasDAO.Receitas;
 
@@ -98,6 +99,7 @@ public class ReceitasUtil {
 		valuesL.put(Lancamentos.ID_CATEGORIA, lancamento.idCategoria_lancamentos);
 		valuesL.put(Lancamentos.DATA_BAIXA, lancamento.dataBaixa_lancamentos.toString());
 		valuesL.put(Lancamentos.VALOR, lancamento.valor_lancamentos);
+		valuesL.put(Lancamentos.PAGO, lancamento.pago);
 		
 		ContentValues valuesR = new ContentValues();
 		valuesR.put(Receitas.ID_LANCAMENTO, receita.idLancamento_receitas);
@@ -128,20 +130,24 @@ public class ReceitasUtil {
 	}
 
 	// Deleta o receita com o id fornecido
-	public int deletar(long id) {
-		String where = Receitas._ID + "=?";
+	public int deletar(long idL, long idR) {
+		String whereL = Lancamentos._ID + "=?";
+		String whereR = Receitas._ID + "=?";
 
-		String _id = String.valueOf(id);
-		String[] whereArgs = new String[] { _id };
+		String _idL = String.valueOf(idL);
+		String _idR = String.valueOf(idR);
 
-		int count = deletar(where, whereArgs);
-
+		String[] whereArgsL = new String[] { _idL };
+		String[] whereArgsR = new String[] { _idR };
+		
+		int count2 = deletar(TABELA_RECEITAS,whereR, whereArgsR);
+		int count = deletar(TABELA_LANCAMENTO,whereL, whereArgsL);
 		return count;
 	}
 
 	// Deleta o receita com os argumentos fornecidos
-	public int deletar(String where, String[] whereArgs) {
-		int count = db.delete(TABELA_RECEITAS, where, whereArgs);
+	public int deletar(String tabela, String where, String[] whereArgs) {
+		int count = db.delete(tabela, where, whereArgs);
 		Log.i(CATEGORIA, "Deletou [" + count + "] registros");
 		return count;
 	}
@@ -270,7 +276,6 @@ public class ReceitasUtil {
         try {
         	data  = formato.parse(extr);
         } catch (ParseException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return data;

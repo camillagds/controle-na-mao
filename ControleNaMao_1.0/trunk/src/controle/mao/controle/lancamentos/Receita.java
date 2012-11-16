@@ -41,11 +41,7 @@ public class Receita extends Activity{
 		}
 		LancamentoDAO lancamento = new LancamentoDAO();		
 		ReceitasDAO receita = new ReceitasDAO();
-		if (id != null) {
-			// É uma atualização
-			lancamento.id = id;
-		}
-		//TODO declarar as variaveis do BD
+
 		lancamento.tipoLancamento_lancamentos = "R";
 		lancamento.descricao_lancamentos = TelaAddReceitas.getTxtDescricaoReceitas().getText().toString();
 		String temp = TelaAddReceitas.getNomeCategoriaBD();
@@ -53,6 +49,7 @@ public class Receita extends Activity{
 		lancamento.idCategoria_lancamentos = Categoria.BuscarIdCategoria(temp);
 		lancamento.dataBaixa_lancamentos = converteDataString(TelaAddReceitas.getDtCreditoReceitas());
 		lancamento.valor_lancamentos = valorLancamento;
+		lancamento.pago = 0;
 		receita.dataCredito_receitas = converteDataString(TelaAddReceitas.getDtCreditoReceitas());
 
 		// Salvar
@@ -79,7 +76,6 @@ public class Receita extends Activity{
 		LancamentoDAO lancamento = new LancamentoDAO();		
 		ReceitasDAO receita = new ReceitasDAO();
 		lancamento.id = id;
-		//TODO declarar as variaveis do BD
 		lancamento.tipoLancamento_lancamentos = "R";
 		lancamento.descricao_lancamentos = TelaEditarReceitas.getTxtDescricaoReceitas().getText().toString();
 		String temp = TelaEditarReceitas.getNomeCategoriaBD();
@@ -122,13 +118,12 @@ public class Receita extends Activity{
 
 	// Salvar a receita
 	protected void salvarReceita(LancamentoDAO controle, ReceitasDAO receita) {
-		//TODO alterar
 		bdScript.salvar(controle,receita);
 	}
 
 	// Excluir a receita
 	protected void excluirReceita(long id) {
-		bdScript.deletar(id);
+		bdScript.deletar(id, id);
 	}
 	
     public static String converteDataString(DatePicker campoData) {  	 
@@ -152,7 +147,6 @@ public class Receita extends Activity{
     	try {
 			c.setTime(formatoData.parse(data));
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	return c;
@@ -170,17 +164,15 @@ public class Receita extends Activity{
     
 	
 	public List<ReceitasDAO> listaReceitas() {
-		// TODO Auto-generated method stub
 		return bdScript.listarReceitas();
 	}
 
 	public ReceitasDAO buscarLancamentoReceitas(Long id) {
-		// TODO Auto-generated method stub
 		return bdScript.buscarLancamentoReceitas(id);
 	}
 
 	public void deletar(long id2) {
-		// TODO Auto-generated method stub
+		// TODO precisa?
 		
 	}
 

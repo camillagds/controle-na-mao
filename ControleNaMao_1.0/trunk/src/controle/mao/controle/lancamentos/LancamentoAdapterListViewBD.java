@@ -1,8 +1,10 @@
 package controle.mao.controle.lancamentos;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import controle.mao.R;
 import controle.mao.dados.dao.CategoriaDAO;
@@ -76,15 +78,14 @@ public class LancamentoAdapterListViewBD extends BaseAdapter{
 
 	        
 	        TextView data = (TextView) view.findViewById(R.id.listItemDataLancamento);
-	        //TODO tratar data
 	        data.setText(item.dataBaixa_lancamentos.toString());
-//	        data.setText("03/11/2012");
 	        TextView nome = (TextView) view.findViewById(R.id.listItemNomeLancamento);
 	        nome.setText(item.descricao_lancamentos.toString());
 	        
 	        TextView valor = (TextView) view.findViewById(R.id.listItemValorLancamento);
-	        String valorT = new DecimalFormat("00.00").format(item.valor_lancamentos);
-	        valor.setText("R$ " + valorT);
+	    	NumberFormat formatReais = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+	        String valorT = formatReais.format(item.valor_lancamentos);
+	        valor.setText(valorT);
 	        
 	        return view;
 	    }

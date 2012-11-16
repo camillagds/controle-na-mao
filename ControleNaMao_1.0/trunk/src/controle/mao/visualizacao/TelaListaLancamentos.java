@@ -1,6 +1,9 @@
 package controle.mao.visualizacao;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 import controle.mao.R;
 import controle.mao.controle.lancamentos.Despesa;
@@ -26,12 +29,13 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.graphics.Color;
 
-public class TelaListaLancamentos extends Activity implements OnItemClickListener {
+public class TelaListaLancamentos extends Activity{
 	
 	public static Lancamento bdScript;
 	public static Receita bdScriptR;
@@ -42,7 +46,6 @@ public class TelaListaLancamentos extends Activity implements OnItemClickListene
 	
 	private List<LancamentoDAO> lancamentos;
 	private ListView listView;  
-	private LancamentoAdapterListViewBD lancamentosAdapterList;
 	
 	private TextView valorDespesas;
 	private TextView valorReceitas;
@@ -61,7 +64,7 @@ public class TelaListaLancamentos extends Activity implements OnItemClickListene
         
         //Lista
         listView = (ListView)findViewById(R.id.listaLancamentos);
-        listView.setOnItemClickListener(this);
+        listView.setOnItemClickListener(onItemClick_List);
         
         valorDespesas = (TextView)findViewById(R.id.txtTotalDespesas);
         valorReceitas = (TextView)findViewById(R.id.txtTotalReceitas);
@@ -73,40 +76,41 @@ public class TelaListaLancamentos extends Activity implements OnItemClickListene
         // Calcular Fluxo de Caixa
     	Character R = 'R';
     	Character D = 'D';
-        valorReceitas.setText(String.valueOf("R$ "+totalLancamentos(lancamentos, R)));
-        valorDespesas.setText(String.valueOf("R$ "+totalLancamentos(lancamentos, D)));
-        float valorTotal = totalLancamentos(lancamentos, R)-totalLancamentos(lancamentos, D);
-        valorSaldo.setText(String.valueOf("R$ "+valorTotal));
+    	NumberFormat formatReais = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+        String valorR = formatReais.format(totalLancamentos(lancamentos, R));
+        String valorD = formatReais.format(totalLancamentos(lancamentos, D));
+        String valorS = formatReais.format(totalLancamentos(lancamentos, R)-totalLancamentos(lancamentos, D));
+
+        valorReceitas.setText(valorR);
+        valorDespesas.setText(valorD);
+        valorSaldo.setText(valorS);
     }
 
 
 protected void atualizarLista() {
 	// Pega a lista de categorias e exibe na tela
 	lancamentos = bdScript.listaLancamentos();
+		
 	Log.e("cnm", "Nenhum Registro?: " + lancamentos.isEmpty());
 	// Se não tiver dados, ele vai pra tela de adicionar categoria.
 	if (lancamentos.isEmpty()){
-//		startActivityForResult(new Intent(this, TelaAddReceitas.class), INSERIR_EDITAR);
+        Toast.makeText(getApplicationContext(), "Não Existem Lançamentos Cadastrados!", Toast.LENGTH_SHORT).show();
+        listView.setVisibility(View.INVISIBLE);
 	} else{
-	// Adaptador de lista customizado para cada linha de uma categoria
-//		setListAdapter(new LancamentoAdapterListViewBD(this, lancamentos));
-		
-
 	    //Cria o adapter
-		lancamentosAdapterList = new LancamentoAdapterListViewBD(this, lancamentos);
-		
+		LancamentoAdapterListViewBD lancamentosAdapterList = new LancamentoAdapterListViewBD(this, lancamentos);
 		        //Define o Adapter
 		        listView.setAdapter(lancamentosAdapterList);
 
 		        //Cor quando a lista é selecionada para ralagem.
 
 		        listView.setCacheColorHint(Color.TRANSPARENT);
+	}	
 		
-		}
 }
 
 public float totalLancamentos(List<LancamentoDAO> lista, Character tipoLancamento){
-	int total = 0;
+	float total = 0;
 
 	for (int i = 0; i < lista.size(); i++){
 	    char[] temp = lista.get(i).tipoLancamento_lancamentos.toCharArray();
@@ -121,8 +125,8 @@ public float totalLancamentos(List<LancamentoDAO> lista, Character tipoLancament
 @Override
 public boolean onCreateOptionsMenu(Menu menu) {
 	super.onCreateOptionsMenu(menu);
-	menu.add(0, INSERIR_EDITAR, 0, "Inserir Novo").setIcon(R.drawable.novo);
-//	menu.add(0, BUSCAR, 0, "Buscar").setIcon(R.drawable.pesquisar);
+//	menu.add(0, INSERIR_EDITAR, 0, "Inserir Novo").setIcon(R.drawable.novo);
+	menu.add(0, BUSCAR, 0, "Buscar").setIcon(R.drawable.pesquisar);
 	return true;
 }
 
@@ -149,9 +153,16 @@ public boolean onMenuItemSelected(int featureId, MenuItem item) {
 //	editarLancamento(posicao);
 //}
 
-public void onItemClick(AdapterView<?> arg0, View arg1, int posicao, long id) {
-	editarLancamento(posicao);
-}
+OnItemClickListener onItemClick_List = new OnItemClickListener() {
+    public void onItemClick(AdapterView arg0, View view, int position, long index) {
+        //Pegar o item clicado
+    	editarLancamento(position);
+    }
+};
+
+//public void onItemClick(AdapterView<?> a, View v, int posicao, long id) {
+//	editarLancamento(posicao);
+//}
 
 
 
@@ -161,7 +172,7 @@ protected void editarLancamento(int posicao) {
 	Intent it;
 	// Recupera a categoria selecionada
 	LancamentoDAO lancamento = lancamentos.get(posicao);
-//	ReceitasUtil lancamentos = new ReceitasUtil(getApplicationContext());
+
 	char[] temp = lancamento.tipoLancamento_lancamentos.toCharArray();
 	Character R = 'R';
 	if(R.equals(temp[0])){
@@ -170,12 +181,14 @@ protected void editarLancamento(int posicao) {
 	}
 	else {
 		// Cria a intent para abrir a tela de editar
-		it = new Intent(this, TelaEditarDespesas.class);
+	it = new Intent(this, TelaEditarDespesas.class);
 	}
 		// Passa o id do carro como parâmetro
 		it.putExtra(Lancamentos._ID, lancamento.id);	
 	
 	// Abre a tela de edição
+	Log.i("cnm","Abrir tela edicao");
+	Log.i("cnm",it.toString());
 	startActivityForResult(it, INSERIR_EDITAR);
 }
 

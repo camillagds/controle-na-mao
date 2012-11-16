@@ -41,14 +41,13 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.AdapterView.OnItemSelectedListener;
 
-public class TelaEditarReceitas extends Activity {
+public class TelaEditarReceitas extends Activity implements OnItemSelectedListener{
 
 	private static DatePicker dtCreditoReceitas;
 	private int year;
 	private int month;
 	private int day;
 	private Categoria bdScriptCategorias;
-//	private ReceitasUtil bdScriptR;
 	private List<CategoriaDAO> categorias;
 	private ImageButton btSalvar;
     private ImageButton btCancelar;
@@ -67,10 +66,7 @@ public class TelaEditarReceitas extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lanc_editar_receitas);
-      //TODO tem que fechar as duas conexões
-      bdScriptCategorias = new Categoria(new CategoriasUtil(this));
-//      bdScriptR = new ReceitasUtil(this);
-
+        bdScriptCategorias = new Categoria(new CategoriasUtil(this));
         
         //Elementos
         setTxtDescricaoReceitas((EditText) findViewById(R.id.txtDescricaoEditarReceitas));
@@ -82,33 +78,24 @@ public class TelaEditarReceitas extends Activity {
         btExcluir = (ImageButton) findViewById(R.id.btExcluirEditarReceitas);
        
         //Lista - Categorias
-        Spinner dbCategoriaReceitas = (Spinner) findViewById(R.id.dbCategoriaEditarReceitas);
+//        Spinner dbCategoriaReceitas = (Spinner) findViewById(R.id.dbCategoriaEditarReceitas);
         
      // Lista - Categorias
-     		categorias = bdScriptCategorias.bdScript.listarCategorias();
+     		categorias = Categoria.bdScript.listarCategorias();
      		List<String> nomesCategorias = new ArrayList<String>();
-     		for (int i = 0; i < categorias.size(); i++) {
-     			nomesCategorias.add(categorias.get(i).nome_categoria);
+     		for (CategoriaDAO categoria : categorias) {
+     			nomesCategorias.add(categoria.nome_categoria);
      		}
+     		Log.i("cnm","tamanho lista categoria: "+nomesCategorias.size());
+     		
      		ArrayAdapter<String> listaCategorias = new ArrayAdapter<String>
      				(this, android.R.layout.simple_spinner_item, nomesCategorias);
      		
      		listaCategorias
      				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+     		
      		dbCategoriaReceitas.setAdapter(listaCategorias);
-     		dbCategoriaReceitas.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-
-				public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                 	//Pega Nome Pela Posição
-                 	setNomeCategoriaBD(parentView.getItemAtPosition(position).toString());
-                 }
-
-                 public void onNothingSelected(AdapterView<?> parentView) {
-                     // your code here
-                 }
-
-             });
+     		dbCategoriaReceitas.setOnItemSelectedListener(this);
      		
      		idL = null;
      		idR = null;
@@ -123,10 +110,10 @@ public class TelaEditarReceitas extends Activity {
     				ReceitasDAO r = TelaListaLancamentos.bdScriptR.buscarLancamentoReceitas(idL);
     				
     				getTxtDescricaoReceitas().setText(l.descricao_lancamentos);
-    				
-    				Integer pos = (int) l.idCategoria_lancamentos;
-    				dbCategoriaReceitas.setSelection((int) l.idCategoria_lancamentos);
-
+    				//TODO arrumar
+    				Integer pos = (int) l.idCategoria_lancamentos-1;
+    				Log.i("cnm", "Posicao categoria: "+pos);
+    				dbCategoriaReceitas.setSelection(pos);
     				getTxtValorReceitas().setText(String.valueOf(l.valor_lancamentos));
     				Calendar data = Receita.ConvertToDateBR(String.valueOf(r.dataCredito_receitas));
     				day = data.get(Calendar.DAY_OF_MONTH);
@@ -158,10 +145,16 @@ public class TelaEditarReceitas extends Activity {
     		// Bt Excluir
 			btExcluir.setOnClickListener(new ImageView.OnClickListener() {
 				public void onClick(View v) {
-					Intent trocatela = new Intent(TelaEditarReceitas.this,
-							ControleNaMaoActivity.class);
-					TelaEditarReceitas.this.startActivity(trocatela);
-					TelaEditarReceitas.this.finish();
+//					Intent trocatela = new Intent(TelaEditarReceitas.this,
+//							ControleNaMaoActivity.class);
+//					TelaEditarReceitas.this.startActivity(trocatela);
+//					TelaEditarReceitas.this.finish();
+					excluir();
+					// OK
+					setResult(RESULT_OK, new Intent());
+
+					// Fecha a tela
+					finish();
 				}
 			});
     }
@@ -215,7 +208,7 @@ public void editar() {
 
 public void excluir() {
 	if (idL != null) {
-		excluirReceita(idL);
+		excluirReceita(idL, idR);
 	}
 
 	// OK
@@ -232,13 +225,12 @@ protected ReceitasDAO buscarReceita(long id) {
 
 // Salvar a receita
 protected void atualizarReceita(LancamentoDAO lancamento, ReceitasDAO receita) {
-//TODO alterar
 	Receita.bdScript.atualizar(lancamento, receita);
 }
 
 // Excluir a receita
-protected void excluirReceita(long id) {
-	TelaListaLancamentos.bdScriptR.excluir();
+protected void excluirReceita(long idL, long idR) {
+	Receita.bdScript.deletar(idL, idR);
 }
 
 
@@ -252,7 +244,7 @@ public static EditText getTxtValorReceitas() {
 
 
 public void setTxtValorReceitas(EditText txtValorReceitas) {
-	this.txtValorReceitas = txtValorReceitas;
+	TelaEditarReceitas.txtValorReceitas = txtValorReceitas;
 }
 
 
@@ -266,7 +258,7 @@ public static DatePicker getDtCreditoReceitas() {
 
 
 public void setDtCreditoReceitas(DatePicker dtCreditoReceitas) {
-	this.dtCreditoReceitas = dtCreditoReceitas;
+	TelaEditarReceitas.dtCreditoReceitas = dtCreditoReceitas;
 }
 
 
@@ -281,7 +273,7 @@ public static EditText getTxtDescricaoReceitas() {
 
 
 public void setTxtDescricaoReceitas(EditText txtDescricaoReceitas) {
-	this.txtDescricaoReceitas = txtDescricaoReceitas;
+	TelaEditarReceitas.txtDescricaoReceitas = txtDescricaoReceitas;
 }
 
 
@@ -293,7 +285,7 @@ public static String getNomeCategoriaBD() {
 
 
 public void setNomeCategoriaBD(String nomeCategoriaBD) {
-	this.nomeCategoriaBD = nomeCategoriaBD;
+	TelaEditarReceitas.nomeCategoriaBD = nomeCategoriaBD;
 }
 
 
@@ -304,7 +296,24 @@ protected void onDestroy() {
 	super.onDestroy();
 
 	// Fecha o banco
-	bdScriptCategorias.bdScript.fechar();
+	Categoria.bdScript.fechar();
 }
+
+
+
+public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+ 	//Pega Nome Pela Posição
+ 	Log.i("cnm","Spinner Categoria: Antes");
+ 	String selected = parentView.getItemAtPosition(position).toString();
+	String itemCategoria = dbCategoriaReceitas.getSelectedItem().toString();
+ 	Log.i("cnm","Spinner Categoria 1: "+selected);
+ 	Log.i("cnm","Spinner Categoria 2: "+itemCategoria);
+
+	setNomeCategoriaBD(selected);	
+ }
+
+ public void onNothingSelected(AdapterView<?> parentView) {
+     // your code here
+ }
 
 }

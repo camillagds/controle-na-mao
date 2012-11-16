@@ -93,7 +93,6 @@ public class Cartao  extends Activity{
 	}
     
 	public static List<CartaoDAO> listaCartoes() {
-		// TODO Auto-generated method stub
 		return bdScript.listarCartao();
 	}
 	
