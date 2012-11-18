@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import controle.mao.controle.cartoes.Cartao;
 import controle.mao.controle.categoria.Categoria;
 import controle.mao.dados.dao.DespesasDAO;
@@ -39,6 +40,7 @@ public class Despesa extends Activity{
 	}
 
 	public void salvar() {
+		
 		float valorDespesa = 0;
 		try {
 			valorDespesa = Float.parseFloat(TelaAddDespesas.getTxtValorDespesas().getText().toString());
@@ -83,6 +85,55 @@ public class Despesa extends Activity{
 		finish();
 		
 		
+	}
+	
+public void salvar(int parcelas) {
+		for (int i=0;i<parcelas;i++){
+		float valorDespesa = 0;
+		try {
+			valorDespesa = Float.parseFloat(TelaAddDespesas.getTxtValorDespesas().getText().toString());
+		} catch (NumberFormatException e) {
+			// ok neste exemplo, tratar isto em aplicações reais
+		}
+		
+		DespesasDAO despesa = new DespesasDAO();
+		LancamentoDAO lancamento = new LancamentoDAO();
+
+		if (id != null) {
+			// É uma atualização
+			despesa.id = id;
+		}
+		//todo arrumar tudo isso ai
+		lancamento.tipoLancamento_lancamentos = "D";
+		int parc = i+1;
+		lancamento.descricao_lancamentos = TelaAddDespesas.getTxtDescricaoDespesas().getText().toString() + " - p."+parc;
+		String temp = TelaAddDespesas.getNomeCategoriaBD();
+		Log.e("cnm", TelaAddDespesas.getNomeCategoriaBD());
+		lancamento.idCategoria_lancamentos = Categoria.BuscarIdCategoria(temp);
+		lancamento.dataBaixa_lancamentos = null;
+		lancamento.valor_lancamentos = valorDespesa;
+		lancamento.pago = 0;
+		despesa.tipoCartao = TelaAddDespesas.getNomeTipoCartaoBD();
+		despesa.formaPagto = TelaAddDespesas.nomeFormaPagtoBD;
+		despesa.dataVencimento = converteDataString(TelaAddDespesas.getDtDebitoDespesas());
+		try {
+			despesa.id_cartao = Cartao.BuscarIdCartao(TelaAddDespesas.getNomeCartaoBD());
+		} catch (Exception e) {
+			despesa.id_cartao = (Long) null;
+		}
+		
+		// Salvar
+		salvarDespesa(lancamento, despesa);
+		Log.i("cnm", lancamento.toString());
+		Log.i("cnm", despesa.toString());
+		
+		// OK
+		setResult(RESULT_OK, new Intent());
+
+		// Fecha a tela
+		finish();
+		
+		}
 	}
 
 

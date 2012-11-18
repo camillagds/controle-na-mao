@@ -184,6 +184,11 @@ public class DespesasUtil {
 		return null;
 	}
 	
+	public DespesasDAO buscarLancamentosCartao(){
+		db.execSQL("select * from tb_despesa inner join tb_cartao on tb_despesa.[id_cartao] = tb_cartao._id inner join tb_lancamento on tb_despesa.[id_lancamento]=tb_lancamento._id where tb_despesa.[forma_pagamento]='Cartão' and tb_despesa.[tipo_cartao]='Credito';");
+		return null;
+	}
+	
 	public DespesasDAO buscarLancamentoDespesas(Long id) {
 		// select * from receita where _id=?
 				Cursor c = db.query(true, TABELA_DESPESAS, DespesasDAO.colunas, Despesas.ID_LANCAMENTO + "=" + id, null, null, null, null, null);
