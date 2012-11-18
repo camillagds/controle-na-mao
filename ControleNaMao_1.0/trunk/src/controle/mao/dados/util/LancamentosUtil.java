@@ -37,6 +37,7 @@ public class LancamentosUtil {
 	// Nome das tabelas
 	public static final String TABELA_LANCAMENTOS = "tb_lancamento";
 	public static final String TABELA_RECEITAS = "tb_recebimento";
+	public static final String TABELA_DESPESAS = "tb_despesa";
 
 	private SQLiteHelper dbHelper;
 	public SQLiteDatabase db;
@@ -92,6 +93,20 @@ public class LancamentosUtil {
 		
 	}
 
+	public Cursor getCursorCartoes() {
+		try {
+//			return db.query(TABELA_DESPESAS, new String [] {_ID, NAME, DEPT, CITY }, DEPT +"=?" +" AND " + CITY +"=?", new String[] {"Sales", "HCM" }, null, null, null);
+		return null;
+		} catch (SQLException e) {
+			Log.e(CATEGORIA, "Erro ao buscar os controles: " + e.toString());
+			return null;
+		} catch (NullPointerException e){
+			Log.e(CATEGORIA, "Banco Vazio: " + e.toString());
+			return null;
+		}
+		
+	}
+	
 	// Retorna uma lista com todos os controles
 	public List<LancamentoDAO> listarLancamentos() {
 		Cursor c = getCursor();

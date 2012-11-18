@@ -53,6 +53,8 @@ public class TelaAddDespesas extends Activity {
 	private Categoria bdScriptCategorias;
 
 	private Cartao bdScriptCartoes;
+
+	private EditText txtParcelasDespesas;
 	private static EditText txtValorDespesas;
 	private static String nomeCategoriaBD;
 	private static EditText txtDescricaoDespesas;
@@ -77,6 +79,7 @@ public class TelaAddDespesas extends Activity {
 		setTxtValorDespesas((EditText) findViewById(R.id.txtValorDespesas));
 		dbFormaPgtoDespesas = (Spinner) findViewById(R.id.dbFormaPgtoDespesas);
 		dbCategoriaDespesas = (Spinner) findViewById(R.id.dbCategoriaDespesas);
+		txtParcelasDespesas = (EditText) findViewById(R.id.txtParcelasDespesas);
 		dbPeriodoDespesas = (Spinner) findViewById(R.id.dbPeriodoDespesas);
 		rgFormaPagtoDespesas = (RadioGroup) findViewById(R.id.rgFormaPagtoDespesas);
 		dbNomeCartaoDespesas = (Spinner) findViewById(R.id.dbCartaoDespesas);
@@ -167,9 +170,13 @@ public class TelaAddDespesas extends Activity {
 		// Bt Confirmar
 		btConfirmar.setOnClickListener(new ImageView.OnClickListener() {
 			public void onClick(View v) {
-//				Categoria.bdScript.fechar();
-				bdScript.salvar();
-
+				int parcelas = Integer.parseInt(txtParcelasDespesas.getText().toString());
+				if (parcelas > 0){
+					bdScript.salvar(parcelas);
+				}
+				else{
+					bdScript.salvar();
+				}
 				// OK
 				setResult(RESULT_OK, new Intent());
 
@@ -194,7 +201,7 @@ public class TelaAddDespesas extends Activity {
 				Intent trocatela = new Intent(TelaAddDespesas.this,
 						ControleNaMaoActivity.class);
 				TelaAddDespesas.this.startActivity(trocatela);
-//				TelaAddDespesas.this.finish();
+				TelaAddDespesas.this.finish();
 			}
 		});
 	}
