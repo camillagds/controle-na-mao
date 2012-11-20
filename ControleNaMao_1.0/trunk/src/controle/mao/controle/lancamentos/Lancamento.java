@@ -6,6 +6,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.widget.DatePicker;
+import controle.mao.dados.dao.DespesasDAO;
 import controle.mao.dados.dao.LancamentoDAO;
 import controle.mao.dados.util.LancamentosUtil;
 
@@ -26,8 +27,8 @@ public class Lancamento extends Activity{
 		return bdScript.listarLancamentos();
 	}
 	
-	public List<LancamentoDAO> listaLancamentosCartao(List<LancamentoDAO> list) {
-		return bdScript.listarLancamentosCartao(list);
+	public List<LancamentoDAO> listaLancamentosCartao() {
+		return bdScript.listarLancamentosCartao();
 	}
 
 
@@ -35,5 +36,7 @@ public class Lancamento extends Activity{
 		return bdScript.buscarLancamento(id);
 	}
 
-
+	public LancamentoDAO buscarLancamentoCartao(long cartao){
+		return bdScript.buscarLancamentoCartao(cartao);
+	}
 }

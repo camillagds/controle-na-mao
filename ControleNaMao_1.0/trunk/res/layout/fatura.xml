@@ -1,20 +1,13 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@drawable/fundo"
-    android:scrollbarAlwaysDrawVerticalTrack="true"
-    android:scrollbarStyle="insideOverlay"
-    android:scrollbars="vertical" >
-
-    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:background="@drawable/fundo" >
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="17dp"
             android:orientation="vertical" >
 
@@ -31,15 +24,18 @@
             <ListView
                 android:id="@+id/listaLancamentosCartoes"
                 android:layout_width="fill_parent"
-                android:layout_height="370dp" >
+                android:layout_height="370dp"
+                android:scrollbarStyle="insideOverlay"
+                android:scrollbarAlwaysDrawVerticalTrack="true"
+                android:scrollbars="vertical" >
             </ListView>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:orientation="horizontal"
-            android:layout_marginLeft="17dp" >
+            android:layout_marginLeft="17dp"
+            android:orientation="horizontal" >
 
             <TextView
                 android:id="@+id/textView1"
@@ -57,5 +53,3 @@
                 android:textSize="7pt" />
         </LinearLayout>
     </LinearLayout>
-
-</ScrollView>

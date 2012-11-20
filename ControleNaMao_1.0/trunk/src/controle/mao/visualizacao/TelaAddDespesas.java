@@ -85,6 +85,7 @@ public class TelaAddDespesas extends Activity {
 		dbNomeCartaoDespesas = (Spinner) findViewById(R.id.dbCartaoDespesas);
 		dtDebitoDespesas = (DatePicker) findViewById(R.id.dtDebitoDespesas);
 		rgFormaPagtoCartaoDespesas = (RadioGroup) findViewById(R.id.rgFormaPagtoCartaoDespesas);
+		rgFormaPagtoCartaoDespesas.clearCheck();
 		rowParcelamentos = (TableRow) findViewById(R.id.rowParcelamentos);
 		rowParcelamentos.setVisibility(View.INVISIBLE);
 		rowCartoes = (TableRow) findViewById(R.id.rowCartao);
@@ -110,6 +111,7 @@ public class TelaAddDespesas extends Activity {
             		rowCartoes.setVisibility(View.INVISIBLE);
             	Log.e("cnm", "invisivel");
             	}
+            	rgFormaPagtoCartaoDespesas.clearCheck();
             }
 
             public void onNothingSelected(AdapterView<?> parentView) {
@@ -170,7 +172,12 @@ public class TelaAddDespesas extends Activity {
 		// Bt Confirmar
 		btConfirmar.setOnClickListener(new ImageView.OnClickListener() {
 			public void onClick(View v) {
-				int parcelas = Integer.parseInt(txtParcelasDespesas.getText().toString());
+				int parcelas;
+				try {
+					parcelas = Integer.parseInt(txtParcelasDespesas.getText().toString());
+				} catch (Exception e) {
+					parcelas=0;
+				}
 				if (parcelas > 0){
 					bdScript.salvar(parcelas);
 				}
@@ -299,7 +306,7 @@ public void setNomeTipoCartaoBD(String nomeTipoCartaoBD) {
 	TelaAddDespesas.nomeTipoCartaoBD = nomeTipoCartaoBD;
 }
 
-public String getNomeFormaPagtoBD() {
+public static String getNomeFormaPagtoBD() {
 	return nomeFormaPagtoBD;
 }
 
