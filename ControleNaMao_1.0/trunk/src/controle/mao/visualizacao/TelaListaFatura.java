@@ -153,8 +153,8 @@ public class TelaListaFatura extends  Activity implements OnItemClickListener  {
 		// Clicou no menu
 		switch (item.getItemId()) {
 		case BUSCAR:
-			startActivityForResult(new Intent(this, TelaBuscarFatura.class), BUSCAR);
-//			startActivity(new Intent(this, TelaBuscarFatura.class));
+//			startActivityForResult(new Intent(this, TelaBuscarFatura.class), BUSCAR);
+			startActivity(new Intent(this, TelaBuscarFatura.class));
 			break;
 		}
 		return true;

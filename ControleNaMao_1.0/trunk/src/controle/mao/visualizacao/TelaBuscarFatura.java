@@ -3,7 +3,9 @@ package controle.mao.visualizacao;
 import controle.mao.R;
 import controle.mao.controle.cartoes.Cartao;
 import controle.mao.controle.categoria.Categoria;
+import controle.mao.controle.lancamentos.Despesa;
 import controle.mao.dados.dao.LancamentoDAO;
+import controle.mao.dados.util.CartoesUtil;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,11 +30,13 @@ public class TelaBuscarFatura extends Activity implements OnClickListener {
 	
 	private LancamentoDAO listaCartao;
 	private long idCartao;
+	private Cartao bdScriptCartoes;
 
 	
 	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
+	    bdScriptCartoes = new Cartao(new CartoesUtil(this));
 
 		setContentView(R.layout.busca_fatura);
 		Spinner dbCartaoBuscarFatura = (Spinner) findViewById(R.id.dbCartaoBuscarFatura);
@@ -76,7 +80,14 @@ public class TelaBuscarFatura extends Activity implements OnClickListener {
 	 * @see android.view.View.OnClickListener#onClick(android.view.View)
 	 */
 	public void onClick(View view) {
-
+		setResult(RESULT_CANCELED);
+		// Fecha a tela
+		finish();
+		
+		Intent trocatela = new Intent(TelaBuscarFatura.this,
+				TelaListaFatura.class);
+		TelaBuscarFatura.this.startActivity(trocatela);
+		TelaBuscarFatura.this.finish();
 		
 	}
 
@@ -85,6 +96,13 @@ public class TelaBuscarFatura extends Activity implements OnClickListener {
 		long id = 0;
 		LancamentoDAO listaCartao = TelaListaFatura.bdScript.buscarLancamentoCartao(id);
 		return listaCartao;
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		// Fecha o banco
+		Cartao.bdScript.fechar();
 	}
 
 }
