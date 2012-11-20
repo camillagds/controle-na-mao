@@ -117,6 +117,7 @@ public class TelaEditarDespesas extends Activity {
 		rdDebitoCartaoDespesas = (RadioButton) findViewById(R.id.rdDebitoCartaoEditarDespesas);
 
 		rowCartoes = (TableRow) findViewById(R.id.rowCartao);
+		rgFormaPagtoCartaoDespesas.clearCheck();
 
 		// Lista - Forma de Pagamento
 		ArrayAdapter<CharSequence> listaFormaPgto = ArrayAdapter
@@ -130,18 +131,9 @@ public class TelaEditarDespesas extends Activity {
 					public void onItemSelected(AdapterView<?> parentView,
 							View selectedItemView, int position, long id) {
 						// Pega Nome Pela Posição
-						String formaPgt = parentView
+						campoFormaPgt = parentView
 								.getItemAtPosition(position).toString()
 								.substring(0, 2);
-						String result = "Ca";
-						Log.e("cnm", formaPgt);
-						if (formaPgt.equalsIgnoreCase(result)) {
-							rowCartoes.setVisibility(View.VISIBLE);
-							Log.e("cnm", "visivel");
-						} else {
-							rowCartoes.setVisibility(View.INVISIBLE);
-							Log.e("cnm", "invisivel");
-						}
 					}
 
 					public void onNothingSelected(AdapterView<?> parentView) {
@@ -239,12 +231,18 @@ public class TelaEditarDespesas extends Activity {
 				int i = 0;
 
 				campoFormaPgt = d.formaPagto.toString();
+				
 				String cartao = "Ca";
+				String cheque = "Ch";
+				String dinheiro = "Di";
+				String formaP = campoFormaPgt.toString().substring(0, 3);
+				Log.i("cnm", formaP);
+				Log.i("cnm", String.valueOf(listaFormaPgto.getCount()));
 				for (i = 0; i < listaFormaPgto.getCount(); i++) {
-					String tempP = listaFormaPgto.getItem(i).toString().substring(0, 2);
-					if (tempP.equals(cartao))
+					String tempP = listaFormaPgto.getItem(i).toString().substring(0, 3);
+					Log.i("cnm", tempP);
+					if (tempP.equals(formaP))
 						dbFormaPgtoDespesas.setSelection(i);
-					i++;
 				}
 
 				Log.i("cnm", "Lista Extras - Cartões");
@@ -265,8 +263,7 @@ public class TelaEditarDespesas extends Activity {
 				
 				String credito = "C";
 				String debito = "D";
-				rdCreditoCartaoDespesas.clearFocus();
-				rdDebitoCartaoDespesas.clearFocus();
+				rgFormaPagtoCartaoDespesas.clearCheck();
 				Log.e("cnm", formaPgtCartao);
 				if (formaPgtCartao.equalsIgnoreCase(credito)) {
 					rgFormaPagtoCartaoDespesas
@@ -274,8 +271,7 @@ public class TelaEditarDespesas extends Activity {
 					Log.e("cnm", "credito");
 				} else if (formaPgtCartao.equalsIgnoreCase(debito)){
 					rgFormaPagtoCartaoDespesas
-							.check(R.id.rdDebitoCartaoDespesas);
-
+							.check(R.id.rdDebitoCartaoEditarDespesas);
 					Log.e("cnm", "debito");
 				}
 				

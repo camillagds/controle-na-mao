@@ -63,14 +63,14 @@ public class TelaListaFatura extends  Activity implements OnItemClickListener  {
 		        atualizarLista();
 		        
 		        // Calcular Fluxo de Caixa
-//		    	valorFatura.setText(String.valueOf("R$ "+totalLancamentos(lancamentos, despesas)));
-		    	valorFatura.setText(String.valueOf("R$ "+totalLancamentosFake()));
+		    	valorFatura.setText(String.valueOf("R$ "+totalLancamentos(lancamentos)));
+//		    	valorFatura.setText(String.valueOf("R$ "+totalLancamentosFake()));
 
 	}
 
 		private void atualizarLista() {
 			//Carrega Lista
-			lancamentos = bdScript.listaLancamentos();
+			lancamentos = bdScript.listaLancamentosCartao();
 			Log.e("cnm", "Nenhum Registro?: " + lancamentos.isEmpty());
 			
 			if (lancamentos.isEmpty()){
@@ -78,13 +78,13 @@ public class TelaListaFatura extends  Activity implements OnItemClickListener  {
 				} else{
 
 			// Cria o adapter
-			// faturaAdapterList = new FaturaAdapterListViewBD(this,
-			// lancamentos);
-			SimpleAdapter adaptador = criaAdaptador();
+			 faturaAdapterList = new FaturaAdapterListViewBD(this,
+			 lancamentos);
+//			SimpleAdapter adaptador = criaAdaptador();
 
 			// Define o Adapter
-			// listView.setAdapter(faturaAdapterList);
-			listView.setAdapter(adaptador);
+			 listView.setAdapter(faturaAdapterList);
+//			listView.setAdapter(adaptador);
 
 			// Cor quando a lista é selecionada para ralagem.
 
@@ -105,14 +105,9 @@ public class TelaListaFatura extends  Activity implements OnItemClickListener  {
 			return total;
 		}
 		
-		public float totalLancamentos(List<LancamentoDAO> listaL, List<DespesasDAO> listaD){
+		public float totalLancamentos(List<LancamentoDAO> listaL){
 			int total = 0;
-	    	Character tipoLancamento = 'D';
-	    	Character tipoCartao = 'C';
 			for (int i = 0; i < listaL.size(); i++){
-			    char[] temp = listaL.get(i).tipoLancamento_lancamentos.toCharArray();
-			    char[] temp2 = listaD.get(i).tipoCartao.toCharArray();
-				if (tipoLancamento.equals(temp[0]) && tipoCartao.equals(temp2[0]))
 					total+= listaL.get(i).valor_lancamentos;
 			}
 			//TODO boa sorte na logica rs
@@ -158,7 +153,8 @@ public class TelaListaFatura extends  Activity implements OnItemClickListener  {
 		// Clicou no menu
 		switch (item.getItemId()) {
 		case BUSCAR:
-			startActivity(new Intent(this, TelaBuscarFatura.class));
+			startActivityForResult(new Intent(this, TelaBuscarFatura.class), BUSCAR);
+//			startActivity(new Intent(this, TelaBuscarFatura.class));
 			break;
 		}
 		return true;
@@ -177,4 +173,16 @@ public class TelaListaFatura extends  Activity implements OnItemClickListener  {
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		//TODO precisa?		
 	}
+	
+	@Override
+	protected void onActivityResult(int codigo, int codigoRetorno, Intent it) {
+		super.onActivityResult(codigo, codigoRetorno, it);
+
+		// Quando a activity EditarCarro retornar, seja se foi para adicionar vamos atualizar a lista
+		if (codigoRetorno == RESULT_OK) {
+			// atualiza a lista na tela
+			atualizarLista();
+		}
+	}
+	
 }

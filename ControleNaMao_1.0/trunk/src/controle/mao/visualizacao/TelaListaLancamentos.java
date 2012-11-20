@@ -105,6 +105,7 @@ protected void atualizarLista() {
 		        //Cor quando a lista é selecionada para ralagem.
 
 		        listView.setCacheColorHint(Color.TRANSPARENT);
+		        listView.setScrollContainer(true);
 	}	
 		
 }

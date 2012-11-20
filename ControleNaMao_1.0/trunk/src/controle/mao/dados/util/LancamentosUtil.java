@@ -9,6 +9,7 @@ import java.util.List;
 import controle.mao.dados.SQLiteHelper;
 import controle.mao.dados.dao.DespesasDAO;
 import controle.mao.dados.dao.LancamentoDAO;
+import controle.mao.dados.dao.DespesasDAO.Despesas;
 import controle.mao.dados.dao.LancamentoDAO.Lancamentos;
 import controle.mao.dados.dao.ReceitasDAO;
 import controle.mao.dados.dao.ReceitasDAO.Receitas;
@@ -55,6 +56,32 @@ public class LancamentosUtil {
 	public LancamentoDAO buscarLancamento(long id) {
 		// select * from controle where _id=?
 		Cursor c = db.query(true, TABELA_LANCAMENTOS, LancamentoDAO.colunas, Lancamentos._ID + "=" + id, null, null, null, null, null);
+
+		if (c.getCount() > 0) {
+
+			// Posicinoa no primeiro elemento do cursor
+			c.moveToFirst();
+
+			LancamentoDAO lancamento = new LancamentoDAO();
+
+			// Lê os dados
+			lancamento.id = c.getLong(0);
+			lancamento.tipoLancamento_lancamentos = c.getString(1);
+			lancamento.descricao_lancamentos = c.getString(2);
+			lancamento.idCategoria_lancamentos = c.getLong(3);
+			lancamento.dataBaixa_lancamentos = c.getString(4);
+			lancamento.valor_lancamentos = c.getFloat(5);
+			lancamento.pago = c.getInt(6);
+
+			return lancamento;
+		}
+
+		return null;
+	}
+	
+	public LancamentoDAO buscarLancamentoCartao(long cartao) {
+		// select * from controle where _id=?
+		Cursor c = db.rawQuery("select * from tb_lancamento inner join tb_despesa on tb_lancamento.[_id]=tb_despesa.id_lancamento where tb_despesa.[tipo_cartao]='Credito' and tb_despesa.[id_cartao]= ?;",new String[] {String.valueOf(cartao)} );
 
 		if (c.getCount() > 0) {
 
@@ -143,6 +170,49 @@ public class LancamentosUtil {
 		}
 
 		return controles;
+	}
+	
+	public List<LancamentoDAO> listarLancamentosCartao(){
+		try{
+		Cursor c = db.rawQuery("select * from tb_lancamento inner join tb_despesa on tb_lancamento.[_id]=tb_despesa.id_lancamento where tb_despesa.[tipo_cartao]='Credito';",null);
+
+		List<LancamentoDAO> lancamentos = new ArrayList<LancamentoDAO>();
+
+		if (c.moveToFirst()) {
+
+			// Recupera os índices das colunas
+						int idxId = c.getColumnIndex(Lancamentos._ID);
+						int idxTipoLancamento = c.getColumnIndex(Lancamentos.TIPO_LANCAMENTO);
+						int idxDescricao = c.getColumnIndex(Lancamentos.DESCRICAO);
+						int idxCategoria = c.getColumnIndex(Lancamentos.ID_CATEGORIA);
+						int idxDataBaixa = c.getColumnIndex(Lancamentos.DATA_BAIXA);
+						int idxValor = c.getColumnIndex(Lancamentos.VALOR);
+						int idxPago = c.getColumnIndex(Lancamentos.PAGO);
+
+
+						// Loop até o final
+						do {
+							LancamentoDAO lancamento = new LancamentoDAO();
+							lancamentos.add(lancamento);
+
+							// recupera os atributos de controle
+							lancamento.id = c.getLong(idxId);
+							lancamento.tipoLancamento_lancamentos = c.getString(idxTipoLancamento);
+							lancamento.descricao_lancamentos = c.getString(idxDescricao);
+							lancamento.idCategoria_lancamentos = c.getInt(idxCategoria);
+							lancamento.dataBaixa_lancamentos = c.getString(idxDataBaixa);
+				            lancamento.valor_lancamentos = c.getFloat(idxValor);
+				            lancamento.pago = c.getInt(idxPago);
+	            
+			} while (c.moveToNext());
+		}
+
+		return lancamentos;
+		
+		} catch (SQLException e) {
+			Log.e(CATEGORIA, "Erro ao buscar lancamento de credito: " + e.toString());
+			return null;
+		}
 	}
 	
 	public List<LancamentoDAO> listarLancamentosCartao(List<LancamentoDAO> list) {

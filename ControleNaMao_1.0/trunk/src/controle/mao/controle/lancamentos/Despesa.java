@@ -65,7 +65,7 @@ public class Despesa extends Activity{
 		lancamento.valor_lancamentos = valorDespesa;
 		lancamento.pago = 0;
 		despesa.tipoCartao = TelaAddDespesas.getNomeTipoCartaoBD();
-		despesa.formaPagto = TelaAddDespesas.nomeFormaPagtoBD;
+		despesa.formaPagto = TelaAddDespesas.getNomeFormaPagtoBD();
 		despesa.dataVencimento = converteDataString(TelaAddDespesas.getDtDebitoDespesas());
 		try {
 			despesa.id_cartao = Cartao.BuscarIdCartao(TelaAddDespesas.getNomeCartaoBD());
@@ -110,11 +110,11 @@ public void salvar(int parcelas) {
 		String temp = TelaAddDespesas.getNomeCategoriaBD();
 		Log.e("cnm", TelaAddDespesas.getNomeCategoriaBD());
 		lancamento.idCategoria_lancamentos = Categoria.BuscarIdCategoria(temp);
-		lancamento.dataBaixa_lancamentos = null;
+		lancamento.dataBaixa_lancamentos = converteDataString(TelaAddDespesas.getDtDebitoDespesas());
 		lancamento.valor_lancamentos = valorDespesa;
 		lancamento.pago = 0;
 		despesa.tipoCartao = TelaAddDespesas.getNomeTipoCartaoBD();
-		despesa.formaPagto = TelaAddDespesas.nomeFormaPagtoBD;
+		despesa.formaPagto = TelaAddDespesas.getNomeFormaPagtoBD();
 		despesa.dataVencimento = converteDataString(TelaAddDespesas.getDtDebitoDespesas());
 		try {
 			despesa.id_cartao = Cartao.BuscarIdCartao(TelaAddDespesas.getNomeCartaoBD());
