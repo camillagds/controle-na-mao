@@ -87,7 +87,7 @@ public class Despesa extends Activity{
 		
 	}
 	
-public void salvar(int parcelas) {
+public void salvar(int parcelas, int periodo) {
 		for (int i=0;i<parcelas;i++){
 		float valorDespesa = 0;
 		try {
@@ -110,12 +110,13 @@ public void salvar(int parcelas) {
 		String temp = TelaAddDespesas.getNomeCategoriaBD();
 		Log.e("cnm", TelaAddDespesas.getNomeCategoriaBD());
 		lancamento.idCategoria_lancamentos = Categoria.BuscarIdCategoria(temp);
-		lancamento.dataBaixa_lancamentos = converteDataString(TelaAddDespesas.getDtDebitoDespesas());
+		lancamento.dataBaixa_lancamentos = converteDataString(TelaAddDespesas.getDtDebitoDespesas(),periodo,i);
+		Log.e("cnm", i + " e " + periodo);
 		lancamento.valor_lancamentos = valorDespesa;
 		lancamento.pago = 0;
 		despesa.tipoCartao = TelaAddDespesas.getNomeTipoCartaoBD();
 		despesa.formaPagto = TelaAddDespesas.getNomeFormaPagtoBD();
-		despesa.dataVencimento = converteDataString(TelaAddDespesas.getDtDebitoDespesas());
+		despesa.dataVencimento = converteDataString(TelaAddDespesas.getDtDebitoDespesas(),periodo,i);
 		try {
 			despesa.id_cartao = Cartao.BuscarIdCartao(TelaAddDespesas.getNomeCartaoBD());
 		} catch (Exception e) {
@@ -126,14 +127,14 @@ public void salvar(int parcelas) {
 		salvarDespesa(lancamento, despesa);
 		Log.i("cnm", lancamento.toString());
 		Log.i("cnm", despesa.toString());
-		
+		}
 		// OK
 		setResult(RESULT_OK, new Intent());
 
 		// Fecha a tela
 		finish();
 		
-		}
+		
 	}
 
 
@@ -159,6 +160,19 @@ public void salvar(int parcelas) {
 	    String dataTransf = String.valueOf(DateFormat.format(format, data));
 		return dataTransf;
 	}
+    
+    public static String converteDataString(DatePicker campoData, int periodo, int contador) {  	 
+    	Calendar data = Calendar.getInstance();
+		data.set(campoData.getYear(), campoData.getMonth(), campoData.getDayOfMonth());
+		int dias = periodo*contador;
+		Log.i(" cnm","Dias: "+dias);
+		data.add(Calendar.DATE, dias);
+		String format = "dd/MM/yyyy";
+	    String dataTransf = String.valueOf(DateFormat.format(format, data));
+	    Log.i(" cnm","Dias: "+dias+" Data: "+dataTransf);
+		return dataTransf;
+	}
+    
     
     public static Calendar ConvertToDateBR(String dateString){  
 
