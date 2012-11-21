@@ -55,11 +55,13 @@ public class TelaAddDespesas extends Activity {
 	private Cartao bdScriptCartoes;
 
 	private EditText txtParcelasDespesas;
+
 	private static EditText txtValorDespesas;
 	private static String nomeCategoriaBD;
 	private static EditText txtDescricaoDespesas;
 	public static String nomeFormaPagtoBD;
 	private static String nomeTipoCartaoBD;	
+	private int nomePeriodo;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -80,6 +82,7 @@ public class TelaAddDespesas extends Activity {
 		dbFormaPgtoDespesas = (Spinner) findViewById(R.id.dbFormaPgtoDespesas);
 		dbCategoriaDespesas = (Spinner) findViewById(R.id.dbCategoriaDespesas);
 		txtParcelasDespesas = (EditText) findViewById(R.id.txtParcelasDespesas);
+		dbPeriodoDespesas = (Spinner) findViewById(R.id.dbPeriodoDespesas);
 		dbPeriodoDespesas = (Spinner) findViewById(R.id.dbPeriodoDespesas);
 		rgFormaPagtoDespesas = (RadioGroup) findViewById(R.id.rgFormaPagtoDespesas);
 		dbNomeCartaoDespesas = (Spinner) findViewById(R.id.dbCartaoDespesas);
@@ -117,6 +120,35 @@ public class TelaAddDespesas extends Activity {
             public void onNothingSelected(AdapterView<?> parentView) {
                 // your code here
             }
+		});
+            
+         // Lista - Periodicidade
+    		final ArrayAdapter<CharSequence> listaPeriodo = ArrayAdapter
+    				.createFromResource(this, R.array.periodicidade,
+    						android.R.layout.simple_spinner_item);
+    		listaPeriodo
+    				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    		dbPeriodoDespesas.setAdapter(listaPeriodo);
+    		dbPeriodoDespesas.setOnItemSelectedListener(new OnItemSelectedListener() {
+                private String campoPeriodo;
+
+				public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                	//Pega Nome Pela Posição
+                	campoPeriodo = parentView.getItemAtPosition(position).toString();
+                	char[] item = campoPeriodo.toCharArray();
+					if(item[0]=='S')
+							nomePeriodo = 7;
+					if(item[0]=='Q')
+						nomePeriodo = 15;
+					if(item[0]=='M')
+						nomePeriodo = 30;
+                		
+                }
+
+                public void onNothingSelected(AdapterView<?> parentView) {
+                    // your code here
+                }
+
 
         });
 
@@ -173,13 +205,16 @@ public class TelaAddDespesas extends Activity {
 		btConfirmar.setOnClickListener(new ImageView.OnClickListener() {
 			public void onClick(View v) {
 				int parcelas;
+				int periodo = nomePeriodo;
 				try {
 					parcelas = Integer.parseInt(txtParcelasDespesas.getText().toString());
 				} catch (Exception e) {
 					parcelas=0;
 				}
+				
+
 				if (parcelas > 0){
-					bdScript.salvar(parcelas);
+					bdScript.salvar(parcelas,periodo);
 				}
 				else{
 					bdScript.salvar();
