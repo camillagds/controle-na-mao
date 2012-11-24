@@ -1,7 +1,9 @@
 package controle.mao.visualizacao;
 
 import controle.mao.R;
+import controle.mao.controle.categoria.Categoria;
 import controle.mao.controle.util.DialogoData;
+import controle.mao.dados.util.CategoriasUtil;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -9,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -18,6 +21,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -36,11 +40,15 @@ public class TelaExportarPlanilha extends FragmentActivity {
 	private RadioButton rdSalvarCartaoMemoriaExportar;
 	private Button btConfirmarExportar;
 	private Button btCancelarExportar;
+	
+	// Banco de Dados
+	private Categoria bdScriptCategorias;
 
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		setContentView(R.layout.exportar);
+	    bdScriptCategorias = new Categoria(new CategoriasUtil(this));
 
 		// Ocultar Teclado
 		getWindow().setSoftInputMode(
@@ -58,12 +66,26 @@ public class TelaExportarPlanilha extends FragmentActivity {
 		
 
 		//DropBox Categoria
-		ArrayAdapter<CharSequence> listaCategorias = ArrayAdapter
-				.createFromResource(this, R.array.categorias,
-						android.R.layout.simple_spinner_item);
-		listaCategorias
-				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		dbCategoriaExportar.setAdapter(listaCategorias);
+ 		ArrayAdapter<String> listaCategorias = new ArrayAdapter<String>
+			(this, android.R.layout.simple_spinner_item, Categoria.SpinnerCategorias());
+	
+	listaCategorias
+			.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+	dbCategoriaExportar.setAdapter(listaCategorias);
+		
+     		dbCategoriaExportar.setOnItemSelectedListener(new OnItemSelectedListener() {
+				public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                 	//Pega Nome Pela Posição
+//                 	setNomeCategoriaBD(parentView.getItemAtPosition(position).toString());
+//                 	System.out.println(getNomeCategoriaBD());
+                 }
+
+                 public void onNothingSelected(AdapterView<?> parentView) {
+//                  setNomeCategoriaBD(String.valueOf(parentView.getId()));
+//                 	System.out.println(getNomeCategoriaBD());
+                 }
+
+             });
 		
 		// Botão Data Inicial
 		btDataInicialExportar.setOnClickListener(new ImageView.OnClickListener() {
@@ -154,10 +176,19 @@ public class TelaExportarPlanilha extends FragmentActivity {
 	@Override
 	public void onBackPressed() {
 	// Toast.makeText(this, "Back key pressed =)", Toast.LENGTH_SHORT).show();
+		Categoria.bdScript.fechar();
 		Intent trocatela = new
 		Intent(TelaExportarPlanilha.this,ControleNaMaoActivity.class);
 		TelaExportarPlanilha.this.startActivity(trocatela);
 		TelaExportarPlanilha.this.finish();
 	// super.onBackPressed();
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+
+		// Fecha o banco
+		Categoria.bdScript.fechar();
 	}
 }
