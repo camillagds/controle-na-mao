@@ -122,11 +122,12 @@ public class TelaListaCategorias extends ListActivity{
 	@Override
 	public void onBackPressed() {
 //	 Toast.makeText(this, "Back key pressed =)", Toast.LENGTH_SHORT).show();
+		Categoria.bdScript.fechar();
 		Intent trocatela = new
 		Intent(TelaListaCategorias.this,ControleNaMaoActivity.class);
 		TelaListaCategorias.this.startActivity(trocatela);
 		TelaListaCategorias.this.finish();
-//	 super.onBackPressed();
+
 	}
 
 }
