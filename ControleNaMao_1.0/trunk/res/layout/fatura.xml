@@ -25,9 +25,11 @@
                 android:id="@+id/listaLancamentosCartoes"
                 android:layout_width="fill_parent"
                 android:layout_height="370dp"
+                android:cacheColorHint="@android:color/transparent"
                 android:scrollbarStyle="insideOverlay"
                 android:scrollbarAlwaysDrawVerticalTrack="true"
-                android:scrollbars="vertical" >
+                android:scrollbars="vertical"
+                android:overScrollFooter="@null" >
             </ListView>
         </LinearLayout>
 
