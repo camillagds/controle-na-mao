@@ -27,7 +27,9 @@
         android:scrollbars="vertical"
         android:scrollbarAlwaysDrawVerticalTrack="true"
         android:layout_width="fill_parent"
-        android:layout_height="328dp" >
+        android:layout_height="370dp"
+        android:overScrollFooter="@null"
+        android:cacheColorHint="#00000000" >
     </ListView>
 
 </LinearLayout>
